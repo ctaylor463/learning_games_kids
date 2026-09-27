@@ -64,6 +64,11 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .track .ticks span{flex:1;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--line);position:relative}
 .track .ticks span.done::after{content:'';position:absolute;inset:16%;border-radius:50%;background:var(--c2)}
 @media (prefers-reduced-motion: reduce){.track .ticks span.done::after{transition:none}}
+.rv{animation:rvIn .45s ease-out both;animation-delay:var(--d,0s);transform-box:fill-box;transform-origin:center}
+@keyframes rvIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.rvdraw{stroke-dasharray:1;stroke-dashoffset:1;animation:rvDraw .8s ease-in-out forwards;animation-delay:var(--d,0s)}
+@keyframes rvDraw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion: reduce){.rv,.rvdraw{animation:none;stroke-dashoffset:0}}
 
 .home{flex:1;display:flex;flex-direction:column;padding:max(6px,var(--sat)) max(18px,var(--sar)) max(18px,var(--sab)) max(18px,var(--sal));gap:14px;min-height:0}
 .hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;width:100%}
@@ -264,8 +269,8 @@ const RODC = ['','var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','va
 // n counters, or [a,b] for a two-colour part-whole fill. cap 10 per frame; >10 draws two frames.
 function tenFrame(spec, o){
   o = o || {}; const cw = 46, gap = 5, pad = 6;
-  const parts = Array.isArray(spec) ? spec : [spec, 0];
-  const total = parts[0] + parts[1];
+  const parts = Array.isArray(spec) ? spec.concat([0, 0]).slice(0, 3) : [spec, 0, 0];
+  const total = parts[0] + parts[1] + parts[2];
   const frames = Math.max(1, Math.ceil(Math.max(total, o.min || 0) / 10));
   const fw = 5 * cw + 4 * gap + 2 * pad, fh = 2 * cw + gap + 2 * pad;
   const W = frames * fw + (frames - 1) * 16, H = fh;
@@ -279,9 +284,13 @@ function tenFrame(spec, o){
       s += `<rect x="${x}" y="${y}" width="${cw}" height="${cw}" rx="7" fill="none" stroke="var(--line)" stroke-width="1.5"/>`;
       k++;
       if (k <= total) {
-        const col = k <= parts[0] ? (o.c1 || 'var(--c2)') : (o.c2 || 'var(--c9)');
+        const seg = k <= parts[0] ? 0 : k <= parts[0] + parts[1] ? 1 : 2;
+        const col = [o.c1 || 'var(--c2)', o.c2 || 'var(--c9)', o.c3 || 'var(--accent)'][seg];
         const hide = o.hide && k > o.hide;
-        s += `<circle cx="${x + cw / 2}" cy="${y + cw / 2}" r="${cw * 0.36}" fill="${hide ? 'none' : col}" ${hide ? 'stroke="var(--line)" stroke-width="2" stroke-dasharray="4 3"' : ''}/>`;
+        // o.anim = [start of part two, start of part three] in seconds: counters then appear one by one.
+        const j = seg === 1 ? k - parts[0] - 1 : k - parts[0] - parts[1] - 1;
+        const an = o.anim && seg > 0 ? ` class="rv" style="--d:${(o.anim[seg - 1] + j * 0.12).toFixed(2)}s"` : '';
+        s += `<circle${an} cx="${x + cw / 2}" cy="${y + cw / 2}" r="${cw * 0.36}" fill="${hide ? 'none' : col}" ${hide ? 'stroke="var(--line)" stroke-width="2" stroke-dasharray="4 3"' : ''}/>`;
       }
     }
   }
@@ -343,12 +352,13 @@ function numberLine(min, max, o){
   }
   (o.hops || []).forEach(h => {
     const x1 = pad + (h.from - min) * step, x2 = pad + (h.to - min) * step, mid = (x1 + x2) / 2, r = Math.abs(x2 - x1) / 2;
-    s += `<path d="M ${x1} ${base-12} A ${r} ${Math.min(r,46)} 0 0 1 ${x2} ${base-12}" fill="none" stroke="${h.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
-    s += `<text x="${mid}" y="${base - Math.min(r,46) - 18}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="600" fill="${h.color||'var(--accent)'}">${h.label||''}</text>`;
+    const dp = h.d === undefined ? '' : ` pathLength="1" class="rvdraw" style="--d:${h.d}s"`, dt = h.d === undefined ? '' : ` class="rv" style="--d:${h.d + .6}s"`;
+    s += `<path${dp} d="M ${x1} ${base-12} A ${r} ${Math.min(r,46)} 0 0 1 ${x2} ${base-12}" fill="none" stroke="${h.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<text${dt} x="${mid}" y="${base - Math.min(r,46) - 18}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="600" fill="${h.color||'var(--accent)'}">${h.label||''}</text>`;
   });
   if (o.mark !== undefined && o.mark !== null) {
-    const x = pad + (o.mark - min) * step;
-    s += `<circle cx="${x}" cy="${base}" r="12" fill="var(--accent)" stroke="var(--card)" stroke-width="3"/>`;
+    const x = pad + (o.mark - min) * step, dm = o.markD === undefined ? '' : ` class="rv" style="--d:${o.markD}s"`;
+    s += `<circle${dm} cx="${x}" cy="${base}" r="12" fill="var(--accent)" stroke="var(--card)" stroke-width="3"/>`;
   }
   return s + '</svg>';
 }
@@ -399,21 +409,24 @@ function baseTen(n, o){
 
 // ---------- Open number line ----------
 // No ticks. Only the landmarks the jumps actually land on, which is the point of it.
-function openLine(start, jumps){
+function openLine(start, jumps, step){
   const W = 720, H = 128, base = 92, pad = 40;
   const total = jumps.reduce((a,j)=>a+Math.abs(j.d),0) || 1;
   let x = pad, val = start;
   let s = `<svg viewBox="0 0 ${W} ${H}" class="oline" role="img" aria-label="open number line from ${start}">`;
   s += `<line x1="${pad-16}" y1="${base}" x2="${W-pad+16}" y2="${base}" stroke="var(--ink-soft)" stroke-width="3" stroke-linecap="round"/>`;
-  const mark=(px,v,strong)=>`<line x1="${px}" y1="${base-9}" x2="${px}" y2="${base+9}" stroke="var(--ink-soft)" stroke-width="3"/><text x="${px}" y="${base+30}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="${strong?600:500}" fill="${strong?'var(--accent)':'var(--ink-soft)'}">${v}</text>`;
-  s += mark(x, val, false);
+  // With a step (seconds), each jump draws in turn and its landing number appears after it.
+  const rv=d=>step==null?'':` class="rv" style="--d:${d}s"`;
+  const mark=(px,v,strong,d)=>`<g${d==null?'':rv(d)}><line x1="${px}" y1="${base-9}" x2="${px}" y2="${base+9}" stroke="var(--ink-soft)" stroke-width="3"/><text x="${px}" y="${base+30}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="${strong?600:500}" fill="${strong?'var(--accent)':'var(--ink-soft)'}">${v}</text></g>`;
+  s += mark(x, val, false, null);
   jumps.forEach((j,i)=>{
     const w = (Math.abs(j.d) / total) * (W - pad * 2);
-    const x2 = x + w, mid = (x + x2) / 2, r = w / 2;
-    s += `<path d="M ${x} ${base-11} A ${r} ${Math.min(r,42)} 0 0 1 ${x2} ${base-11}" fill="none" stroke="${j.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
-    s += `<text x="${mid}" y="${base - Math.min(r,42) - 16}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="${j.color||'var(--accent)'}">${j.d>0?'+':'−'}${Math.abs(j.d)}</text>`;
+    const x2 = x + w, mid = (x + x2) / 2, r = w / 2, t = i * (step || 0);
+    const dp = step==null ? '' : ` pathLength="1" class="rvdraw" style="--d:${t}s"`;
+    s += `<path${dp} d="M ${x} ${base-11} A ${r} ${Math.min(r,42)} 0 0 1 ${x2} ${base-11}" fill="none" stroke="${j.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<text${rv(t+.6)} x="${mid}" y="${base - Math.min(r,42) - 16}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="${j.color||'var(--accent)'}">${j.d>0?'+':'−'}${Math.abs(j.d)}</text>`;
     val += j.d; x = x2;
-    s += mark(x, val, i===jumps.length-1);
+    s += mark(x, val, i===jumps.length-1, t+.7);
   });
   return s + '</svg>';
 }
@@ -677,7 +690,11 @@ function options(correct,lo,hi,n){
 function dimOthers(correct){ document.querySelectorAll('.choice').forEach(b=>{ const v=+b.dataset.v; b.classList.toggle('dim',v!==correct); if(v===correct) b.classList.add('glow'); }); }
 
 // ---------- Answer handling ----------
-// Right: brief, then on. Wrong: no buzzer, the picture plays out the answer, then the same item is asked again.
+// Right: the picture plays out the strategy step by step, then on by itself.
+// Wrong: no buzzer, the child's answer is shown, then a second try. After a second miss the
+// strategy plays out more slowly and waits for a tap, so there is time to look at it.
+// redraw(value, ok, anim) returns how many seconds its animation runs.
+function tapNext(){ return new Promise(res=>{ $('bar').insertAdjacentHTML('beforeend',`<button class="act go" id="mg-next" aria-label="Next">${icon('next')}</button>`); $('mg-next').addEventListener('click',res,{once:true}); }); }
 async function settle(right,item,given,redraw){
   const card=$('stage').querySelector('.card'); const s=currentSession();
   s.modes[P.act]=s.modes[P.act]||{n:0,first:0};
@@ -685,20 +702,20 @@ async function settle(right,item,given,redraw){
     const firstTry=P.tries===0, ms=Date.now()-P.t0;
     if(firstTry){ s.first++; s.modes[P.act].first++; }
     s.items++; s.modes[P.act].n++; noteFact(item.fact,firstTry); noteFam(item,firstTry,ms);
-    dimOthers(item.answer); card.classList.add('ok'); if(redraw) redraw(item.answer,true);
+    dimOthers(item.answer); card.classList.add('ok'); const dur=(redraw&&redraw(item.answer,true,{step:1.2}))||0;
     if(firstTry&&P.praise<2&&Math.random()<0.15){ P.praise++; const bank=PRAISE[item.kind]||[]; if(bank.length) note(pick(bank)); }
-    await wait(1000); P.i++; save(); setTrack(); next();
+    await wait(Math.max(1000,dur*1000+1000)); P.i++; save(); setTrack(); next();
   } else {
     if(P.tries===0){ noteError(P.act,item,given); }
     P.tries++; card.classList.add('oops'); if(redraw) redraw(given,false);
     await wait(1000); card.classList.remove('oops');
     if(P.tries>=2){
       s.items++; s.modes[P.act].n++; noteFact(item.fact,false); noteFam(item,false,0);
-      dimOthers(item.answer); card.classList.add('ok'); if(redraw) redraw(item.answer,true);
+      dimOthers(item.answer); card.classList.add('ok'); const dur=(redraw&&redraw(item.answer,true,{step:1.8}))||0;
       // Ask it again later in this round as well as at the start of the next session.
       const at=Math.min(P.queue.length,P.i+rnd(5,8));
       if(!P.queue.slice(P.i+1).some(q=>q.fact===item.fact)) P.queue.splice(at,0,Object.assign({},item));
-      await wait(1700); P.i++; save(); setTrack(); next();
+      await wait(dur*1000+300); await tapNext(); P.i++; save(); setTrack(); next();
     } else { document.querySelectorAll('.choice').forEach(b=>{ if(+b.dataset.v===given) b.classList.add('dim'); });
       if(redraw) redraw(null,false); P.busy=false; }
   }
@@ -745,10 +762,11 @@ function renderShowMe(it){
 // 3. Make ten: the pairs everything else leans on.
 function renderMakeTen(it){
   const T=it.target;
-  const paint=(extra)=>{ const add=extra===null||extra===undefined?0:extra;
+  const paint=(extra,ok,anim)=>{ const add=extra===null||extra===undefined?0:extra;
     const over=Math.max(0,it.a+add-T);
-    $('mg-frame').innerHTML=tenFrame([it.a,Math.min(add,T-it.a)],{min:T,hide:add?undefined:it.a})+
-      (over?`<div class="prompt" style="color:var(--amber)">${over} did not fit</div>`:''); };
+    $('mg-frame').innerHTML=tenFrame([it.a,Math.min(add,T-it.a)],{min:T,hide:add?undefined:it.a,anim:anim?[0.1,0]:null})+
+      (over?`<div class="prompt" style="color:var(--amber)">${over} did not fit</div>`:'');
+    return anim?0.1+add*0.12+0.5:0; };
   $('stage').innerHTML=cardHTML(`<div class="prompt"><b style="color:var(--accent)">${it.a}</b> so far. How many more make ${T}?</div><div id="mg-frame"></div>`);
   paint(null);
   choiceRow(options(it.b,1,T-1,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
@@ -756,9 +774,10 @@ function renderMakeTen(it){
 
 // 4. Break it apart, and from Hard on the same thing written as subtraction.
 function renderBreak(it){
-  const paint=(given)=>{ const b=given===null||given===undefined?null:given;
+  const paint=(given,ok,anim)=>{ const b=given===null||given===undefined?null:given;
     $('mg-bond').innerHTML=numberBond(it.whole,it.a,b);
-    $('mg-frame').innerHTML=tenFrame([it.a,b===null?0:b],{min:it.whole>10?20:10}); };
+    $('mg-frame').innerHTML=tenFrame([it.a,b===null?0:b],{min:it.whole>10?20:10,anim:anim?[0.1,0]:null});
+    return anim&&b?0.1+b*0.12+0.5:0; };
   const head=it.sub
     ? `<div class="eq"><span>${it.whole}</span><span class="op">&minus;</span><span>${it.a}</span><span class="op">=</span><span class="box">?</span></div><div class="prompt">${it.a} and how many more make ${it.whole}?</div>`
     : `<div class="prompt"><b style="color:var(--accent)">${it.whole}</b> is ${it.a} and how many?</div>`;
@@ -770,13 +789,18 @@ function renderBreak(it){
 // 5. Cross ten: fill the ten, then carry on. The strategy, made visible.
 function renderCross(it){
   const need=10-it.a, rest=it.b-need, crosses=rest>0;
-  const paint=(given)=>{
-    const total=given===null||given===undefined?null:given;
-    const hops=[{from:it.a,to:Math.min(10,it.a+it.b),label:'+'+Math.min(need,it.b),color:'var(--c9)'}];
-    if(crosses) hops.push({from:10,to:it.a+it.b,label:'+'+rest,color:'var(--accent)'});
-    $('mg-line').innerHTML=numberLine(Math.max(0,it.a-1),Math.max(it.a+it.b+1,12),{every:1,hops:total===null?[]:hops,mark:total===null?it.a:total});
-    $('mg-frame').innerHTML=tenFrame([it.a,total===null?0:Math.min(it.b,10-it.a)],{min:it.a+it.b>10?20:10,c2:'var(--c9)'});
-    const bx=$('mg-box'); if(bx){ bx.textContent=total===null?'?':total; bx.classList.toggle('filled',total!==null); } };
+  // The strategy is drawn only for the right answer: fill to ten with the first hop, then the rest.
+  // A wrong answer just marks where the child landed, so the second try is still a try.
+  const paint=(given,ok,anim)=>{
+    const total=given===null||given===undefined?null:given, show=total!==null&&ok, T=anim?anim.step:0;
+    const hops=[{from:it.a,to:Math.min(10,it.a+it.b),label:'+'+Math.min(need,it.b),color:'var(--c9)',d:anim?0:undefined}];
+    if(crosses) hops.push({from:10,to:it.a+it.b,label:'+'+rest,color:'var(--accent)',d:anim?T:undefined});
+    const end=hops.length*T;
+    $('mg-line').innerHTML=numberLine(Math.max(0,it.a-1),Math.max(it.a+it.b+1,12),{every:1,hops:show?hops:[],mark:total===null?it.a:total,markD:show&&anim?end:undefined});
+    $('mg-frame').innerHTML=tenFrame(show?[it.a,Math.min(it.b,need),crosses?rest:0]:[it.a,0],{min:it.a+it.b>10?20:10,c2:'var(--c9)',c3:'var(--accent)',anim:show&&anim?[0.1,T+0.1]:null});
+    const bx=$('mg-box'); if(bx){ bx.classList.toggle('filled',total!==null);
+      if(show&&anim) bx.innerHTML=`<span class="rv" style="--d:${end}s">${total}</span>`; else bx.textContent=total===null?'?':total; }
+    return show&&anim?end+0.5:0; };
   $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-frame"></div><div id="mg-line"></div>`);
   paint(null);
   choiceRow(options(it.answer,Math.max(2,it.answer-4),it.answer+4,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
@@ -818,11 +842,13 @@ function renderEquals(it){
 
 // 8. Bigger numbers: two digit work on base ten blocks and an open number line.
 function renderBig(it){
-  const paint=(given)=>{
-    const v=given===null||given===undefined?null:given;
-    const bx=$('mg-box'); if(bx){ bx.textContent=v===null?'?':v; bx.classList.toggle('filled',v!==null); }
-    $('mg-blocks').innerHTML=v!==null?'':`<div class="btrow">${baseTen(it.a,{color:'var(--c9)',oneColor:'var(--c5)'})}<span class="op">${it.b<0?'−':'+'}</span>${baseTen(Math.abs(it.b),{color:'var(--c3)',oneColor:'var(--c5)'})}</div>`;
-    $('mg-open').innerHTML=v===null?'':openLine(it.a,jumpsFor(it.a,it.b)); };
+  const paint=(given,ok,anim)=>{
+    const v=given===null||given===undefined?null:given, show=v!==null&&ok, jumps=jumpsFor(it.a,it.b), T=anim?anim.step:0, end=jumps.length*T;
+    const bx=$('mg-box'); if(bx){ bx.classList.toggle('filled',v!==null);
+      if(show&&anim) bx.innerHTML=`<span class="rv" style="--d:${end}s">${v}</span>`; else bx.textContent=v===null?'?':v; }
+    $('mg-blocks').innerHTML=show?'':`<div class="btrow">${baseTen(it.a,{color:'var(--c9)',oneColor:'var(--c5)'})}<span class="op">${it.b<0?'−':'+'}</span>${baseTen(Math.abs(it.b),{color:'var(--c3)',oneColor:'var(--c5)'})}</div>`;
+    $('mg-open').innerHTML=show?openLine(it.a,jumps,anim?T:null):'';
+    return show&&anim?end+0.5:0; };
   $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">${it.b<0?'−':'+'}</span><span>${Math.abs(it.b)}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-blocks"></div><div id="mg-open"></div>`);
   paint(null);
   // One distractor is the answer with the carry dropped, which is the classic slip.
