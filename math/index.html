@@ -74,6 +74,13 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;width:100%}
 .brand{font-family:var(--f-num);font-weight:600;font-size:30px}
 .brand small{display:block;font-family:var(--f-read);font-weight:400;font-size:15px;color:var(--ink-soft);margin-top:2px}
+.levels{display:flex;gap:12px}
+.lvl{flex:1;background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:4px solid transparent;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--f-num)}
+.lvl.on{border-color:var(--accent)}
+.lvl .rods{display:flex;align-items:flex-end;gap:3px;height:30px}
+.lvl .rods i{display:block;width:9px;border-radius:2px}
+.lvl .lab{font-size:16px;font-weight:600;color:var(--ink-soft)}
+.lvl.on .lab{color:var(--ink)}
 .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;flex:1;min-height:0}
 @media (max-width:520px){.tiles{grid-template-columns:1fr}}
 .tile{background:var(--card);border-radius:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;border:4px solid transparent;min-height:130px}
@@ -188,6 +195,7 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
         <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
       </div>
     </div>
+    <div class="levels" id="levels"></div>
     <div class="tiles" id="tiles"></div>
     <div class="homefoot">
       <span class="done-note" id="home-note"></span>
@@ -577,8 +585,23 @@ function advancePath(){ const st=pathStep(), r=S.path.recent||[];
   if(st>=PATH.length-1||r.length<15||r.filter(Boolean).length<13) return null;
   S.path.step=st+1; S.path.recent=[]; save(); return PATH[st+1].name; }
 
+// ---------- Levels ----------
+// A level is a stretch of the path and of the fact sets. Choosing one moves both Play and Facts
+// to its start, unless the child is already inside it. Both still move on by themselves.
+const LEVELS=[
+  {name:'Easy', steps:[0,3], sets:[0,0], rods:[3]},
+  {name:'Medium', steps:[4,5], sets:[1,2], rods:[5,3]},
+  {name:'Hard', steps:[6,7], sets:[3,4], rods:[7,5,3]},
+  {name:'Expert', steps:[8,10], sets:[5,5], rods:[10,7,5,3]}
+];
+function curLevel(){ const st=pathStep(); return Math.max(0,LEVELS.findIndex(l=>st>=l.steps[0]&&st<=l.steps[1])); }
+function chooseLevel(i){ const L=LEVELS[i], st=pathStep(), fs=drillSet();
+  if(st<L.steps[0]||st>L.steps[1]){ S.path.step=L.steps[0]; S.path.recent=[]; }
+  if(fs<L.sets[0]||fs>L.sets[1]) S.drill.set=L.sets[0];
+  save(); renderHome(); }
+
 // ---------- Home ----------
-// Two choices only. Play is the picture path, Facts is the bare equations. Each tile says where the child is.
+// A level row and two choices. Play is the picture path, Facts is the bare equations. Each tile says where the child is.
 const STEP_GLYPH={
   howmany:()=>dieFace(5,90),
   bonds:()=>numberBond(10,7,null),
@@ -593,7 +616,9 @@ const ACTS=[
   {id:'facts', label:'Facts', glyph:()=>'<svg viewBox="0 0 200 70"><text x="100" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="42" font-weight="600" fill="var(--ink)">7+5 = ?</text></svg>', sub:()=>FACT_SETS[drillSet()].name}
 ];
 function renderHome(){
-  rollDay(); const done=!!S.settings.limit&&S.today.done;
+  rollDay(); const done=!!S.settings.limit&&S.today.done, cl=curLevel();
+  $('levels').innerHTML=LEVELS.map((l,i)=>`<button class="lvl ${cl===i?'on':''}" data-lv="${i}" aria-label="${l.name}"><span class="rods">${l.rods.map(n=>`<i style="height:${8+n*2}px;background:${RODC[n]}"></i>`).join('')}</span><span class="lab">${l.name}</span></button>`).join('');
+  document.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>chooseLevel(+b.dataset.lv)));
   $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph()}</span><span class="label">${a.label}</span><span class="sub">${a.sub()}</span></button>`).join('');
   $('home-note').textContent=done?'Math time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
   document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>{ if(S.settings.limit&&S.today.done){ show('s-alldone'); return; } start(t.dataset.act); }));
@@ -981,6 +1006,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ do
 function renderHow(){
   $('pane-how').innerHTML=`<h2>How to play</h2>
   <p>Two buttons. <b>Play</b> is the picture games, and <b>Facts</b> is plain sums on a number pad. Each button shows where the child is, and both move on by themselves. There is no score, no timer and no wrong buzzer.</p>
+  <p>The level row above them picks a starting point for both: ${LEVELS.map(l=>`<b>${l.name}</b> is ${PATH.slice(l.steps[0],l.steps[1]+1).map(p=>p.name.toLowerCase()).join(', ')} in Play, and ${FACT_SETS.slice(l.sets[0],l.sets[1]+1).map(f=>f.name.toLowerCase()).join(', ')} in Facts`).join('. ')}. Passing the last step of a level carries on into the next one.</p>
   <h3>Play</h3>
   <p>One kind of question at a time, in this order: ${PATH.map(p=>p.name.toLowerCase()).join(', ')}. The child moves to the next step after 13 first-try answers in the last 15. Every answer is shown in a picture, a ten frame, a number line or a number bond, and the picture plays out the strategy step by step: for eight plus five, the frame fills to ten first and the line shows two hops, the jump to ten and then the rest. After two misses the picture plays slowly and waits for a tap. Anything missed comes back in the next round.</p>
   <p>Taking away is written as subtraction and pictured as the missing part, so thirteen minus eight is shown as eight and how many more make thirteen. From adding to ten on, about one question in seven writes the equals sign the other way round, such as 7 = 4 + 3, because children who read equals as "the answer comes next" struggle with algebra later.</p>
