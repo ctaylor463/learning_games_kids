@@ -74,24 +74,22 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;width:100%}
 .brand{font-family:var(--f-num);font-weight:600;font-size:30px}
 .brand small{display:block;font-family:var(--f-read);font-weight:400;font-size:15px;color:var(--ink-soft);margin-top:2px}
-.levels{display:flex;gap:12px}
-.lvl{flex:1;background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:4px solid transparent;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:84px}
-.lvl.on{border-color:var(--accent)}
-.lvl .rods{display:flex;align-items:flex-end;gap:3px;height:30px}
-.lvl .rods i{display:block;width:9px;border-radius:2px;background:var(--c5)}
-.lvl .lab{font-family:var(--f-num);font-size:14px;color:var(--ink-soft)}
-.lvl.on .lab{color:var(--ink)}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;min-height:0}
-@media (max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;flex:1;min-height:0}
 @media (max-width:520px){.tiles{grid-template-columns:1fr}}
 .tile{background:var(--card);border-radius:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;border:4px solid transparent;min-height:130px}
 .tile:active{transform:scale(.98)}
-.tile .glyph{height:66px;display:flex;align-items:center;justify-content:center}
-.tile .glyph svg{height:66px;width:auto;display:block}
-.tile .label{font-family:var(--f-num);font-size:19px;color:var(--ink);text-align:center}
+.tile .glyph{height:110px;display:flex;align-items:center;justify-content:center}
+.tile .glyph svg{height:110px;width:auto;max-width:100%;display:block}
+.tile .label{font-family:var(--f-num);font-size:30px;font-weight:600;color:var(--ink);text-align:center}
+.tile .sub{font-size:17px;color:var(--ink-soft);text-align:center}
 .tile.locked{opacity:.45}
-.tile.adv{border-color:var(--c9)}
-.tile .advtag{font-size:13px;color:var(--ink-soft)}
+.pad{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;width:100%;max-width:720px}
+.key{height:78px;border-radius:18px;background:var(--card);box-shadow:var(--shadow);font-family:var(--f-num);font-weight:600;font-size:38px;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.key:active{transform:scale(.96)}
+.key svg{width:34px;height:34px}
+.key.del{color:var(--ink-soft)}
+.key.ok{background:var(--accent);color:#fff}
+.eq .box.wrong{border-color:var(--amber);color:var(--amber)}
 .homefoot{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .gate{width:56px;height:56px;border-radius:50%;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden}
 .gate svg{width:26px;height:26px;position:relative}
@@ -160,6 +158,7 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
 .pane th,.pane td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
 .pane th{font-family:var(--f-num);font-weight:600;color:var(--ink-soft);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
 .pbtn{font-family:var(--f-num);font-weight:600;font-size:16px;padding:12px 18px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);margin:4px 6px 4px 0;min-height:48px}
+.field select{font-family:var(--f-num);font-weight:600;font-size:16px;padding:12px 14px;border-radius:14px;background:var(--card);color:var(--ink);border:2px solid var(--line);min-height:48px;max-width:100%}
 .pbtn.warn{background:var(--amber);color:#1F2A37}
 .pbtn.on{outline:3px solid var(--accent)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
@@ -189,7 +188,6 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
         <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
       </div>
     </div>
-    <div class="levels" id="levels"></div>
     <div class="tiles" id="tiles"></div>
     <div class="homefoot">
       <span class="done-note" id="home-note"></span>
@@ -291,6 +289,10 @@ function tenFrame(spec, o){
         const j = seg === 1 ? k - parts[0] - 1 : k - parts[0] - parts[1] - 1;
         const an = o.anim && seg > 0 ? ` class="rv" style="--d:${(o.anim[seg - 1] + j * 0.12).toFixed(2)}s"` : '';
         s += `<circle${an} cx="${x + cw / 2}" cy="${y + cw / 2}" r="${cw * 0.36}" fill="${hide ? 'none' : col}" ${hide ? 'stroke="var(--line)" stroke-width="2" stroke-dasharray="4 3"' : ''}/>`;
+        // o.cross: the last n counters are taken away, drawn with a cross over them.
+        if (o.cross && k > total - o.cross) { const cx = x + cw / 2, cy = y + cw / 2, d = cw * 0.3, j2 = k - (total - o.cross) - 1;
+          const ac = o.crossD === undefined ? '' : ` class="rv" style="--d:${(o.crossD + j2 * 0.15).toFixed(2)}s"`;
+          s += `<g${ac}><circle cx="${cx}" cy="${cy}" r="${cw * 0.36}" fill="var(--card)" opacity=".6"/><path d="M ${cx-d} ${cy-d} L ${cx+d} ${cy+d} M ${cx+d} ${cy-d} L ${cx-d} ${cy+d}" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/></g>`; }
       }
     }
   }
@@ -353,22 +355,13 @@ function numberLine(min, max, o){
   (o.hops || []).forEach(h => {
     const x1 = pad + (h.from - min) * step, x2 = pad + (h.to - min) * step, mid = (x1 + x2) / 2, r = Math.abs(x2 - x1) / 2;
     const dp = h.d === undefined ? '' : ` pathLength="1" class="rvdraw" style="--d:${h.d}s"`, dt = h.d === undefined ? '' : ` class="rv" style="--d:${h.d + .6}s"`;
-    s += `<path${dp} d="M ${x1} ${base-12} A ${r} ${Math.min(r,46)} 0 0 1 ${x2} ${base-12}" fill="none" stroke="${h.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<path${dp} d="M ${x1} ${base-12} A ${r} ${Math.min(r,46)} 0 0 ${x2 > x1 ? 1 : 0} ${x2} ${base-12}" fill="none" stroke="${h.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
     s += `<text${dt} x="${mid}" y="${base - Math.min(r,46) - 18}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="600" fill="${h.color||'var(--accent)'}">${h.label||''}</text>`;
   });
   if (o.mark !== undefined && o.mark !== null) {
     const x = pad + (o.mark - min) * step, dm = o.markD === undefined ? '' : ` class="rv" style="--d:${o.markD}s"`;
     s += `<circle${dm} cx="${x}" cy="${base}" r="12" fill="var(--accent)" stroke="var(--card)" stroke-width="3"/>`;
   }
-  return s + '</svg>';
-}
-
-// ---------- Cuisenaire rods ----------
-function rod(n, o){
-  o = o || {}; const u = o.unit || 34, h = o.h || 34;
-  let s = `<svg viewBox="0 0 ${n*u+4} ${h+4}" class="rod" role="img" aria-label="rod of ${n}">`;
-  s += `<rect x="2" y="2" width="${n*u}" height="${h}" rx="6" fill="${RODC[n]||'var(--c10)'}" stroke="var(--ink-soft)" stroke-width="1.5"/>`;
-  if (o.marks) for (let i = 1; i < n; i++) s += `<line x1="${2+i*u}" y1="2" x2="${2+i*u}" y2="${h+2}" stroke="rgba(0,0,0,.22)" stroke-width="1.5"/>`;
   return s + '</svg>';
 }
 
@@ -513,7 +506,7 @@ const icon=n=>ICONS[n]||'';
 function F(key){ return S.facts[key]=S.facts[key]||{seen:0,first:0,retry:0}; }
 function noteFact(key,firstTry){ const f=F(key); f.seen++; if(firstTry){ f.first++; f.due=false; } else { f.retry++; f.due=true; } f.last=S.todayKey; }
 // Fact families, so the parent view can report by strategy rather than by single fact.
-const FAM_LABEL={bonds10:'Pairs that make ten',doubles:'Doubles',plus012:'Plus nought, one or two',teen:'Ten and some more',bridging:'Bridging past ten',neardoubles:'Near doubles',within10:'Within ten',counting:'Counting and quantity',tens:'Whole tens, plus and minus',twodigit:'Two digit, no carry',carry:'Two digit with a carry',other:'Other'};
+const FAM_LABEL={sub10:'Taking away within ten',sub20:'Taking away across ten',bonds10:'Pairs that make ten',doubles:'Doubles',plus012:'Plus nought, one or two',teen:'Ten and some more',bridging:'Bridging past ten',neardoubles:'Near doubles',within10:'Within ten',counting:'Counting and quantity',tens:'Whole tens, plus and minus',twodigit:'Two digit, no carry',carry:'Two digit with a carry',other:'Other'};
 function familyOf(it){
   if(it.fam) return it.fam;
   const a=it.a,b=it.b;
@@ -558,30 +551,50 @@ function noteError(mode,item,given){
   return kind;
 }
 
-// ---------- Levels ----------
-const LV_NAMES=['Easy','Medium','Hard','Expert'];
-const LV_RODS=[[3],[5,3],[7,5,3],[10,7,5,3]];
-const LV_DESC=['Numbers to 5, one frame at a time.','Numbers to 10, and the pairs that make ten.','Numbers to 20, crossing ten.','Both ways across ten, and the missing part.'];
-function lv(){ return S.level||0; }
-function topOf(){ return [5,10,20,20][lv()]; }
+// ---------- The path ----------
+// Play walks through these steps in order, one kind of question at a time. L is the difficulty
+// handed to the item generators. A step is passed at 13 first-try answers in the last 15.
+const PATH=[
+  {name:'Seeing to 5', act:'howmany', L:0},
+  {name:'Seeing to 10', act:'howmany', L:1},
+  {name:'Making 5', act:'bonds', L:0},
+  {name:'Making 10', act:'bonds', L:1},
+  {name:'Adding to 10', act:'add10', L:1},
+  {name:'Taking away to 10', act:'sub10', L:1},
+  {name:'Crossing ten', act:'crossten', L:2},
+  {name:'Taking away across ten', act:'subcross', L:2},
+  {name:'Adding tens', act:'big', L:1},
+  {name:'Two-digit adding', act:'big', L:2},
+  {name:'Two-digit carrying', act:'big', L:3}
+];
+function pathStep(){
+  // Carry over the old Easy/Medium/Hard/Expert choice the first time.
+  if(!S.path){ S.path={step:[0,3,6,6][S.level||0],recent:[]}; save(); }
+  return Math.min(S.path.step,PATH.length-1); }
+function lv(){ return PATH[pathStep()].L; }
+function notePath(firstTry){ if(P.act!=='learn') return; S.path.recent=(S.path.recent||[]).concat([firstTry]).slice(-15); }
+function advancePath(){ const st=pathStep(), r=S.path.recent||[];
+  if(st>=PATH.length-1||r.length<15||r.filter(Boolean).length<13) return null;
+  S.path.step=st+1; S.path.recent=[]; save(); return PATH[st+1].name; }
 
 // ---------- Home ----------
-// Four games. The ten frame, the number line and the number bond carry all of them,
-// so the child learns arithmetic rather than a new interface each time.
+// Two choices only. Play is the picture path, Facts is the bare equations. Each tile says where the child is.
+const STEP_GLYPH={
+  howmany:()=>dieFace(5,90),
+  bonds:()=>numberBond(10,7,null),
+  add10:()=>numberLine(3,9,{every:1,hops:[{from:4,to:7,label:'+3'}]}),
+  sub10:()=>numberLine(3,9,{every:1,hops:[{from:8,to:5,label:'−3'}]}),
+  crossten:()=>numberLine(6,14,{every:2,hops:[{from:8,to:10,label:'2'},{from:10,to:13,label:'3'}]}),
+  subcross:()=>numberLine(6,14,{every:2,hops:[{from:8,to:10,label:'2'},{from:10,to:13,label:'3'}]}),
+  big:()=>baseTen(23,{u:9})
+};
 const ACTS=[
-  {id:'howmany', label:'How many?', glyph:()=>dieFace(5,66)},
-  {id:'bonds', label:'Make the number', glyph:()=>numberBond(10,7,null)},
-  {id:'crossten', label:'Cross ten', glyph:()=>numberLine(6,14,{every:2,hops:[{from:8,to:10,label:'2'},{from:10,to:13,label:'3'}]})},
-  {id:'equals', label:'Is it true?', glyph:()=>'<svg viewBox="0 0 200 70"><text x="100" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="42" font-weight="600" fill="var(--ink)">6+4 = 7+3</text></svg>'},
-  {id:'big', label:'Bigger numbers', adv:true, glyph:()=>baseTen(23,{u:7})}
+  {id:'learn', label:'Play', glyph:()=>STEP_GLYPH[PATH[pathStep()].act](), sub:()=>PATH[pathStep()].name},
+  {id:'facts', label:'Facts', glyph:()=>'<svg viewBox="0 0 200 70"><text x="100" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="42" font-weight="600" fill="var(--ink)">7+5 = ?</text></svg>', sub:()=>FACT_SETS[drillSet()].name}
 ];
-const MODE_NAME={howmany:'How many',bonds:'Make the number',crossten:'Cross ten',equals:'Is it true',big:'Bigger numbers'};
 function renderHome(){
   rollDay(); const done=!!S.settings.limit&&S.today.done;
-  $('levels').innerHTML=[0,1,2,3].map(i=>`<button class="lvl ${lv()===i?'on':''}" data-lv="${i}" aria-label="${LV_NAMES[i]}"><span class="rods">${LV_RODS[i].map(n=>`<i style="height:${8+n*2}px;background:${RODC[n]}"></i>`).join('')}</span><span class="lab">${LV_NAMES[i]}</span></button>`).join('');
-  document.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>{ S.level=+b.dataset.lv; save(); renderHome(); }));
-  $('home-sub').textContent=LV_DESC[lv()];
-  $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${a.adv?'adv':''} ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph()}</span><span class="label">${a.label}</span>${a.adv?'<span class="advtag">once adding is easy</span>':''}</button>`).join('');
+  $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph()}</span><span class="label">${a.label}</span><span class="sub">${a.sub()}</span></button>`).join('');
   $('home-note').textContent=done?'Math time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
   document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>{ if(S.settings.limit&&S.today.done){ show('s-alldone'); return; } start(t.dataset.act); }));
 }
@@ -622,8 +635,9 @@ function genBreak(){ const L=lv(), whole=L===0?rnd(3,5):L===1?rnd(4,10):rnd(6,L=
 function genCrossTen(){ const L=lv(); let a,b;
   if(L===0){ a=rnd(1,3); b=rnd(1,5-a); } else if(L===1){ a=rnd(2,8); b=rnd(1,10-a); } else { a=rnd(5,9); b=rnd(10-a+1,9); }
   return {kind:'crossten',a,b,answer:a+b,label:a+' + '+b,fact:a+'+'+b}; }
-function genRods(){ const L=lv(); const w=L===0?5:L===1?10:rnd(8,12); const a=rnd(1,w-1);
-  return {kind:'rods',whole:w,a,b:w-a,answer:w-a,label:'rod '+w+' after '+a,fact:'rod:'+w+'/'+a}; }
+// Taking away, written as subtraction and pictured as "a and how many more make the whole".
+function genTakeAway(lo,hi){ const whole=rnd(lo,hi), a=whole>10?rnd(whole-9,9):rnd(1,whole-1);
+  return {kind:'breakapart',whole,a,b:whole-a,sub:true,answer:whole-a,label:whole+' − '+a,fact:'break:'+whole+'/'+a}; }
 // Equivalence: the equals sign as balance, not as "answer next". McNeil-style formats.
 function genEquals(){ const L=lv(), top=L===0?5:L===1?10:L===2?14:18;
   const forms=L===0?['std','rev']:L===1?['std','rev','missA','tf']:['rev','missA','both','tf','both'];
@@ -661,20 +675,65 @@ function genBig(){ const L=lv(); let a,b,fam;
   const answer=a+b;
   return {kind:'big',a,b,fam,answer,label:a+(b<0?' − '+Math.abs(b):' + '+b),fact:'big:'+a+(b<0?'-':'+')+Math.abs(b)};
 }
+// Facts: bare equations answered on a number pad, in sets that unlock in order. A fact is known
+// once it is answered right first try on two different days. A miss resets it.
+function factItem(op,x,y){ return op==='+'
+  ? {kind:'fact',op,a:x,b:y,answer:x+y,label:x+' + '+y,fact:x+'+'+y}
+  : {kind:'fact',op,m:x,s:y,answer:x-y,label:x+' − '+y,fact:x+'-'+y,fam:x>10&&x-y<10?'sub20':'sub10'}; }
+const FACT_SETS=(()=>{ const sets=[[],[],[],[],[]];
+  for(let a=1;a<=10;a++) for(let b=1;b<=10;b++){ const s=a+b; sets[s<=5?0:s<=10?1:3].push(factItem('+',a,b)); }
+  for(let m=2;m<=20;m++) for(let s=1;s<=10;s++){ const d=m-s; if(d<1||d>10) continue; sets[m<=10?2:4].push(factItem('-',m,s)); }
+  const names=['Adding within 5','Adding within 10','Taking away within 10','Adding within 20','Taking away within 20'];
+  const out=sets.map((items,i)=>({name:names[i],items}));
+  out.push({name:'Everything mixed',items:sets.flat()});
+  return out; })();
+function factDays(k){ return (S.facts[k]&&S.facts[k].dd)||[]; }
+function factKnown(k){ return factDays(k).length>=2; }
+function noteDrill(it,firstTry){ const f=F(it.fact);
+  if(!firstTry){ f.dd=[]; return; }
+  f.dd=f.dd||[]; if(!f.dd.includes(S.todayKey)) f.dd.push(S.todayKey); f.dd=f.dd.slice(-3); }
+function drillSet(){ S.drill=S.drill||{set:0}; return S.drill.set; }
+function setKnown(i){ return FACT_SETS[i].items.filter(x=>factKnown(x.fact)).length; }
+function buildFacts(){
+  const cur=drillSet(), pool=FACT_SETS[cur].items;
+  const seen=k=>!!(S.facts[k]&&S.facts[k].seen);
+  const due=shuffle(pool.filter(x=>S.facts[x.fact]&&S.facts[x.fact].due));
+  const fresh=shuffle(pool.filter(x=>!seen(x.fact)));
+  const learning=shuffle(pool.filter(x=>seen(x.fact)&&!factKnown(x.fact)&&!due.includes(x)));
+  const known=shuffle(pool.filter(x=>factKnown(x.fact)&&!due.includes(x)));
+  const earlier=cur>0&&cur<5?shuffle(FACT_SETS.slice(0,cur).flatMap(s=>s.items)):[];
+  const nNew=earlier.length?8:ROUND_N;
+  const out=[];
+  for(const x of [...due,...learning.slice(0,4),...fresh,...learning.slice(4),...known]){ if(out.length>=nNew) break; if(!out.includes(x)) out.push(x); }
+  const review=shuffle(earlier.filter(x=>factKnown(x.fact))).concat(shuffle(earlier)).filter((x,i,a)=>a.indexOf(x)===i).slice(0,ROUND_N-out.length);
+  const dueFirst=out.filter(x=>due.includes(x)), rest=shuffle(out.filter(x=>!due.includes(x)).concat(review));
+  return dueFirst.concat(rest).map(x=>Object.assign({},x));
+}
+// Move on to the next set once every fact in the current one is known.
+function advanceFacts(){ const cur=drillSet(); if(cur>=FACT_SETS.length-1) return null;
+  if(setKnown(cur)<FACT_SETS[cur].items.length) return null;
+  S.drill.set=cur+1; save(); return FACT_SETS[cur+1].name; }
+// Once adding and taking away are in play, about one item in seven is an equals-sign item.
+const withEq=g=>()=>Math.random()<0.15?genEquals():g();
 const GEN={
   howmany:()=>Math.random()<(lv()<=1?0.4:0.3)?genShowMe():genHowMany(),
-  bonds:()=>Math.random()<(lv()<=1?0.6:0.4)?genMakeTen():genBreak(),
-  crossten:genCrossTen,
-  equals:genEquals,
+  bonds:()=>Math.random()<0.6?genMakeTen():genBreak(),
+  add10:withEq(genCrossTen),
+  sub10:withEq(()=>genTakeAway(3,10)),
+  crossten:withEq(genCrossTen),
+  subcross:withEq(()=>genTakeAway(11,18)),
   big:genBig
 };
+// Items missed at this step come back first in the next round of the same step.
+function noteRedo(item){ if(P.act!=='learn') return; S.redo=(S.redo||[]).filter(r=>r.item.fact!==item.fact).concat([{step:pathStep(),item:Object.assign({},item)}]).slice(-30); }
 function buildRound(act){
-  const out=[], seen=new Set(); let guard=0;
+  const st=pathStep(), redo=(S.redo||[]).filter(r=>r.step===st).slice(0,3).map(r=>r.item);
+  S.redo=(S.redo||[]).filter(r=>!redo.includes(r.item));
+  const out=redo.slice(), seen=new Set(out.map(x=>x.fact)); let guard=0;
   while(out.length<ROUND_N&&guard++<400){ const it=GEN[act](); if(seen.has(it.fact)&&guard<120) continue; seen.add(it.fact); out.push(it); }
-  // Facts missed in an earlier session come back at the front of the next one.
-  return out.sort((x,y)=>((S.facts[y.fact]||{}).due?1:0)-((S.facts[x.fact]||{}).due?1:0));
+  return out;
 }
-function start(act){ rollDay(); P.act=act; P.i=0; P.busy=false; P.praise=0; P.enter=Date.now(); P.queue=buildRound(act); show('s-play'); setTrack(); next(); }
+function start(act){ rollDay(); P.act=act; P.i=0; P.busy=false; P.praise=0; P.enter=Date.now(); P.queue=act==='facts'?buildFacts():buildRound(PATH[pathStep()].act); show('s-play'); setTrack(); next(); }
 
 // ---------- Choices ----------
 function choiceRow(vals,handler,cls){
@@ -697,11 +756,13 @@ function dimOthers(correct){ document.querySelectorAll('.choice').forEach(b=>{ c
 function tapNext(){ return new Promise(res=>{ $('bar').insertAdjacentHTML('beforeend',`<button class="act go" id="mg-next" aria-label="Next">${icon('next')}</button>`); $('mg-next').addEventListener('click',res,{once:true}); }); }
 async function settle(right,item,given,redraw){
   const card=$('stage').querySelector('.card'); const s=currentSession();
-  s.modes[P.act]=s.modes[P.act]||{n:0,first:0};
+  const mk=item.kind; s.modes[mk]=s.modes[mk]||{n:0,first:0};
   if(right){
     const firstTry=P.tries===0, ms=Date.now()-P.t0;
-    if(firstTry){ s.first++; s.modes[P.act].first++; }
-    s.items++; s.modes[P.act].n++; noteFact(item.fact,firstTry); noteFam(item,firstTry,ms);
+    if(firstTry){ s.first++; s.modes[mk].first++; }
+    s.items++; s.modes[mk].n++; noteFact(item.fact,firstTry); noteFam(item,firstTry,ms);
+    if(item.kind==='fact') noteDrill(item,firstTry);
+    notePath(firstTry); if(!firstTry) noteRedo(item);
     dimOthers(item.answer); card.classList.add('ok'); const dur=(redraw&&redraw(item.answer,true,{step:1.2}))||0;
     if(firstTry&&P.praise<2&&Math.random()<0.15){ P.praise++; const bank=PRAISE[item.kind]||[]; if(bank.length) note(pick(bank)); }
     await wait(Math.max(1000,dur*1000+1000)); P.i++; save(); setTrack(); next();
@@ -710,7 +771,9 @@ async function settle(right,item,given,redraw){
     P.tries++; card.classList.add('oops'); if(redraw) redraw(given,false);
     await wait(1000); card.classList.remove('oops');
     if(P.tries>=2){
-      s.items++; s.modes[P.act].n++; noteFact(item.fact,false); noteFam(item,false,0);
+      s.items++; s.modes[mk].n++; noteFact(item.fact,false); noteFam(item,false,0);
+      if(item.kind==='fact') noteDrill(item,false);
+      notePath(false); noteRedo(item);
       dimOthers(item.answer); card.classList.add('ok'); const dur=(redraw&&redraw(item.answer,true,{step:1.8}))||0;
       // Ask it again later in this round as well as at the start of the next session.
       const at=Math.min(P.queue.length,P.i+rnd(5,8));
@@ -729,7 +792,7 @@ function next(){
   if(P.i>=P.queue.length) return endRound();
   P.cur=P.queue[P.i]; P.tries=0; P.busy=false; P.build=0; begin();
   const it=P.cur;
-  ({howmany:renderHowMany,showme:renderShowMe,maketen:renderMakeTen,breakapart:renderBreak,crossten:renderCross,equals:renderEquals,big:renderBig})[it.kind](it);
+  ({howmany:renderHowMany,showme:renderShowMe,maketen:renderMakeTen,breakapart:renderBreak,crossten:renderCross,equals:renderEquals,big:renderBig,fact:renderFact})[it.kind](it);
 }
 
 // 1. How many? A brief look, so the child sees the group rather than counting it.
@@ -806,17 +869,6 @@ function renderCross(it){
   choiceRow(options(it.answer,Math.max(2,it.answer-4),it.answer+4,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
 }
 
-// 6. Match the rod: a number as a length.
-function renderRods(it){
-  const paint=(given)=>{ const b=given===null||given===undefined?null:given;
-    $('mg-rods').innerHTML=`<div class="rodrow"><span class="lbl">this long</span>${rod(it.whole,{marks:true})}
-      <span class="lbl">${b===null?'finish the row':'you made '+(it.a+b)}</span>
-      <span style="display:flex;gap:4px;align-items:center">${rod(it.a,{marks:true})}${b?rod(b,{marks:true}):'<span style="display:inline-block;width:70px;height:34px;border:3px dashed var(--line);border-radius:6px"></span>'}</span></div>`; };
-  $('stage').innerHTML=cardHTML(`<div class="prompt">Which rod finishes the row?</div><div id="mg-rods"></div>`);
-  paint(null);
-  choiceRow(options(it.b,1,10,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
-}
-
 // 7. Is it true? The equals sign as balance rather than "the answer comes next".
 function renderEquals(it){
   const boxed=v=>`<span class="box ${v===null?'':'filled'}" id="mg-box">${v===null?'?':v}</span>`;
@@ -858,6 +910,55 @@ function renderBig(it){
   choiceRow(arr,(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
 }
 
+// The picture for a missed fact. Without show it is a hint with no answer on it. With show the
+// strategy plays out in steps T seconds apart. Returns {html, dur}.
+// Adding: fill the ten first, then the rest. Taking away within ten: cross the counters out.
+// Taking away across ten: count up, "8 and how many make 13", through ten.
+function factPic(it,show,T){
+  const rv=d=>` class="rv" style="--d:${d}s"`;
+  if(it.op==='+'){ const a=it.a,b=it.b,sum=a+b,need=10-a,crosses=a<10&&sum>10;
+    const frame=tenFrame([a,crosses?need:b,crosses?sum-10:0],{min:sum>10?20:10,c2:'var(--c9)',c3:'var(--accent)',anim:show?[0.1,T+0.1]:null});
+    if(!show) return {html:frame,dur:0};
+    const hops=crosses?[{from:a,to:10,label:'+'+need,color:'var(--c9)',d:0},{from:10,to:sum,label:'+'+(sum-10),color:'var(--accent)',d:T}]:[{from:a,to:sum,label:'+'+b,color:'var(--c9)',d:0}];
+    return {html:frame+numberLine(Math.max(0,a-1),sum+1,{every:1,hops,mark:sum,markD:hops.length*T}),dur:hops.length*T+0.5}; }
+  const m=it.m,s=it.s,d=m-s;
+  if(m<=10){ const frame=tenFrame(m,{min:10,cross:s,crossD:show?0.1:undefined});
+    if(!show) return {html:frame,dur:0};
+    return {html:frame+numberLine(Math.max(0,d-1),m+1,{every:1,hops:[{from:m,to:d,label:'−'+s,color:'var(--accent)',d:0}],mark:d,markD:T}),dur:T+0.5}; }
+  const toTen=10-s, rest=m-10, two=s<10;
+  const frame=tenFrame(two?[s,toTen,rest]:[s,m-s],{min:20,c2:'var(--c9)',c3:'var(--accent)',anim:show?[0.1,T+0.1]:null});
+  const ask=`<div class="prompt">${s} and how many make ${m}?</div>`;
+  if(!show) return {html:ask+frame,dur:0};
+  const hops=two?[{from:s,to:10,label:'+'+toTen,color:'var(--c9)',d:0},{from:10,to:m,label:'+'+rest,color:'var(--accent)',d:T}]:[{from:s,to:m,label:'+'+(m-s),color:'var(--c9)',d:0}];
+  const end=hops.length*T;
+  return {html:ask+frame+numberLine(Math.max(0,s-1),m+1,{every:1,hops})+(two?`<div class="prompt"${rv(end)}>${toTen} and ${rest} make ${d}</div>`:''),dur:end+0.5};
+}
+// 9. Facts: the bare equation, answered on a number pad so the answer is recalled, not picked.
+// A first miss brings up the picture as a hint. A second miss plays the strategy out with the answer.
+function renderFact(it){
+  let entry='';
+  const upd=()=>{ const bx=$('mg-box'); bx.classList.remove('wrong'); bx.classList.toggle('filled',!!entry); bx.innerHTML=entry||'&nbsp;'; };
+  const pic=(show,T)=>{ const r=factPic(it,show,T); $('mg-pic').innerHTML=r.html; return r.dur; };
+  const draw=(given,ok,anim)=>{ const bx=$('mg-box'); if(!bx) return 0;
+    if(given===null||given===undefined){ entry=''; upd(); if(P.tries>0) pic(false); return 0; }
+    bx.classList.add('filled'); bx.classList.toggle('wrong',!ok);
+    if(ok&&P.tries>0){ const dur=pic(true,anim?anim.step:1.2);
+      if(P.tries>=2) bx.innerHTML=`<span class="rv" style="--d:${Math.max(0,dur-0.5)}s">${given}</span>`; else bx.textContent=given;
+      return dur; }
+    bx.textContent=given; return 0; };
+  const q=it.op==='+'?`<span>${it.a}</span><span class="op">+</span><span>${it.b}</span>`:`<span>${it.m}</span><span class="op">&minus;</span><span>${it.s}</span>`;
+  $('stage').innerHTML=cardHTML(`<div class="eq">${q}<span class="op">=</span><span class="box" id="mg-box">&nbsp;</span></div><div id="mg-pic"></div>`);
+  const key=d=>`<button class="key" data-k="${d}">${d}</button>`;
+  $('bar').innerHTML=`<div class="pad">${[1,2,3,4,5].map(key).join('')}<button class="key del" data-k="del" aria-label="Delete">&#9003;</button>${[6,7,8,9,0].map(key).join('')}<button class="key ok" data-k="ok" aria-label="Check">${icon('check')}</button></div>`;
+  document.querySelectorAll('.key').forEach(b=>b.addEventListener('click',()=>{ if(P.busy) return; const k=b.dataset.k;
+    if(k==='del'){ entry=entry.slice(0,-1); upd(); return; }
+    if(k==='ok'){ if(!entry) return; P.busy=true; const v=+entry; settle(v===it.answer,it,v,draw); return; }
+    if(entry.length<2){ entry=(entry==='0'?'':entry)+k; upd(); } }));
+}
+document.addEventListener('keydown',e=>{ if(!P.cur||P.cur.kind!=='fact'||!$('s-play').classList.contains('on')) return;
+  const k=/^[0-9]$/.test(e.key)?e.key:e.key==='Backspace'?'del':e.key==='Enter'?'ok':null;
+  const b=k&&document.querySelector(`.key[data-k="${k}"]`); if(b){ e.preventDefault(); b.click(); } });
+
 // ---------- Round end ----------
 function endRound(){
   leavePlay(); S.today.rounds++; save();
@@ -865,6 +966,9 @@ function endRound(){
   $('end-art').innerHTML=trophyArt(); $('alldone-art').innerHTML=rodStack();
   $('end-title').textContent=over?'That is the lot for today.':'Round finished.';
   $('end-text').textContent='';
+  if(P.act==='facts'){ const unlocked=advanceFacts(), cur=drillSet(), set=FACT_SETS[cur];
+    $('end-text').textContent=unlocked?`New facts: ${unlocked}.`:cur<FACT_SETS.length-1?`${set.name}: ${setKnown(cur)} of ${set.items.length} facts known.`:''; }
+  if(P.act==='learn'){ const nxt=advancePath(); $('end-text').textContent=nxt?`Next time: ${nxt}.`:''; }
   $('btn-end-more').hidden=over; show('s-end');
 }
 </script>
@@ -876,32 +980,27 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ do
 
 function renderHow(){
   $('pane-how').innerHTML=`<h2>How to play</h2>
-  <p>Every game asks the child to move between a quantity they can see and the numeral that names it. There is no score, no timer and no wrong buzzer. When the child taps a number, the picture changes to show what that number actually does, and they can look and try again. Two misses and the game shows the answer in the picture and moves on.</p>
-  <p>Four games, plus one for later. They share three pictures between them, the ten frame, the number line and the number bond, so the child spends the time on arithmetic rather than on learning a new screen each go.</p>
-  <div class="grid2">
-  <div class="tipcard"><b>How many?</b>Two directions in one game. A dice pattern or ten frame appears briefly and the child names it, with a look-again button if the glance was not enough. Sometimes it runs the other way and the child builds the number on a frame instead, which is harder and tells you more.</div>
-  <div class="tipcard"><b>Make the number</b>Bonds. Some counters are in the frame and the child says how many more make five or ten, and later how a whole splits into two parts. From Hard the same relation is written as subtraction, so thirteen minus eight is asked as eight and how many more make thirteen. These pairs are the facts everything else leans on.</div>
-  <div class="tipcard"><b>Cross ten</b>The heart of it. For eight plus five the frame fills to ten first and the number line shows two hops, the jump to ten and then the rest. This is the strategy that turns counting into knowing.</div>
-  <div class="tipcard"><b>Is it true?</b>The equals sign written every way round, including six plus four equals seven plus three. Most children read equals as "the answer comes next", and that misreading is what makes algebra hard years later. This is the cheapest fix for it.</div>
-  <div class="tipcard" style="border:2px solid var(--c9)"><b>Bigger numbers</b>For once adding within twenty is easy. Two digit work shown as base ten blocks, with an open number line that adds the tens first, then fills to the next ten, then the rest. It is the same bridging idea one place value up. One of the wrong answers is always the right one with the carry dropped, because that is the slip to watch for.</div>
-  </div>
+  <p>Two buttons. <b>Play</b> is the picture games, and <b>Facts</b> is plain sums on a number pad. Each button shows where the child is, and both move on by themselves. There is no score, no timer and no wrong buzzer.</p>
+  <h3>Play</h3>
+  <p>One kind of question at a time, in this order: ${PATH.map(p=>p.name.toLowerCase()).join(', ')}. The child moves to the next step after 13 first-try answers in the last 15. Every answer is shown in a picture, a ten frame, a number line or a number bond, and the picture plays out the strategy step by step: for eight plus five, the frame fills to ten first and the line shows two hops, the jump to ten and then the rest. After two misses the picture plays slowly and waits for a tap. Anything missed comes back in the next round.</p>
+  <p>Taking away is written as subtraction and pictured as the missing part, so thirteen minus eight is shown as eight and how many more make thirteen. From adding to ten on, about one question in seven writes the equals sign the other way round, such as 7 = 4 + 3, because children who read equals as "the answer comes next" struggle with algebra later.</p>
+  <h3>Facts</h3>
+  <p>A bare sum, typed on a number pad so the answer has to be remembered rather than picked from a list. The sets run adding within 5, adding within 10, taking away within 10, adding within 20, taking away within 20, then everything mixed. A fact counts as known when it has been answered right on the first try on two different days. After a first miss a picture appears as a hint, and after a second the picture shows the answer and waits for a tap.</p>
   <h3>Sitting with them</h3>
   <p>Ask how they knew, not whether they are sure. If they count every counter from one, point at the filled ten and ask whether they need to start again. Counting on from the larger number, then bridging through ten, is the progression to listen for.</p>
-  <p>When they are stuck, show the objects rather than explaining the rule, and stop after a few minutes. Anxious helping transmits more anxiety than it fixes, so a short cheerful session beats a long corrective one.</p>
-  <h3>What this game does not do</h3>
-  <p>No timed drill, no streaks, no coins. Speed comes from knowing the pairs to ten and being able to bridge, not from being hurried. There is no curriculum here either. It practises one narrow band, composing and decomposing to twenty, which is the band that matters most at this age.</p>`;
+  <p>When they are stuck, show the objects rather than explaining the rule, and stop after a few minutes. A short cheerful session beats a long corrective one.</p>`;
 }
 
 function renderProgress(){
   const week=S.sessions.filter(s=>daysSince(s.date)<7); const mins=Math.round(week.reduce((a,s)=>a+(s.minutes||0),0));
   const pct=(o,n)=>n?Math.round(100*o/n)+'%':'-';
   const rows=S.sessions.slice(-12).reverse();
-  const modeName={howmany:'How many',showme:'Show me',maketen:'Make ten',breakapart:'Break apart',crossten:'Cross ten',rods:'Rods'};
+  const modeName={howmany:'How many',showme:'Show me',maketen:'Making 5 and 10',breakapart:'Parts and taking away',crossten:'Adding with pictures',equals:'Equals sign',big:'Bigger numbers',fact:'Facts',bonds:'Make the number (old)',facts:'Facts (old)',rods:'Rods (old)'};
   const byMode={}; S.sessions.forEach(s=>Object.entries(s.modes||{}).forEach(([m,v])=>{ byMode[m]=byMode[m]||{n:0,first:0}; byMode[m].n+=v.n; byMode[m].first+=v.first; }));
   $('pane-progress').innerHTML=`<h2>Progress</h2>
-  <p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. The figure to watch is first-try, which counts only the answers given without a second look.</p>
-  <h3>By game, all time</h3>${Object.keys(byMode).length?`<table><tr><th>Game</th><th>Answers</th><th>First try</th></tr>${Object.entries(byMode).map(([m,v])=>`<tr><td>${modeName[m]||m}</td><td>${v.n}</td><td>${pct(v.first,v.n)}</td></tr>`).join('')}</table>`:'<p class="note">Nothing yet.</p>'}
-  <h3>Sessions</h3>${rows.length?`<table><tr><th>Date</th><th>Answers</th><th>First try</th><th>Minutes</th><th>Level</th></tr>${rows.map(s=>`<tr><td>${s.date}</td><td>${s.items}</td><td>${pct(s.first,s.items)}</td><td>${Math.round(s.minutes||0)}</td><td>${LV_NAMES[s.level||0]}</td></tr>`).join('')}</table>`:'<p class="note">No sessions yet.</p>'}`;
+  <p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. Play is on step ${pathStep()+1} of ${PATH.length}, ${PATH[pathStep()].name.toLowerCase()}, with ${(S.path.recent||[]).filter(Boolean).length} first-try answers in the last ${(S.path.recent||[]).length} (13 of 15 moves on). The figure to watch is first-try, which counts only the answers given without a second look.</p>
+  <h3>By kind of question, all time</h3>${Object.keys(byMode).length?`<table><tr><th>Kind</th><th>Answers</th><th>First try</th></tr>${Object.entries(byMode).map(([m,v])=>`<tr><td>${modeName[m]||m}</td><td>${v.n}</td><td>${pct(v.first,v.n)}</td></tr>`).join('')}</table>`:'<p class="note">Nothing yet.</p>'}
+  <h3>Sessions</h3>${rows.length?`<table><tr><th>Date</th><th>Answers</th><th>First try</th><th>Minutes</th></tr>${rows.map(s=>`<tr><td>${s.date}</td><td>${s.items}</td><td>${pct(s.first,s.items)}</td><td>${Math.round(s.minutes||0)}</td></tr>`).join('')}</table>`:'<p class="note">No sessions yet.</p>'}`;
 }
 
 const OFFSCREEN=[
@@ -926,7 +1025,11 @@ function renderFacts(){
   const top=Object.entries(errs).sort((x,y)=>y[1]-x[1]);
   const recent=S.errors.slice(-14).reverse();
   const crossing=S.errors.filter(e=>e.k==='crossing-ten'||e.k==='off-by-one-crossing'||e.k==='stopped-at-ten').length;
-  $('pane-facts').innerHTML=`<h2>Fact map</h2>
+  const cur=drillSet();
+  $('pane-facts').innerHTML=`<h2>Facts practice</h2>
+  <p>The Facts game works through these sets in order. A fact counts as known once it has been answered right on the first try on two different days, and a miss resets it. The next set opens when every fact in the current one is known.</p>
+  <table><tr><th>Set</th><th>Known</th></tr>${FACT_SETS.slice(0,-1).map((st,i)=>`<tr><td>${i===cur?'<b>'+st.name+'</b> (now)':st.name}</td><td>${setKnown(i)} of ${st.items.length}</td></tr>`).join('')}${cur===FACT_SETS.length-1?'<tr><td><b>Everything mixed</b> (now)</td><td></td></tr>':''}</table>
+  <h2>Fact map</h2>
   <p>Every addition pair to ten plus ten. Green means answered first try almost every time, amber means mixed, red means usually needed a second look, grey means not yet seen. Hover or long press a square to see the counts.</p>
   <div class="factgrid" style="grid-template-columns:repeat(10,1fr);max-width:640px">${grid}</div>
   <h3>Pairs that make ten</h3>
@@ -951,13 +1054,15 @@ function renderFacts(){
 
 function renderSettings(){
   $('pane-settings').innerHTML=`<h2>Settings</h2>
-  <div class="field"><label>Level</label>${LV_NAMES.map((n,i)=>`<button class="pbtn ${lv()===i?'on':''}" data-lv="${i}">${n}</button>`).join('')}</div>
-  <p class="note">${LV_DESC[lv()]} The level is yours to set. Nothing unlocks on its own, so the child stays where the work is useful.</p>
+  <div class="field"><label>Play step</label><select id="set-step">${PATH.map((p,i)=>`<option value="${i}" ${i===pathStep()?'selected':''}>${i+1}. ${p.name}</option>`).join('')}</select></div>
+  <div class="field"><label>Facts set</label><select id="set-fset">${FACT_SETS.map((f,i)=>`<option value="${i}" ${i===drillSet()?'selected':''}>${i+1}. ${f.name}</option>`).join('')}</select></div>
+  <p class="note">Both move on by themselves. Change them only if the child is clearly in the wrong place.</p>
   <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?'On: six rounds or 24 minutes':'Off'}</button></div>
   <div class="field"><button class="pbtn" id="set-more">Allow one more round today</button><span class="note">${S.settings.limit&&S.today.done?'Today is marked finished.':'Today is not finished.'}</span></div>
   <h3>On the iPad</h3><p>Open in Safari, tap Share, then Add to Home Screen. Everything stays on the device. Nothing is uploaded and there is no account.</p>
   <h3>Data</h3><div class="field"><button class="pbtn" id="set-export">Copy all data</button><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>`;
-  document.querySelectorAll('[data-lv]').forEach(b=>b.addEventListener('click',()=>{ S.level=+b.dataset.lv; save(); renderSettings(); renderHome(); }));
+  $('set-step').addEventListener('change',e=>{ pathStep(); S.path.step=+e.target.value; S.path.recent=[]; save(); renderHome(); });
+  $('set-fset').addEventListener('change',e=>{ drillSet(); S.drill.set=+e.target.value; save(); renderHome(); });
   $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit) S.today.done=false; save(); renderSettings(); });
   $('set-more').addEventListener('click',()=>{ rollDay(); S.today.done=false; S.today.rounds=Math.min(S.today.rounds,5); S.today.ms=Math.min(S.today.ms,20*60*1000); save(); toast('One more round allowed.'); renderSettings(); });
   $('set-export').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(JSON.stringify(S,null,1)); toast('Copied.'); }catch(e){ toast('Could not copy.'); } });
