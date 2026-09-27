@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Dibel Game</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dibel Game">
+<meta name="theme-color" content="#EAF2FA">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;600&display=swap">
+<style>
+@font-face{font-family:'ABeeZee';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,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) format('woff2');}
+:root{
+  --ground:#EAF2FA; --card:#FFFFFF; --ink:#1B2A41; --ink-soft:#5B6B80; --line:#C9D6E4;
+  --accent:#E4572E; --sun:#F5C242; --leaf:#3E9B5F; --amber:#E0A13A; --sky:#BFD9F2;
+  --name:#4C7DD1; --name-soft:#DCE8FA; --leaf-soft:#D8F0E0; --amber-soft:#FBE8D2;
+  --shadow:0 6px 24px rgba(27,42,65,.10);
+  --f-read:'ABeeZee','Andika','Trebuchet MS','Verdana',sans-serif;
+  --f-ui:'Fredoka','ABeeZee','Trebuchet MS',sans-serif;
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px);
+  --sar:env(safe-area-inset-right,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14202E; --card:#1F2D3F; --ink:#EAF0F7; --ink-soft:#A9B6C6; --line:#3A4B60;
+    --accent:#F07A55; --sun:#F5C242; --leaf:#5DBA7A; --amber:#E8B04C; --sky:#2B4460;
+    --name:#7AA3E6; --name-soft:#26364D; --leaf-soft:#22463A; --amber-soft:#47382A;
+    --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14202E; --card:#1F2D3F; --ink:#EAF0F7; --ink-soft:#A9B6C6; --line:#3A4B60;
+  --accent:#F07A55; --sun:#F5C242; --leaf:#5DBA7A; --amber:#E8B04C; --sky:#2B4460;
+  --name:#7AA3E6; --name-soft:#26364D; --leaf-soft:#22463A; --amber-soft:#47382A;
+  --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-read);font-size:18px;-webkit-user-select:none;user-select:none;overscroll-behavior:none;touch-action:manipulation}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--name);outline-offset:3px}
+#app{height:100%;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;min-height:0}
+.screen.on{display:flex}
+
+.strip{display:flex;align-items:center;gap:12px;padding:max(10px,var(--sat)) max(14px,var(--sar)) 10px max(14px,var(--sal));min-height:64px}
+.iconbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--card);box-shadow:var(--shadow)}
+.iconbtn svg{width:30px;height:30px}
+.iconbtn.small{width:44px;height:44px}
+.iconbtn.small svg{width:22px;height:22px}
+.skyline{flex:1;height:44px;position:relative;border-radius:22px;background:var(--sky);overflow:hidden}
+.skyline .kite{position:absolute;left:4%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;transition:left .5s ease}
+.skyline .kite svg{width:100%;height:100%;display:block}
+@media (prefers-reduced-motion: reduce){.skyline .kite{transition:none}.word .g{transition:none}}
+
+.home{flex:1;display:flex;flex-direction:column;padding:max(6px,var(--sat)) max(18px,var(--sar)) max(18px,var(--sab)) max(18px,var(--sal));gap:14px;min-height:0}
+.hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;width:100%}
+.brand{font-family:var(--f-ui);font-weight:600;font-size:30px;text-wrap:balance}
+.brand small{display:block;font-family:var(--f-read);font-weight:400;font-size:15px;color:var(--ink-soft);margin-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;flex:1;min-height:0}
+@media (max-width:700px){.tiles{grid-template-columns:1fr}}
+.tile{background:var(--card);border-radius:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;position:relative;border:4px solid transparent;min-height:140px}
+.tile:active{transform:scale(.98)}
+.tile .glyph svg{width:84px;height:84px;display:block}
+.tile .label{font-family:var(--f-ui);font-size:19px;color:var(--ink)}
+.tile .who{font-size:14px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.tile .who svg{width:20px;height:20px}
+.tile.locked{opacity:.45}
+.levels{display:flex;gap:12px}
+.lvl{flex:1;background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:4px solid transparent;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:84px}
+.lvl.on{border-color:var(--accent)}
+.lvl .kites{display:flex;gap:2px}
+.lvl .kites svg{width:24px;height:24px}
+.word.long{font-size:min(12vw,80px)}
+.lvl .lab{font-family:var(--f-ui);font-size:14px;color:var(--ink-soft)}
+.lvl.on .lab{color:var(--ink)}
+.homefoot{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.gate{width:56px;height:56px;border-radius:50%;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden}
+.gate svg{width:26px;height:26px;position:relative}
+.gate .fill{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--sky)}
+.done-note{font-size:15px;color:var(--ink-soft)}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 18px;min-height:0;gap:16px}
+.card{background:var(--card);border-radius:28px;box-shadow:var(--shadow);width:100%;max-width:760px;min-height:260px;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;border:6px solid transparent;transition:border-color .3s,background .3s}
+.card.ok{border-color:var(--leaf)}
+.card.oops{border-color:var(--amber)}
+.card .corner{position:absolute;top:12px;right:16px;font-size:44px;line-height:1}
+.word{font-size:min(20vw,128px);line-height:1.15;display:flex;gap:.02em;justify-content:center;transition:gap .5s ease}
+.word.split{gap:.5em}
+.word .g{padding:0 .04em;border-radius:.12em;transition:background .2s,color .2s,opacity .2s;position:relative}
+.word .g.lit{background:var(--sun)}
+.word .g.silent{color:var(--ink-soft);opacity:.55}
+.word.split .g:not(:last-child)::after{content:'';position:absolute;right:-.3em;top:55%;width:.12em;height:.12em;border-radius:50%;background:var(--ink-soft)}
+.pic{font-size:min(30vw,150px);line-height:1}
+.choices{display:flex;gap:16px;width:100%;max-width:760px;justify-content:center;flex-wrap:wrap}
+.choice{flex:1;min-width:150px;min-height:110px;background:var(--card);border-radius:22px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;font-size:min(9vw,56px);border:5px solid transparent;transition:border-color .2s,opacity .2s,transform .1s}
+.choice:active{transform:scale(.97)}
+.choice.glow{border-color:var(--leaf);background:var(--leaf-soft)}
+.choice.dim{opacity:.35}
+.choice svg{width:76px;height:76px}
+.choice.labeled{flex-direction:column;gap:8px;padding:14px 18px;font-family:var(--f-ui);font-weight:600;font-size:24px;min-height:150px}
+
+.bar{display:flex;justify-content:center;gap:22px;padding:12px 18px max(22px,var(--sab));align-items:center}
+.act{height:92px;min-width:150px;padding:0 30px;border-radius:46px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--f-ui);font-weight:600;font-size:22px;box-shadow:var(--shadow);transition:transform .1s,opacity .2s}
+.act:active{transform:scale(.97)}
+.act svg{width:40px;height:40px}
+.act.parts{background:var(--card);color:var(--ink)}
+.act.helped{background:var(--amber);color:#1B2A41}
+.act.readit{background:var(--leaf);color:#fff;min-width:210px}
+.act[disabled]{opacity:.35;pointer-events:none}
+
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+.center h1{font-family:var(--f-ui);font-weight:600;font-size:34px;margin:0;text-wrap:balance}
+.center p{margin:0;color:var(--ink-soft);max-width:34em}
+.bigkite{width:min(50vw,260px);height:min(50vw,260px)}
+.bigkite svg{width:100%;height:100%}
+
+.parent{flex:1;display:flex;flex-direction:column;min-height:0;-webkit-user-select:text;user-select:text}
+.tabs{display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto}
+.tab{font-family:var(--f-ui);font-weight:600;font-size:16px;padding:10px 16px;border-radius:999px;background:var(--card);color:var(--ink-soft);white-space:nowrap}
+.tab.on{background:var(--ink);color:var(--ground)}
+.pane{display:none;flex:1;overflow:auto;padding:0 18px 28px;min-height:0}
+.pane.on{display:block}
+.pane h2{font-family:var(--f-ui);font-weight:600;font-size:22px;margin:18px 0 8px}
+.pane h3{font-family:var(--f-ui);font-weight:600;font-size:15px;margin:16px 0 6px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.pane p,.pane li{font-size:16px;line-height:1.5;max-width:64ch}
+.pane table{border-collapse:collapse;width:100%;max-width:760px;font-size:15px;font-variant-numeric:tabular-nums}
+.pane th,.pane td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.pane th{font-family:var(--f-ui);font-weight:600;color:var(--ink-soft);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-family:var(--f-ui);font-weight:600;color:#1B2A41}
+.pill.blue{background:#BFD9F2}.pill.green{background:#B9E3C6}.pill.yellow{background:#F8E3A3}.pill.red{background:#F5C1B3}.pill.grey{background:var(--line);color:var(--ink)}
+.pbtn{font-family:var(--f-ui);font-weight:600;font-size:16px;padding:12px 18px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);margin:4px 6px 4px 0;min-height:48px}
+.pbtn.primary{background:var(--name);color:#fff}
+.pbtn.warn{background:var(--amber);color:#1B2A41}
+.pbtn.on{outline:3px solid var(--name)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.tipcard{background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow)}
+.tipcard b{font-family:var(--f-ui);display:block;margin-bottom:4px}
+.field{display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap}
+.note{font-size:15px;color:var(--ink-soft)}
+
+.form{background:var(--card);border-radius:20px;padding:18px 22px;box-shadow:var(--shadow);font-size:28px;line-height:1.9;max-width:900px}
+.form .fr{display:flex;flex-wrap:wrap;gap:0 4px;align-items:baseline}
+.form .fi{padding:0 6px;border-radius:8px;position:relative;display:inline-flex;align-items:baseline}
+.form .fi.last{outline:3px solid var(--name);outline-offset:-3px}
+.form .fi.after{opacity:.35}
+.form .ch{padding:0 2px;border-radius:6px}
+.form .ch.silent{color:var(--ink-soft)}
+.form .ch.miss{background:var(--amber-soft);text-decoration:line-through;text-decoration-color:var(--accent)}
+.form .wr{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);display:inline-block;margin-left:6px;align-self:center}
+.form .wr.miss{background:var(--accent);border-color:var(--accent)}
+.form .num{color:var(--ink-soft);font-size:.6em;margin-left:8px}
+.timerbar{display:flex;align-items:center;gap:14px;padding:max(10px,var(--sat)) max(18px,var(--sar)) 10px max(18px,var(--sal));flex-wrap:wrap}
+.clock{font-family:var(--f-ui);font-weight:600;font-size:26px;font-variant-numeric:tabular-nums;min-width:64px}
+.result{background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow);margin:12px 0;max-width:720px}
+.result .n{font-family:var(--f-ui);font-weight:600;font-size:34px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:12px 18px;border-radius:14px;font-size:16px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section class="screen on" id="s-home">
+  <div class="home">
+    <div class="hometop">
+      <div class="brand">Dibel Game<small id="home-sub">Make-believe words</small></div>
+      <div style="display:flex;gap:12px">
+        <a class="iconbtn" href="../" aria-label="All games" title="All games" style="color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></a>
+        <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+      </div>
+    </div>
+    <div class="levels" id="levels"></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="homefoot">
+      <span class="done-note" id="home-note"></span>
+      <button class="gate" id="gate" aria-label="Grown-ups: hold for three seconds"><span class="fill"></span><span data-icon="lock"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s-play">
+  <div class="strip">
+    <button class="iconbtn" id="btn-home" aria-label="Home"><span data-icon="home"></span></button>
+    <div class="skyline"><div class="kite" id="kite"><span data-icon="kite"></span></div></div>
+    <button class="iconbtn" id="btn-play-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+  </div>
+  <div class="stage" id="stage"></div>
+  <div class="bar" id="bar"></div>
+</section>
+
+<section class="screen" id="s-end">
+  <div class="center">
+    <div class="bigkite"><span data-icon="kite"></span></div>
+    <h1 id="end-title">The kite flew high.</h1>
+    <p id="end-text"></p>
+    <div class="bar" style="padding-bottom:0">
+      <button class="act parts" id="btn-end-home" aria-label="Home"><span data-icon="home"></span></button>
+      <button class="act readit" id="btn-end-more" aria-label="Another round"><span data-icon="next"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s-alldone">
+  <div class="center">
+    <div class="bigkite"><span data-icon="kiteHigh"></span></div>
+    <h1>All done for today.</h1>
+    <p>Reading time is finished. Go read a real book with someone.</p>
+    <button class="act parts" id="btn-alldone-home" aria-label="Home"><span data-icon="home"></span></button>
+  </div>
+</section>
+
+<section class="screen" id="s-parent">
+  <div class="parent">
+    <div class="strip">
+      <button class="iconbtn small" id="btn-parent-close" aria-label="Close"><span data-icon="close"></span></button>
+      <div class="brand" style="font-size:22px;flex:1">Grown-ups</div>
+      <span class="note" id="parent-period"></span>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-pane="how">How to play</button>
+      <button class="tab" data-pane="timer">Timed run</button>
+      <button class="tab" data-pane="progress">Progress</button>
+      <button class="tab" data-pane="settings">Settings</button>
+    </div>
+    <div class="pane on" id="pane-how"></div>
+    <div class="pane" id="pane-timer"></div>
+    <div class="pane" id="pane-progress"></div>
+    <div class="pane" id="pane-settings"></div>
+  </div>
+</section>
+
+<section class="screen" id="s-timer">
+  <div class="timerbar">
+    <button class="iconbtn small" id="btn-timer-back" aria-label="Back"><span data-icon="close"></span></button>
+    <span class="clock" id="clock">1:00</span>
+    <button class="pbtn primary" id="btn-timer-start">Start</button>
+    <button class="pbtn" id="btn-timer-stop" hidden>Stop</button>
+    <span class="note" id="timer-note"></span>
+  </div>
+  <div class="pane on" id="timer-body"></div>
+</section>
+
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const ICONS = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
+  parts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="8" width="5" height="8" rx="1.5"/><rect x="9.5" y="8" width="5" height="8" rx="1.5"/><rect x="16" y="8" width="5" height="8" rx="1.5"/></svg>',
+  hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V11"/><path d="M10 10V5a1.5 1.5 0 0 1 3 0v6"/><path d="M13 10V6.5a1.5 1.5 0 0 1 3 0V12"/><path d="M16 11.5a1.5 1.5 0 0 1 3 1V15c0 3.5-2.5 6-6 6h-1c-2 0-3.5-1-4.5-2.5L4.5 14a1.5 1.5 0 0 1 2.5-1.5L8 14"/></svg>',
+  adult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="6" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4"/><circle cx="18" cy="10" r="2.2"/><path d="M15 21v-3a3 3 0 0 1 6 0v3"/></svg>',
+  child:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg>',
+  kite:'<svg viewBox="0 0 64 64"><path d="M32 4 52 26 32 50 12 26Z" fill="#E4572E"/><path d="M32 4 32 50M12 26h40" stroke="#F5C242" stroke-width="2.5"/><path d="M32 50c-2 5 4 7 1 12" stroke="#1B2A41" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M28 58l4-3 4 3M27 63l5-3 5 3" stroke="#4C7DD1" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  kiteHigh:'<svg viewBox="0 0 64 64"><circle cx="50" cy="14" r="8" fill="#F5C242"/><path d="M22 10 42 32 22 56 2 32Z" fill="#E4572E"/><path d="M22 10V56M2 32h40" stroke="#F5C242" stroke-width="2.5"/><path d="M22 56c-2 5 4 7 1 8" stroke="#1B2A41" stroke-width="2" fill="none"/></svg>',
+  book:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><path d="M8 12h20a4 4 0 0 1 4 4v36a4 4 0 0 0-4-4H8z" fill="#BFD9F2"/><path d="M56 12H36a4 4 0 0 0-4 4v36a4 4 0 0 1 4-4h20z" fill="#DCE8FA"/><path d="M14 22h10M14 30h10M40 22h10M40 30h10"/></svg>',
+  monster:'<svg viewBox="0 0 64 64"><path d="M12 30a20 20 0 0 1 40 0v18a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z" fill="#3E9B5F"/><circle cx="24" cy="30" r="6" fill="#fff"/><circle cx="40" cy="30" r="6" fill="#fff"/><circle cx="25" cy="31" r="2.5" fill="#1B2A41"/><circle cx="41" cy="31" r="2.5" fill="#1B2A41"/><path d="M22 44q10 8 20 0" stroke="#1B2A41" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M20 12l-4-8M44 12l4-8" stroke="#3E9B5F" stroke-width="4" stroke-linecap="round"/></svg>',
+  cards:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><rect x="16" y="10" width="36" height="44" rx="5" fill="#DCE8FA" transform="rotate(8 34 32)"/><rect x="10" y="12" width="36" height="44" rx="5" fill="#fff"/><text x="28" y="42" font-family="Andika,sans-serif" font-size="20" text-anchor="middle" fill="#E4572E" stroke="none">zat</text></svg>',
+  picture:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><rect x="8" y="10" width="48" height="36" rx="5" fill="#FBE8D2"/><circle cx="22" cy="24" r="5" fill="#F5C242"/><path d="M12 42l14-12 8 8 8-6 12 10" fill="#3E9B5F"/><path d="M20 54h24"/></svg>',
+  fullscreen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',
+  fullscreenExit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m11 7h6m-6 0V4m0 6l7-7"/></svg>'
+};
+
+// Nonsense words by pattern (no real words, no real-word homophones, English position rules respected)
+const NWF = {
+  vc:'ub ot ep ig om ak ud ez ip og ib ut iz uz az eb ap ug ek ul'.split(' '),
+  cvc:'fim zat kib vop tuz meb hib sef yop wug bim fep kaz pem zib vab jum mup dez lig sut yif wep gof baz pib tid yub wob zom keb fum vem nuz lem zug bof gim yem dif vun tef cag jad vig pid teb fod zin kem bup rif gub vot nef jub mig lub zeb hif jom pum tiz yeb zud kof lom gep bex kez mub nez rog yag zop jeg mep ruz sog vad zem feg laz mip wib zut jat rab vup zol fip jol lun mab rox wex yaf kag kep ket kig kom kug kun leb lek lep lod lon lud lup maz mek mib mim mun neb nem nep nuk pab pag paz peb pif pim pob pon raz ren ret ruk rup san saz sen sif tem tud vam vap veb ved vek vep vib vik vit vob vod vok vub vud vum vut wab wap weg wem wid wif wim wod wub yab yad yaz yed yeg yek yib yig yim yit yog yud yug yut zab zad zam zan zeg zek zep zet zid zif zik zim zob zod zog zok zon zot zub zuk zum zun zup bab beb bep bik bip daz deg dep diz dod faz fid fif fik fon fot fud fup fut geb ged gek gid gik gog gok gom gug guk gup guz heb heg hez hom huk huz baf bez bix cax faf fef fex fof foz fuf gax goz guf gux hux jaf jal jex jid jix jod jof jop juf jup jux kiz luf maf mef mif mof mox mul nal nax nif niz nof nuf nux paf pef pel pex pof pux ril rul saf sul taf toz tul vaf vef vez vif vof voz vuf vul vux vuz wof wux yax yef yil yix yiz yof yol yoz yuf yux zaf zal zaz zef zex zez zil zix ziz zof zox zoz zuf zul zux zuz'.split(' '),
+  cvce:'fabe mide pote zope tade vobe hane jide gafe nube sabe zute fime dape lote mube tife yade gume hafe jope kune nide wibe zade mape tobe vime yope zibe bime bope cobe dake dife dobe fike fute gube hape hibe hobe hute jabe jete jobe kabe kefe kude labe libe mabe mibe nefe pabe pibe rabe ribe sefe sibe sube tabe tebe tibe vake vede vute wabe wike wobe wute yabe yede yibe yobe yube zabe zede zike zobe zube bafe bave bibe bife bipe bofe bufe bule cofe cufe dabe dibe dipe dofe fafe febe fefe feke fepe fibe fipe fobe fofe fope fube fufe fupe gake gobe gope gupe hefe heke hene hife hime hube jafe jame jave jebe jede jife jike jile jime jite jofe jome jume kebe kede keme kete kife kime lale lebe lele lipe lole lufe mafe mame mave mebe mefe mepe mife mipe mobe mofe muke nafe nebe neke neme nepe nibe nime nipe nobe nofe nufe pafe pame pebe pefe peme pife pime pite pobe pode rebe reme rike sape sebe sepe sofe sufe tafe tefe teke tofe tufe vabe vafe vefe veke veme vepe vipe vone vude vule vume vupe wafe wape webe wefe weme wube yake yame yane yape yave yeke yepe yete yide yile yime yude yute zake zame zate zefe zete zide zile zoke zote zufe zule zupe'.split(' '),
+  rcon:'zorp kurm farb gorn murd sarm perd dorf virt jarm korb nerp torf wurb yarp zerd garp lirt morp purd varb worg zirm curm forn harb jurt kirm porb vurd yorm zarb birk corb darb derb dird durb firb garm gorb jarb jird jorb jurb kird larb lerm lorb lurm marb merb mird morb murb narb nerb norb nurb parb perb pird porm purb sarb sird surb tarb torb turb varm vird vorm vurm werb yarb yerb yird yorb yurb zarm zerb zird zurb barp berf birf borb bork borm borp burb burf burm carm darf darm darp derd dirb dirf dirn dirp dorb durd durf farf farn farp ferf ferp firf firp forf forp furb furf furp garf gark gart gorf gork gorm gorp gort gurb gurf gurp harf herf hirf hirk hirm hirp hurk hurm hurp jarf jarn jart jerb jerf jerp jirf jorp jort jurd jurn jurp kerm kirf lerf lirf lirm lirp lorf lork lorm lorp lort lurb lurp lurt mard marn marp merf merm merp mirb mirm mirp morm murm murp narm narn nern nirk nirt nord norp nort nurf nurn nurp nurt parf parn parp pirb pirf pord porf porp purf sarf sarn sarp serm sirm sorf sork sorm sorp surk surm tarf tark tarm terb tert tirb tirp tirt tord torm torp vark varp verk verm virk virm virp vorb vord vurk vurp werp wirb wirp wirt wurp wurt yerf yerp yirb yirf yirp yirt yord yorp yort yurf yurm yurp zard zarn zerm zerp zirb zirf zirt zorf zort zurd zurf zurp'.split(' '),
+  dig:'shup chib thap whog shem chod whib shig thog shob thib thep shuz chob thup chid thab chog thun chuz whep shog thip fush poth zash kesh vath nush jeth hosh wuch dath gish zoth tesh yosh pash koth dush feth shab shap shaz sheg shek shen shib shif shof shom shon shub shug shum chab chag cham cheb ched cheg chif chig chim chof chom chon chot chud chun chut thag tham theb thed theg thet thid thig thim thob thod thom thon thop thub thut whab whaz whem whid whob whod whub whug whum whun besh desh fesh fosh gesh hesh jash jesh jush kish kosh losh mish nesh nish pesh resh rish rosh sish sosh sush tish vash vesh vish vosh vush wesh yash yesh yish yush zesh zish zosh zush bith buth dith duth fath fith foth futh gath gith heth hith huth jath jith joth juth keth kuth leth lith luth muth nath neth nith noth nuth peth puth rath reth rith sath soth suth tath teth toth tuth veth vith voth vuth wath weth woth wuth yath yeth yith yoth zath zeth zuth boch dech doch foch gech goch guch hech hoch jech joch juch kech kich kuch luch mich moch nech nuch pech pich poch puch roch ruch sech sich soch tich toch tuch vech vich voch vuch wech woch yich yoch zech zich zoch zuch chax chel chiz chox chuf chup cuth dach fach gach jach jich jish sach shaf shax sheb shex shix shoz shuf thaf thal thax thaz thef thel thex thil thix thol thox thuf thul thux vach whaf whef wheg whex whix whof whux'.split(' '),
+  blend:'flim grop clab trep frim plon spod brup snib stib glup crut twib snup spib stog frub gleb plub trum skop grum skib slon smub spem stug twem blig crob drup flen grib skod slup smid snof spag swup trob helf mand pilt nast wesk jomp kilp tesk vomp yelt zust hift gand lomp nesk pund rulf sant tilk wamp zelt fank hend jilk lund mept nolt pask rint sulp tand vist wilk yump zolk blad blem blen blib blid blim blit blod blom blon blop blug blum blun blup blut brab bram brap breb breg brem bren brep brib brid brin brip brob brod brog brom brop brot brub brud brug brum brun clat cleb cled cleg clep clet clib clid clig clin clob clom clon clud clug clum clun clup clut crad cran crat creb creg cren cret crid crig crim crin crod crog crom crot crub crug crun crup drad dran drap dreb dren drep dret drib drid drig drim drin drit drob drod drog drom drot drud drun drut flad fleb fleg flep flet flib flid flig flob flod flom flon flot flug flum flun flup flut frab fram freb freg frem frep frib frid frin frip frob fron frop frot frud frun frup glab glag glan glap glat gled gleg glep glid glig glim glin glip glit glod glog glon glot glub glud glun grag grap grat greb gred grem gren gret grig grob grod grom grud grug grun grup grut plab plag plam plap pleg plem plen plep plet plib plid plim plin plip plit plob plog plom plud plun plup plut prab prad prag pran prap preb pred pren pret prib prid prin prip prit prot prub prud prug prum prun prup prut scap scob scod scog scom scon scop scub scug scun skad skap skem sken sket skig skob skog skom skon skub skug skun skup skut slad slan sleb sleg slem slen slep slib slig slin slod slom slud slun smab smad smag smam sman smap smat smeb smed smem smen smep smet smib smig smim smin smip smob smod smom smon smop smot smud smum smun smup snab snam snan snat sneb sned sneg snem snen snep snet snid snim snin snod snom snon snop snum snun snut spab spad spap speb speg spen spep spet spid spig spim spip spob spog spop spub spug spum sput stad stam stap steb steg stid stig stin stip stob stod stom ston stot stum stup stut swad sweb sweg swem swen swep swib swid swin swip swit swod swom swub swud swug swun swut trab trag trat treb treg trem tren tret trib trid trin trit trog trom trop trub trud trun trup trut twab twad twag twam twan twap tweb twed tweg twen twep twet twid twim twip twob twod twom twon twub twud twug twum twun twup bamp bant bemp besk bimp bisp bomp bosk bund cand casp cond cosk cund dand dant dask demp dend dilt dimp dind domp dond dosk dund dunt famp fand fant fask femp fesk filt fimp fint fisk fomp fosk fump funt fusk gamp gant golt gomp gond gosk gund gusk hamp hant helt hesk himp hisk homp hond hosk hund jamp jand jant jask jelt jemp jend jesk jimp jind jint jisk jond josk jund junt jusk kand kend kesk kimp kint kisk kond kosk kund kusk lant lasp lelt lemp lesk lind lisk lolt lond losk lunt lusk mamp mant memp mesk mimp misk momp mond mulp mund namp nant nask nemp nend nilt nimp nind nint nisk nomp nond nosk nump nund nunt nusk pamp pand pemp pesk pind polt posk pusk relt remp resk rilt rimp rolt rond rosk rund samp sask selt semp sesk sind sint sisk solt somp sond sosk sund sunt susk tant telt timp tind tolt tomp tond tosk tulp tump tund tunt vand vant vask vemp vesk vilt vimp vind vint visk vond vosk vulp vump vund vunt vusk wask wemp wint wolt womp wosk wulp wump wund wunt yamp yand yant yask yemp yend yesk yilt yimp yind yint yisk yolt yosk yulp yund yunt yusk zamp zand zant zask zemp zesk zilt zimp zind zint zisk zomp zond zosk zulp zump zund zunt zusk balp basp beft belf belp bept besp bift bilf bilm bilp bipt blaf blal blap blaz blef bleg blel blep blex blif blik blil blix bliz blof blol bloz bluk blul blux bluz boft bolp bont bopt bosp braf brak bral brax bref brel brex brez brif bril briz brof brox bruf brul brux bruz buft buld bulf bulp bupt busp caft claf clal claz clek clel clex clil cliz clol cluf clul clux cluz cosp craf cral craz cref crel crep crez crif cril crix crof cron croz cruf crul culf culk cupt dalp dapt dasp dast deld delk delp desp dest dift dilk dilm dilp doft dolp dopt dosp draf drak dral draz dref drel drex drez drif drik drix driz drok drol drox droz druf druk drul drux druz duft duld dulf dulk dulp dupt dusp faft falp fasp feft feld felf felk felp fept fesp fift filf filk filp fipt fisp flaf flal flaz flef flek flel flif flil fliz flof flol floz fluk flul fluz foft folp fopt fosp fraf fral frax fref frel frex frez frif fril frix frof frol frox froz fruf fruk frul frut frux fuft fuld fulf fulp fult fupt fusp gaft gapt gask glaf glak glal glax glaz glef glek glel glet glex glif glik glil glix gliz glof glol glox gloz gluf gluk glul glux gluz goft gont gopt gosp grak gral grax gref grek grel grep grez grik grix griz grof grol gron grox groz gruk grul grux gruz guft gulk gupt gusp hapt helk hept hesp hilf hilk hilm hilp hink hipt hisp hoft huft huld hulf hulp hult hupt husp jaft jalp jast jeft jeld jelf jelk jelp jept jesp jilf jilm jilp jisp joft jolp jont jopt josp juft juld julf julk julp jult jupt jusp keft kelf kesp kest kift kilf kilk kilm kipt kisp lalp lapt leld lelf lelk lelp lesp lilf lilk lilm lilp lipt lolp lont lopt losp luft luld lulf lulk lulp lult lupt lusp maft malp masp meft melf melk melp mesp mift milm milp mipt misp moft molp mopt mosp muld mulf mupt musp naft nalp nand napt nasp neft neld nelf nelk nelp nent nept nesp nift nilf nilk nilm nilp nink nipt nisp noft nolp nont nopt nosp nuft nuld nulf nulk nulp nult nunk nupt nusp nust paft papt pasp peft peld pelk pelp pept pesp pift pilf pilk pilp pipt plaf plal plax plaz plef plek plel plif plig plik plil plix pliz plok plol plox ploz pluf plul plux poft polp posp praf prak pral prax praz prel prif pril priz prok prol pruf pruk prul prux pruz pulf pusp pust ralp rask rast reld relf relk relp rilf rilk rilm rilp roft rolp ront ropt rosp ruft ruld rulk rulp rult runk rupt rusp sapt sasp sast scaf scak scal scax scaz scol scox scoz scuk scux seft selk sesp sest silf silm silp sipt sisp skeb skek skex skez skif skix slaf slal slaz slef slek slel slet slex slif slil slix sliz slof slok slol slox sloz sluf sluk slul slux sluz smaf smaz smef smek smex smez smif smik smil smix smiz smof smok smox smoz smuk smul smux smuz snaf snal snaz snef snel snex snez snik snil snix sniz snok snol snox snoz snul snux snuz solp sont sopt sosp spaf spal spax spef spez spix spiz spof spol spom spox spoz spuf spuk spul spux spuz staz stex stez stiz stoz stul stux stuz suft sulf sult susp sust swaf swak swal swax swaz swed swef swek swex swez swif swik swix swof swok swol swox swoz swuf swuk swul swux talp tasp tast teft teld telf telk telp tept tesp tilf tilm tilp tisk tisp tist tolp tosp traf tral traz trel trif tril trok trox troz truf trul truz tuld tulf tulk tult tupt tusp tust twaf twak twax twef twel twex twez twif twik twil twof twok twol twox twuf twuk twul twux vaft valp vapt vasp veft velf velk velp velt vept vift vilf vilk vilm vilp vink vipt visp voft volp vont vopt vosp vuft vuld vulf vulk vult vunk vupt vusp vust walp wapt wesp wift wilf wilm wilp wolp wuft wulf wult wupt yaft yalp yapt yasp yast yeft yelf yent yept yesp yift yilf yilk yilm yilp yink yipt yisp yist yoft yolp yomp yopt yosp yuld yulf yulk yult yunk yupt yusp yust zaft zalp zasp zast zeft zeld zelf zelk zelp zent zept zesp zift zilf zilk zilm zilp zipt zisp zist zoft zolp zont zopt zosp zuft zuld zulf zulk zult zunk zupt zusp'.split(' '),
+  ccc:'blesk plisk thrim scrab splod strib sprad stremp plent crost drimp gremp prind snelt spilk stend trolk twisp clenk drast flisk glent prusk scrop spleb splig sprem stram strig thrand thrib shrop shrib thrup sprub splon strad scrun blamp blent blisk brelt brimp bromp brund clant clesk climp clund crend cromp crund dramp drent drilt drint drolt drump flant flemp flomp flund framp frilt fromp frund glimp glond glump grelt grimp gromp grund plamp plesk plimp plond pramp prent prilt promp prunt scolt skamp skelt skond slamp slent slimp slont smund snamp snimp snont snump spalt spint spond spunt stelt stimp stond swent swilt swond swump trilt trund twamp twent twilt twond twump scred scrib scrid scrob scrog scrud splab splad splan spled splen splet splib splid splin splob splot splub splud splun sprab spram spreb spren sprib sprid sprim sprin sprob sprod sprom sprot sprud sprum sprun strab stran streb stred stren stret strid strim strin strob strod strog strom stron strot strub strud strug strun thrab thrad thram thran thrap thrat threb threm thren threp thrid thrig thrin thrit throd throg throm thron throp throt thrub thrud thrug thrun thrut shrab shrad shram shran shrap shrat shreb shrem shren shrep shret shrid shrig shrim shrin shrip shrit shrob shrod shrog shrom shron shrot shrud shrum shrun shrup shrut blalp blask blasp blesp blilt blipt bloft blolp blosp bluft blulf blulp blupt blusk brapt breld brelp brend brept brift brilt brint bropt brosk bruft brulf brunk brusp claft clalp clemp clent clilm clilp clisk clist clond closk closp clupt clusk clusp crand creft crelt cresk crilp crint crisk crolp cront cruld crulk crupt crusk crusp drapt drask drelt drend drept dresp drisp drist droft drolp drosk drulp drusk drusp flelf flelk flelt flesp flilf flilk flisp flist flolp flopt fluld flulf flunt flupt fralp frapt fremp fresk fresp frest frilm frolp frulk frulp frult frupt frusk frusp glant glasp glelp glemp glilm glilt glisp gloft glosk gluft glulk glulp glunt glust gralp greld grelk grelp grent grilp grink grisk grisp grosp grulf grulp grunk grust plask plasp plast plept plesp plest plift plisp plulp plult plund plunt plusp plust prant prapt prast prelt premp prend presp prilm prist pront prulk prulp prump prusp scaft scask scast scolp scond scont scopt scosk scosp scraf scral screl scren screz scrif scrik scrix scriz scrok scron scrox scrug scrup sculd sculf scund scusk scusp scust shral shrax shraz shref shreg shrel shrez shrif shrix shrol shroz shruf shruk shruz skeft skeld skend skept skesk skesp skest skilf skilk skilm skilp skisk skisp skist sland slasp sleft slelk slelp slilf slilk slisk slolp slomp slopt slosp slulp slult slupt smaft smand sment smilp smink smint smipt smolp smond smont smump smunt smusp smust snaft snant sneft snelk snent snesp snest snilf snond snopt snulf snulp snusk snust spaft spamp spapt speft spelp spemp spilf splaf splak splal splap splix spliz splof splog splok splol sploz splum splut splux spoft spont sprak sprap sprel sprep sprif spril sprip sprix sprol spron spruk sprul sprux spruz spulk spulp spump spund spust steld stelf stelk stemp stesp stest stilf stilp stist stolp stral strat straz streg strex strez strif strik strof stroz struf strul strux struz stuld stulf stult stusp swalp swand swant swemp swesp swilk swipt swont swosk swosp swuft swulf swund swupt thraf thrag thral thraz threk threl threx threz thrik throl throz thruk thrul thruz treft treld trept tresk trilm trilp trimp trisk tront trulk trult trunt trupt trusp twalp twapt twask tweld twelk twesk twesp twift twilm twomp twuft twuld twulk twupt'.split(' ')
+};
+const STAGES=[{keys:['vc','cvc'],name:'short vowels'},{keys:['cvce','rcon'],name:'silent e and r-controlled'},{keys:['dig','blend'],name:'digraphs and blends'},{keys:['ccc'],name:'three-consonant blends'}];
+
+// Real words matched to each pattern stage, for "real or make-believe"
+const REAL = {
+  0:'cat sun dog bed pig hat bug wet fox cup mud fan jog kid van top leg hop map sit run big red hot not but can had get let him yes ten box six jam log nut pot wig zip lip rug web bat pen dig hen sad mom dad up at in on it if us an ox egg bag bad cab cap cot cut cub dam den dip dot dug fig fin fit fog fun gap gas gum gut ham hid hip hit hog hug hum hut jet jig job jug lab lap led lid lit lot mad man mat men met mix mob mop nap net nod pad pan pat pet pin pit pod pop pup rag ram rat rib rid rim rip rob rod rot rub sag sap sob tab tag tan tap tin tip tot tub tug wag wax win wit yak yam yap yet zap am as bib bud bun cod cog cop dab dud fib fob gag gob hem hub jab jut keg kin kit lag lug mug nab nag nip pal peg pug rap rig rut sub sum vet wed wok hex fax lox tux yum sip vat zag bog dim fed kip sod yip ran sat beg bet set did bin bit fix cob got bus'.split(' '),
+  1:'cake ride home cute lake bike nose tune gate rope five mule make time hope kite bone rule tape dime cone tube wave mine note car farm bird corn fork park star barn born hurt turn girl shirt dirt first torn cart harm curl burn fern her fur sort port bake bite cape cave code cube cure date dive dome dune fade fame file fine fire fuse game gave hide hike hire hole huge joke lame lane late life like line lime mane mate mile mode mole name nine pale pile pine pipe poke pole race rake ripe robe rode rose rude safe sale same save side size tale tide tile tone vase vine vote wade wake wide wife wine wipe wire woke zone bark card dark dart hard jar mark part tar yard yarn cord fort horn pork storm torch curb surf turf firm sir stir herd jerk perk term verb moon food root boot zoo too tree feet seed need keep weep boat coat road soap toad rain tail mail nail pail wait cane cove dame dote fume gale gaze hive hose kale lace mute nape node pave pore rage sane site tame tote wove yoke bore core dare fare lore pure rare sore tore wore ward warm warn ford lord nurse purse curse beam bean beat heat meat neat seat leaf leak meal peak real deal heap leap loaf moan roam soak goal foam coal loan deep heel jeep meet peel reel weed beak dean lean wheat cheek face made came take nice care case use page cage rice mice dice male ate age ape ace ice base jade fake pane bale mime dine lone sole role lobe pose duke rise wise maze tire bare hare mare more far for or arm art bar ark harp tarp lark tart cork hurl burp see bee seen seem feel eel feed deed reed beef reef beet beep peep week seek peek deer moo boo goo noon soon room boom zoom mood hood wood good hoot toot foot pool cool tool wool roof hoof woof loop hoop coop book look took cook hook goose loose moose goat oat load oak foal roast toast boar oar roar soar main pain gain sail fail hail jail rail bait aim paid laid raise air hair pair fair day may say way pay lay bay hay ray jay yay eat sea tea pea bead team mean weak heal seal ear dear fear gear hear near year beard east low bow row tow mow own bowl due pie tie lie die boy toy joy soy out loud house mouse saw paw jaw raw law lawn yawn dawn hawk new few dew'.split(' '),
+  2:'ship chin fish shop chop thin bath math wish rich such much moth dish path shut chat that this with frog plant nest stop hand milk drum swim tent fast sled grab flag crab spin plum step jump lamp desk clock trip snap glad slip twig brick truck black frost shed shell shift shock shot chap check chest chick chill chip chum chunk thank thick think thud thump whip when which cloth bench lunch munch pinch punch ranch rush sash blast blend blink block blob blot brag bring brush clam clap clip club crop crust drag dress drill drop flap flat flip flock glass grass grin grip plot plug plus print scan skin skip skunk slam slid slim slot smell snack sniff spot spill stack stem stick still stomp stuck swept swing trap trick trim trunk twist camp damp dump hump bump bend band bond fond land lend mend pond sand send wind went hunt mist must rest vest west wisp ask disk dusk mask risk task tusk help gulp yelp belt felt melt silk bulk hulk elk shack shark sharp shore short shout chain chalk charm chart cheap cheat cheer chess chirp chore chose thorn those whisk white blimp bloom bluff blush brake brand brass brave breed bride brisk brown bunch clash clasp clean clerk cliff cling cloak clown clump coach coast craft crane crash creek crept crib croak crook drank dream drift drink drove drown flake flame flash fleet flesh flick float flute frame frank fresh fried frown glade glare gleam glide gloom grade grain grasp graze greed greet grill grind groan groom grove plank plate plead plume plump plush pride prime prize probe proud prowl prune skate slate sleek sleep sleet slick slide slime sling slope sloth slump smack smart smash smile smoke snare sneak snore snort snout spade spark speak speck spend spike spine spoke spool spore sport stage stain stair stake stale stamp stand stare stark steak steal steam steel steep stern sting stink stock stone stool stoop store stork stove stump stung swamp swarm swift swipe swoop trace track trade trail tramp trash tread treat tribe trout truce trust tweet twice twine back neck sick lock duck sock kick pack rock pick lick deck dock tick tuck luck puck sack rack peck tack wick buck yuck muck quack whack cluck click crack quick pluck king ring sing wing ding bang hang rang sang fang long song gong lung hung rung sung fling thing bank sank tank yank blank clank crank prank pink sink wink link rink clink honk junk bunk dunk sunk fluff stuff skill spell swell class press floss cross staff crisp drip flop plan plop prop skid skull slap slug snag snip snug spun spent stunt swam trot twin ant and end act elf elm ink bent best bulb cast cost dent fact fist gasp gift held hint just kept last left lift limp list loft lump lost mint next past pest pump raft ramp rent rust sent self soft test text tilt vent wept wilt shelf grand clamp cramp draft slept blunt grunt twelve golf adult flask cash dash mash rash hush mush inch branch crunch brunch trench flinch finch arch march porch perch church north birth burst thirst tenth fifth sixth broth shin chug chomp chimp champ chant them then than quit quiz quest quilt quite quote quake shape shake shade shame shave shine chase chime choke theme these while whine globe blade blame blaze broke close crate drone froze plane price scale scare score slice space spare spice state stole snake grape green queen sheet sweet speed bleed free flee glee wheel teeth creep sweep scoop proof smooth tooth booth brook shook drool drain plain quail braid praise waist paint sway clay gray play pray tray each reach teach bleach cream creak leash clear smear spear feast beast least please sheep spoon broom brain train snail beach peach chair steer rabbit basket magnet napkin picnic sunset muffin kitten mitten puppet pocket rocket bucket jacket ticket locket cricket tablet cactus catnip catfish goldfish hotdog bathtub backpack laptop cannot upset until insect invent inside habit rapid robin lemon melon salad seven comet planet wagon dragon button cotton ribbon lesson happen kitchen chicken pumpkin bandit velvet tennis cabin sudden hidden rotten bitten gotten bottom blossom possum hiccup ketchup dentist contest admit unzip unlock unless into onto pigpen sandbox sandwich hundred children problem pretzel trumpet blanket plastic traffic zigzag bobcat cobweb mascot wombat happy puppy bunny funny sunny silly jelly belly penny kitty muddy windy daddy mommy teddy buddy hobby party dirty forty sixty story fairy hairy scary sister letter dinner summer winter under after never better butter rubber supper hammer ladder zipper pepper litter mister corner farmer garden market carpet target hornet morning forest order number lumber member thunder monster hamster blister tiger spider paper baby lady pony tiny navy gravy lazy crazy shiny robot bacon open even over apple little bottle puddle middle candle turtle purple giggle wiggle pickle tickle puzzle bubble cuddle paddle saddle rattle kettle jungle uncle ankle handle simple sample table cable maple title noodle poodle needle beetle eagle yellow pillow shadow follow hollow elbow arrow narrow willow window gallon bedbug catnap padlock windmill hilltop lipstick desktop goblin helmet carrot parrot ferret tunnel funnel kennel barrel camel level shovel travel gravel pedal metal petal medal lizard wizard blizzard mustard pattern golden wooden puffin raisin artist harvest biggest fastest correct collect connect protect perfect racket closet nugget fidget limit visit exit armpit solid attic panic comic circus mattress princess address pencil fossil pupil model label weasel hotel add bell bill boss buzz cuff doll dull fell fill fizz fuss gull hill hiss huff ill jazz kiss less loss mess mill miss moss odd off pass pill puff sell tell till toss well will yell snow grow show slow blow glow blue glue true clue cloud count round sound found pound ground draw claw night light right fight sight tight might high sigh chew grew flew blew drew stew catch match patch hatch latch batch witch pitch ditch itch stitch switch twitch fetch sketch notch hutch clutch crutch'.split(' '),
+  3:'strip strap scrub split sprint string spring street splash strand shrimp thrill throb scram sprig strum shrub shred thrust stripe struck scrap sprout squint splat script splint strict strong thrift throne shrank shrink shrug strike stroke thrash three throat throw scream scrape screen screw scroll shrewd shriek shrill shrine spleen splice spline sprang spray spread spruce sprung squad squat squirm strain straw stray streak stream stress stride strife stroll strut thread threw thrice thrive throng scratch screech scrunch scribble scramble sprain sprinkle stretch strung struggle strange thrush thrown shrunk squid squish squeak squeal squeeze square squirt squirrel squiggle splinter squash splendid violin length strength butterfly basketball hamburger afternoon understand yesterday umbrella banana tomato potato animal camera family holiday hospital remember different birthday sunshine playground rainbow snowman popcorn cupcake pancake football baseball seashell sailboat toothbrush starfish jellyfish sunflower grasshopper kangaroo alligator caterpillar strawberry pineapple skateboard helicopter telescope tractor ladybug octopus unicorn mushroom volcano compass lantern battery'.split(' ')
+};
+
+// Picture words for "find the word": [word, emoji]
+const PICS = [["cat","🐱"],["dog","🐶"],["pig","🐷"],["sun","☀️"],["bed","🛏️"],["hat","🎩"],["bug","🪲"],["fox","🦊"],["bus","🚌"],["box","📦"],["hen","🐔"],["pen","🖊️"],["web","🕸️"],["egg","🥚"],["map","🗺️"],["leg","🦵"],["nut","🥜"],["cup","☕"],["ship","🚢"],["fish","🐟"],["frog","🐸"],["crab","🦀"],["drum","🥁"],["nest","🪺"],["tent","⛺"],["flag","🚩"],["clock","⏰"],["truck","🚚"],["brick","🧱"],["cake","🎂"],["bike","🚲"],["kite","🪁"],["bone","🦴"],["nose","👃"],["rose","🌹"],["car","🚗"],["star","⭐"],["corn","🌽"],["fork","🍴"],["shirt","👕"],["bird","🐦"],["girl","👧"],["moon","🌙"],["tree","🌳"],["boat","⛵"],["snake","🐍"],["sock","🧦"],["duck","🦆"],["milk","🥛"],["hand","✋"],["ring","💍"],["fire","🔥"],["plant","🪴"],["spoon","🥄"],["bread","🍞"],["apple","🍎"],["whale","🐳"],["shell","🐚"],["chick","🐤"],["broom","🧹"],["train","🚆"],["plane","✈️"],["ghost","👻"],["crown","👑"],["sheep","🐑"],["snail","🐌"],["drop","💧"],["gift","🎁"],["bell","🔔"],["key","🔑"],["bat","🦇"],["bee","🐝"],["cow","🐮"],["rat","🐀"],["bear","🐻"],["goat","🐐"],["deer","🦌"],["wolf","🐺"],["seal","🦭"],["shark","🦈"],["squid","🦑"],["worm","🪱"],["leaf","🍃"],["grape","🍇"],["cheese","🧀"],["bowl","🥣"],["pot","🍲"],["jar","🫙"],["chair","🪑"],["door","🚪"],["phone","📱"],["book","📖"],["bag","👜"],["boot","🥾"],["dress","👗"],["gem","💎"],["coin","🪙"],["ball","⚽"],["cloud","☁️"],["rain","🌧️"],["snow","❄️"],["foot","🦶"],["lips","👄"],["tooth","🦷"],["brain","🧠"],["king","🤴"],["queen","👸"],["horse","🐴"],["mouse","🐭"],["pizza","🍕"],["rocket","🚀"],["robot","🤖"],["van","🚐"],["pin","📌"],["lock","🔒"],["pie","🥧"],["brush","🖌️"],["scarf","🧣"],["coat","🧥"],["lemon","🍋"],["peach","🍑"],["salt","🧂"],["taco","🌮"],["couch","🛋️"],["soap","🧼"],["rock","🪨"],["log","🪵"],["dice","🎲"],["ski","🎿"],["sled","🛷"],["swan","🦢"],["shrimp","🦐"],["glove","🧤"],["melon","🍈"],["tulip","🌷"],["candle","🕯️"],["ladder","🪜"],["mirror","🪞"],["magnet","🧲"],["basket","🧺"],["pencil","✏️"],["carrot","🥕"],["banana","🍌"],["cherry","🍒"],["pumpkin","🎃"],["rabbit","🐰"],["turtle","🐢"],["dragon","🐉"],["spider","🕷️"],["monkey","🐵"],["zebra","🦓"],["tiger","🐯"],["lion","🦁"],["camel","🐫"],["panda","🐼"],["koala","🐨"],["hippo","🦛"],["parrot","🦜"],["window","🪟"],["ticket","🎫"],["trophy","🏆"],["medal","🏅"],["guitar","🎸"],["violin","🎻"],["trumpet","🎺"],["balloon","🎈"],["puzzle","🧩"],["helmet","⛑️"],["sandal","👡"],["butterfly","🦋"],["tractor","🚜"],["ladybug","🐞"],["octopus","🐙"],["penguin","🐧"],["dolphin","🐬"],["elephant","🐘"],["giraffe","🦒"],["unicorn","🦄"],["castle","🏰"],["cactus","🌵"],["mushroom","🍄"],["sunflower","🌻"],["rainbow","🌈"],["volcano","🌋"],["hammer","🔨"],["scissors","✂️"],["bucket","🪣"],["toothbrush","🪥"],["backpack","🎒"],["umbrella","☂️"],["lipstick","💄"],["camera","📷"],["battery","🔋"],["lantern","🏮"],["anchor","⚓"],["compass","🧭"],["hourglass","⏳"],["telescope","🔭"],["bandage","🩹"],["wheelchair","🦽"],["canoe","🛶"],["scooter","🛴"],["skateboard","🛹"],["ambulance","🚑"],["firetruck","🚒"],["ant","🐜"],["gas","⛽"],["hut","🛖"],["tub","🛁"],["ram","🐏"],["man","👨"],["ten","🔟"],["six","6️⃣"],["red","🟥"],["cap","🧢"],["can","🥫"],["owl","🦉"],["axe","🪓"],["tie","👔"],["vase","🏺"],["wave","🌊"],["five","5️⃣"],["nine","9️⃣"],["cart","🛒"],["yarn","🧶"],["purse","👛"],["chain","⛓️"],["house","🏠"],["wheel","🛞"],["skunk","🦨"],["sloth","🦥"],["watch","⌚"],["radio","📻"],["crayon","🖍️"],["ruler","📏"],["glasses","👓"],["toilet","🚽"],["shower","🚿"],["sponge","🧽"],["piano","🎹"],["banjo","🪕"],["taxi","🚕"],["wrench","🔧"],["ear","👂"],["heart","❤️"],["baby","👶"],["boy","👦"],["cupcake","🧁"],["cookie","🍪"],["donut","🍩"],["candy","🍬"],["popcorn","🍿"],["pretzel","🥨"],["burger","🍔"],["sandwich","🥪"],["pancake","🥞"],["waffle","🧇"],["bacon","🥓"],["onion","🧅"],["garlic","🧄"],["tomato","🍅"],["potato","🥔"],["avocado","🥑"],["broccoli","🥦"],["pepper","🌶️"],["coconut","🥥"],["mango","🥭"],["kiwi","🥝"],["pineapple","🍍"],["strawberry","🍓"],["watermelon","🍉"],["orange","🍊"],["lobster","🦞"],["flamingo","🦩"],["peacock","🦚"],["gorilla","🦍"],["kangaroo","🦘"],["raccoon","🦝"],["hedgehog","🦔"],["squirrel","🐿️"],["hamster","🐹"],["beaver","🦫"],["otter","🦦"],["llama","🦙"],["rhino","🦏"],["crocodile","🐊"],["lizard","🦎"],["dinosaur","🦕"],["bison","🦬"],["turkey","🦃"],["rooster","🐓"],["eagle","🦅"],["helicopter","🚁"],["mountain","🏔️"],["desert","🏜️"],["island","🏝️"],["beach","🏖️"],["bridge","🌉"],["school","🏫"],["church","⛪"],["feather","🪶"],["caterpillar","🐛"],["scorpion","🦂"],["mosquito","🦟"],["fly","🪰"],["mammoth","🦣"],["flower","🌸"],["clover","🍀"],["pear","🍐"],["blueberries","🫐"],["cucumber","🥒"],["lettuce","🥬"],["bagel","🥯"],["croissant","🥐"],["chicken","🍗"],["steak","🥩"],["fries","🍟"],["burrito","🌯"],["salad","🥗"],["butter","🧈"],["rice","🍚"],["noodles","🍜"],["spaghetti","🍝"],["sushi","🍣"],["dumpling","🥟"],["chocolate","🍫"],["lollipop","🍭"],["honey","🍯"],["bottle","🍼"],["teapot","🫖"],["tea","🍵"],["juice","🧃"],["soda","🥤"],["ice","🧊"],["chopsticks","🥢"],["plate","🍽️"],["knife","🔪"],["earth","🌎"],["hospital","🏥"],["factory","🏭"],["stadium","🏟️"],["tower","🗼"],["statue","🗽"],["fountain","⛲"],["carousel","🎠"],["slide","🛝"],["circus","🎪"],["motorcycle","🏍️"],["subway","🚇"],["road","🛣️"],["stoplight","🚦"],["parachute","🪂"],["spaceship","🛸"],["suitcase","🧳"],["stopwatch","⏱️"],["thermometer","🌡️"],["planet","🪐"],["comet","☄️"],["lightning","⚡"],["tornado","🌪️"],["snowman","⛄"],["fireworks","🎆"],["sparkler","🎇"],["confetti","🎊"],["bow","🎀"],["baseball","⚾"],["basketball","🏀"],["volleyball","🏐"],["football","🏈"],["frisbee","🥏"],["skate","⛸️"],["snorkel","🤿"],["target","🎯"],["wand","🪄"],["controller","🎮"],["teddy","🧸"],["paint","🎨"],["thread","🧵"],["needle","🪡"],["sunglasses","🕶️"],["goggles","🥽"],["vest","🦺"],["jeans","👖"],["swimsuit","🩱"],["underwear","🩲"],["shorts","🩳"],["shoe","👞"],["speaker","🔊"],["megaphone","📣"],["microphone","🎤"],["headphones","🎧"],["saxophone","🎷"],["accordion","🪗"],["plug","🔌"],["laptop","💻"],["computer","🖥️"],["printer","🖨️"],["keyboard","⌨️"],["television","📺"],["flashlight","🔦"],["notebook","📓"],["paper","📄"],["scroll","📜"],["newspaper","📰"],["dollar","💵"],["envelope","✉️"],["mailbox","📫"],["briefcase","💼"],["folder","📁"],["calendar","📅"],["clipboard","📋"],["paperclip","📎"],["trash","🗑️"],["pickaxe","⛏️"],["sword","🗡️"],["boomerang","🪃"],["arrow","🏹"],["shield","🛡️"],["saw","🪚"],["screwdriver","🪛"],["gear","⚙️"],["scale","⚖️"],["hook","🪝"],["toolbox","🧰"],["microscope","🔬"],["pill","💊"],["stethoscope","🩺"],["elevator","🛗"],["plunger","🪠"],["bubbles","🫧"],["farmer","🧑‍🌾"],["firefighter","🧑‍🚒"],["chef","🧑‍🍳"],["astronaut","🧑‍🚀"],["ninja","🥷"],["wizard","🧙"],["fairy","🧚"],["mermaid","🧜‍♀️"],["vampire","🧛"],["zombie","🧟"],["santa","🎅"],["angel","👼"],["superhero","🦸"],["genie","🧞"],["elf","🧝"],["clown","🤡"],["skull","💀"],["alien","👽"],["pilot","🧑‍✈️"],["blue","🟦"],["green","🟩"],["yellow","🟨"],["purple","🟪"],["brown","🟫"],["black","⬛"],["zero","0️⃣"],["one","1️⃣"],["two","2️⃣"],["three","3️⃣"],["four","4️⃣"],["seven","7️⃣"],["eight","8️⃣"],["triangle","🔺"],["circle","⭕"],["square","🔲"]];
+Object.keys(REAL).forEach(k=>{ REAL[k]=[...new Set(REAL[k])]; });
+{ const seen=new Set(); for(let i=PICS.length-1;i>=0;i--){ if(seen.has(PICS[i][0])) PICS.splice(i,1); else seen.add(PICS[i][0]); } }
+const PIC_EMOJI=Object.fromEntries(PICS);
+
+// First-grade NWF benchmark goals (DIBELS 8, goals dated July 2020). [Beginning, Middle, End]
+const GOALS = {
+  cls:{label:'Correct letter sounds', blue:[47,78,87], green:[30,52,55], yellow:[25,41,45]},
+  wrc:{label:'Words recoded correctly', blue:[16,26,28], green:[5,14,15], yellow:[1,10,11]}
+};
+const PERIOD_NAMES=['Beginning of year','Middle of year','End of year'];
+</script>
+<script>
+// ---------- State ----------
+const KEY='kite-reader-v2';
+const DEFAULT={v:2, level:0, settings:{period:'auto',stageOverride:null,voice:'',rate:0.8,limit:false}, mastery:{}, stage:0, stageAt:null, sessions:[], timed:[], confus:{}, realMiss:{}, todayKey:'', today:{rounds:0,ms:0,done:false}};
+let S=load();
+function load(){ try{ const raw=localStorage.getItem(KEY); if(raw){ const o=JSON.parse(raw); return Object.assign({},DEFAULT,o,{settings:Object.assign({},DEFAULT.settings,o.settings||{})}); } }catch(e){} return JSON.parse(JSON.stringify(DEFAULT)); }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function todayKey(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function rollDay(){ const k=todayKey(); if(S.todayKey!==k){ S.todayKey=k; S.today={rounds:0,ms:0,done:false}; save(); } }
+function sessionIdx(){ return S.sessions.length; }
+function currentSession(){ rollDay(); let s=S.sessions[S.sessions.length-1]; if(!s||s.date!==S.todayKey){ s={date:S.todayKey,cards:0,helped:0,realN:0,realOk:0,picN:0,picOk:0,minutes:0,stage:lvlStage(),level:S.level||0}; S.sessions.push(s); } return s; }
+function periodIdx(){ const p=S.settings.period; if(p==='B')return 0; if(p==='M')return 1; if(p==='E')return 2; const m=new Date().getMonth(); if(m>=7&&m<=10)return 0; if(m===11||m<=1)return 1; return 2; }
+function stage(){ return S.settings.stageOverride!==null&&S.settings.stageOverride!==undefined ? S.settings.stageOverride : S.stage; }
+const LV_NAMES=['Easy','Medium','Hard','Expert'];
+function lvlStage(){ const lv=S.level||0; return lv===0?stage():lv===1?Math.max(2,stage()):3; }
+
+// ---------- Utilities ----------
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('on'),2200); }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); }
+document.querySelectorAll('[data-icon]').forEach(el=>{ el.innerHTML=ICONS[el.dataset.icon]||''; });
+const icon=n=>ICONS[n]||'';
+function daysSince(d){ return Math.floor((Date.now()-new Date(d+'T12:00:00').getTime())/86400000); }
+
+// ---------- Full Screen ----------
+function isFullscreen(){
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+function updateFsButtons(){
+  const active = isFullscreen();
+  const iconKey = active ? 'fullscreenExit' : 'fullscreen';
+  document.querySelectorAll('[data-fs-btn]').forEach(btn => {
+    const s = btn.querySelector('[data-icon]');
+    if(s){ s.dataset.icon = iconKey; s.innerHTML = ICONS[iconKey] || ''; }
+    btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen');
+  });
+}
+async function toggleFullscreen(){
+  if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+    toast('Already running full screen from Home Screen.');
+    return;
+  }
+  try{
+    if(isFullscreen()){
+      if(document.exitFullscreen) await document.exitFullscreen();
+      else if(document.webkitExitFullscreen) await document.webkitExitFullscreen();
+    } else {
+      const el = document.documentElement;
+      if(el.requestFullscreen) await el.requestFullscreen();
+      else if(el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+      else {
+        toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+      }
+    }
+  } catch(e){
+    toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+  }
+  updateFsButtons();
+}
+if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+  document.body.classList.add('standalone');
+}
+document.addEventListener('fullscreenchange', updateFsButtons);
+document.addEventListener('webkitfullscreenchange', updateFsButtons);
+document.querySelectorAll('[data-fs-btn]').forEach(btn => {
+  btn.addEventListener('click', toggleFullscreen);
+});
+
+// ---------- Speech (used only to confirm flashcard words) ----------
+let voices=[];
+function loadVoices(){ try{ voices=speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+function pickVoice(){
+  if(!voices.length) return null;
+  if(S.settings.voice){ const v=voices.find(v=>v.name===S.settings.voice); if(v) return v; }
+  const en=voices.filter(v=>/^en[-_]US/i.test(v.lang));
+  return en.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||en[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0];
+}
+function speak(text){
+  return new Promise(res=>{
+    if(!('speechSynthesis' in window)||!text) return res();
+    let done=false; const fin=()=>{ if(!done){ done=true; res(); } };
+    try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=S.settings.rate||0.8; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); }
+  });
+}
+// respell nonsense words so the synthesizer reads them as intended
+const SAY_OVERRIDE={tid:'tidd',pid:'pidd',kib:'kibb',mig:'migg',lem:'lemm',sut:'sutt',cag:'kag',cobe:'kobe',curm:'kurm',kefe:'keef',gube:'goob',gume:'goom',gafe:'gayf',jete:'jeet',sefe:'seef',nefe:'neef',vede:'veed',yede:'yeed',zede:'zeed',tebe:'teeb',vek:'vekk',gek:'gekk',zek:'zekk',wek:'wekk',mek:'mekk',lek:'lekk'};
+// Short strings are respelled with a doubled final consonant so the voice reads them as words rather than as initialisms.
+function sayNonsense(w){
+  let m; if(SAY_OVERRIDE[w]) return SAY_OVERRIDE[w];
+  if(typeof COMPOUND_PARTS!=='undefined'&&COMPOUND_PARTS[w]){ const [a,b]=COMPOUND_PARTS[w]; return sayNonsense(a)+sayNonsense(b); }
+  if((m=w.match(/^([aeiou])([^aeiou])$/))) return m[2]==='k'? m[1]+'ck' : w+m[2];
+  if((m=w.match(/^([^aeiou]{1,3})([aeiou])([^aeiou])e$/))){ const V={a:'ay',e:'ee',i:'y',o:'oa',u:'oo'}[m[2]]; let out=m[1]+V+m[3]; if(m[2]==='i') out+='e'; if(m[2]==='u'&&m[3]==='d') out=m[1]+'ooed'; return out; }
+  if((m=w.match(/^([^aeiou])([aeiou])([bdfglmnptz])$/))) return m[3]==='k'? w.slice(0,-1)+'ck' : w+m[3];
+  if(/^[^aeiou][aeiou]k$/.test(w)) return w.slice(0,-1)+'ck';
+  if(/^[^aeiou]{1,3}[aeiou][zf]$/.test(w)) return w+w.slice(-1);
+  return w;
+}
+
+// ---------- Grapheme parser ----------
+const TWO={sh:1,ch:1,th:1,wh:1,ng:1,ck:1,ar:1,or:1,er:1,ir:1,ur:1,ee:1,oo:1,ai:1,oa:1,ay:1,ea:1,ou:1,ow:1,ey:1,qu:1};
+function parseWord(w){
+  const u=[]; let m;
+  if((m=w.match(/^([^aeiou]{1,3})([aeiou])([^aeiou])e$/))){ u.push(...parseWord(m[1])); u.push({t:m[2]}); u.push({t:m[3]}); u.push({t:'e',silent:true}); return u; }
+  for(let i=0;i<w.length;){ const two=w.slice(i,i+2); if(TWO[two]){ u.push({t:two}); i+=2; } else { u.push({t:w[i]}); i++; } }
+  return u;
+}
+function wordHTML(w){ return `<div class="word ${w.length>=6?'long':''}">${parseWord(w).map((x,i)=>`<span class="g ${x.silent?'silent':''}" data-i="${i}">${x.t}</span>`).join('')}</div>`; }
+async function showParts(container){
+  const word=container.querySelector('.word'); if(!word) return; const gs=[...word.querySelectorAll('.g')];
+  word.classList.add('split'); await wait(600);
+  for(const g of gs){ if(g.classList.contains('silent')) continue; g.classList.add('lit'); await wait(380); g.classList.remove('lit'); }
+  await wait(150); word.classList.remove('split'); await wait(500);
+}
+function stageOf(w){
+  const groups=(w.match(/[aeiouy]+/g)||[]).length;
+  if(/^[aeiou][^aeiouwy]{1,2}$/.test(w)) return 0;
+  if(/^[^aeiouy]{3}/.test(w)||w.length>=7) return 3;
+  if(w.length<=5&&/[aeiou]r[^aeiouy]?$/.test(w)&&!/^[^aeiouy]{2}/.test(w)&&!/(sh|ch|th|wh|ng|ck)/.test(w)&&groups===1) return 1;
+  if(/(sh|ch|th|wh|ng|ck)/.test(w)||/^[^aeiouy]{2}[aeiou]/.test(w)||/[aeiou][^aeiouy]{2}$/.test(w)||w.length>=6||(groups>=2&&!/[^aeiou]e$/.test(w))) return 2;
+  if(/[aeiou][^aeiou]e$/.test(w)||/(ar|or|er|ir|ur|ee|oo|oa|ai|ea|ey|ow|ou|oy|aw|ew|ie|ue|ui|ay)/.test(w)) return 1;
+  return 0;
+}
+const REAL_SET=new Set(Object.values(REAL).flat().concat(PICS.map(p=>p[0])));
+const nearCache={};
+function nearWords(w){ if(nearCache[w]) return nearCache[w]; const out=[]; for(let i=0;i<w.length;i++) for(const ch of 'abcdefghijklmnopqrstuvwxyz'){ if(ch===w[i]) continue; const alt=w.slice(0,i)+ch+w.slice(i+1); if(REAL_SET.has(alt)) out.push(alt); } return nearCache[w]=out; }
+const isNearReal=w=>nearWords(w).length>0;
+// Expert level: two-syllable make-believe words built from two vetted short ones.
+const RUDE_SUB=['ass','sex','cum','tit','fag','fuk','fuc','dik','dic','cok','coc','pis','poo','pee','bum','wank','cunt','nig','jiz','dam','crap','hell','fart','turd','anus','anal','boob','dong','wang','homo','tard','slut','twat'];
+const COMPOUNDS=[], COMPOUND_PARTS={};
+{ const c=NWF.cvc; for(let i=0;i<c.length&&COMPOUNDS.length<240;i++){ const a=c[i], b=c[(i*7+11)%c.length]; if(a===b) continue; const w=a+b; if(TWO[a.slice(-1)+b[0]]||a.slice(-1)===b[0]) continue; if(RUDE_SUB.some(r=>w.includes(r))||REAL_SET.has(w)) continue; COMPOUNDS.push(w); COMPOUND_PARTS[w]=[a,b]; } }
+const LONG_REAL=PICS.map(p=>p[0]).filter(w=>w.length>=5&&!/[^a-z]/.test(w));
+
+// ---------- Mastery ----------
+function M(key){ return S.mastery[key]=S.mastery[key]||{s:0,due:0,help:0,seen:0,ok:0,streak:0}; }
+function markOk(key){ const m=M(key); m.seen++; m.ok++; m.streak++; m.s=Math.min(2,m.s+1); m.due=sessionIdx()+[1,3,7][Math.min(m.streak-1,2)]; }
+function markHelp(key){ const m=M(key); m.seen++; m.help++; m.streak=0; m.s=0; m.due=sessionIdx(); }
+function nonsensePool(){ let p=[]; for(let i=0;i<=lvlStage();i++) STAGES[i].keys.forEach(k=>p=p.concat(NWF[k])); if((S.level||0)===3) p=p.concat(COMPOUNDS); return p; }
+function newestPool(){ if((S.level||0)===3) return COMPOUNDS.slice(); let p=[]; STAGES[lvlStage()].keys.forEach(k=>p=p.concat(NWF[k])); return p; }
+function buildRound(n){
+  const pool=nonsensePool(), idx=sessionIdx(), mm=S.mastery;
+  const learning=pool.filter(k=>mm[k]&&mm[k].s===0&&mm[k].seen>0);
+  const due=pool.filter(k=>mm[k]&&mm[k].s>0&&mm[k].due<=idx);
+  const freshNew=shuffle(newestPool().filter(k=>!mm[k]));
+  const fresh=shuffle(pool.filter(k=>!mm[k]&&!freshNew.includes(k)));
+  const known=pool.filter(k=>mm[k]&&mm[k].s>0&&mm[k].due>idx);
+  let out=shuffle(learning).slice(0,3).concat(shuffle(due).slice(0,Math.ceil(n*0.4)));
+  out=out.concat(freshNew.slice(0,Math.max(2,n-out.length-2)));
+  if(out.length<n) out=out.concat(fresh.slice(0,n-out.length));
+  if(out.length<n) out=out.concat(shuffle(known).slice(0,n-out.length));
+  if(out.length<n) out=out.concat(shuffle(pool.filter(k=>!out.includes(k))).slice(0,n-out.length));
+  return shuffle(out.slice(0,n));
+}
+// Stage unlock is driven by the self-scoring "Real or make-believe?" game, played at Easy on the current stage.
+function realRate(back){ const ss=S.sessions.filter(s=>s.realN>=10&&(s.level||0)===0&&s.stage===S.stage); const s=ss[ss.length-1-back]; return s? s.realOk/s.realN : null; }
+function maybeUnlock(){
+  const a=realRate(0), b=realRate(1);
+  if(a!==null&&b!==null&&a>=0.9&&b>=0.9&&S.stage<STAGES.length-1&&S.stageAt!==sessionIdx()){ S.stage++; S.stageAt=sessionIdx(); toast('New patterns unlocked.'); }
+}
+
+// ---------- Home ----------
+const ACTS=[
+  {id:'cards', label:'Flashcards', who:'say it, then check', whoIcon:'child', glyph:icon('cards')},
+  {id:'real', label:'Real or make-believe?', who:'by yourself', whoIcon:'child', glyph:'<span style="display:flex;gap:6px">'+icon('book')+icon('monster')+'</span>'}
+];
+function renderHome(){
+  rollDay(); const done=!!S.settings.limit&&S.today.done;
+  $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph}</span><span class="label">${a.label}</span><span class="who">${icon(a.whoIcon)} ${a.who}</span></button>`).join('');
+  $('home-note').textContent=done?'Reading time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
+  $('levels').innerHTML=[0,1,2,3].map(i=>`<button class="lvl ${(S.level||0)===i?'on':''}" data-lv="${i}" aria-label="${LV_NAMES[i]}"><span class="kites">${icon('kite').repeat(i+1)}</span><span class="lab">${LV_NAMES[i]}</span></button>`).join('');
+  document.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>{ S.level=+b.dataset.lv; save(); renderHome(); }));
+  document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>{ if(S.settings.limit&&S.today.done){ show('s-alldone'); return; } start(t.dataset.act); }));
+}
+function pointerHold(el,ms,onDone,fillEl){
+  let t=null,start=0,raf=null;
+  const stop=()=>{ clearTimeout(t); t=null; if(raf) cancelAnimationFrame(raf); if(fillEl) fillEl.style.height='0'; };
+  const tick=()=>{ if(!t) return; const p=Math.min(1,(Date.now()-start)/ms); if(fillEl) fillEl.style.height=(p*100)+'%'; raf=requestAnimationFrame(tick); };
+  el.addEventListener('pointerdown',e=>{ e.preventDefault(); start=Date.now(); t=setTimeout(()=>{ stop(); onDone(); },ms); tick(); });
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,stop));
+}
+pointerHold($('gate'),3000,()=>openParent(),$('gate').querySelector('.fill'));
+
+// ---------- Play engine ----------
+const P={act:null,queue:[],i:0,total:0,cards:0,helped:0,ok:0,helpedThis:false,busy:false,enter:0,cur:null};
+const ROUND_N={cards:20,real:20};
+function setKite(f){ $('kite').style.left=(4+92*Math.max(0,Math.min(1,f)))+'%'; }
+function leavePlay(){ if(P.enter){ const ms=Date.now()-P.enter; S.today.ms+=ms; const s=currentSession(); s.minutes=(s.minutes||0)+ms/60000; P.enter=0; } save(); }
+$('btn-home').addEventListener('click',()=>{ leavePlay(); renderHome(); show('s-home'); });
+function start(act){
+  rollDay(); P.act=act; P.i=0; P.cards=0; P.helped=0; P.ok=0; P.busy=false; P.enter=Date.now();
+  if(act==='cards') P.queue=buildRound(ROUND_N.cards);
+  if(act==='real'){ const n=ROUND_N.real/2, lv=S.level||0, fp=nonsensePool(); let fake;
+    if(lv===0){ fake=shuffle(newestPool()).slice(0,Math.ceil(n*0.6)).concat(shuffle(fp)).filter((w,i,a)=>a.indexOf(w)===i).slice(0,n); }
+    else if(lv===3){ const comp=shuffle(COMPOUNDS).slice(0,Math.ceil(n/2)); const near=shuffle(fp.filter(w=>!COMPOUND_PARTS[w]&&isNearReal(w))).slice(0,n-comp.length); fake=comp.concat(near); }
+    else { const near=shuffle(fp.filter(isNearReal)); const k=Math.min(near.length, lv===2?n:Math.ceil(n/2)); const nearSet=new Set(near.slice(0,k)); fake=[...nearSet].concat(shuffle(fp.filter(w=>!nearSet.has(w))).slice(0,n-k)); }
+    let real=[]; for(let i=0;i<=lvlStage();i++) real=real.concat(REAL[i]); real=real.filter(w=>stageOf(w)<=lvlStage());
+    if(lv===2){ const hardReal=shuffle(real.filter(w=>stageOf(w)>=2)); if(hardReal.length>=n) real=hardReal.slice(0,Math.ceil(n*0.7)).concat(shuffle(real.filter(w=>stageOf(w)<2))); }
+    if(lv===3){ real=shuffle(LONG_REAL).slice(0,Math.ceil(n*0.6)).concat(shuffle(real.filter(w=>stageOf(w)>=2))); }
+    real=shuffle(real).filter((w,i,a)=>a.indexOf(w)===i).slice(0,n);
+    P.queue=shuffle(fake.map(w=>({w,real:false})).concat(real.map(w=>({w,real:true})))); }
+  P.total=P.queue.length; show('s-play'); setKite(0);
+  $('bar').innerHTML= act==='cards' ? `<button class="act readit" id="b-read" aria-label="Check">${icon('check')}</button>` : '';
+  if(act==='cards'){ $('b-read').addEventListener('click',onCheck); }
+  next();
+}
+function next(){
+  if(P.i>=P.queue.length) return endRound();
+  P.cur=P.queue[P.i]; P.helpedThis=false; P.triedThis=false; P.busy=false; setKite(P.i/P.total);
+  if(P.act==='cards'){ $('stage').innerHTML=`<div class="card">${wordHTML(P.cur)}</div>`; }
+  if(P.act==='real'){ $('stage').innerHTML=`<div class="card">${wordHTML(P.cur.w)}</div><div class="choices"><button class="choice labeled" data-real="0" aria-label="Make-believe word">${icon('monster')}<span>Make-believe</span></button><button class="choice labeled" data-real="1" aria-label="Real word">${icon('book')}<span>Real</span></button></div>`; document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>onReal(b))); }
+}
+async function onCheck(){
+  if(P.busy) return; P.busy=true; const key=P.cur;
+  if(!P.helpedThis){ markOk(key); P.ok++; } else { markHelp(key); P.helped++; const at=Math.min(P.queue.length,P.i+2+Math.floor(Math.random()*3)); if(!P.queue.slice(P.i+1).includes(key)){ P.queue.splice(at,0,key); P.total=P.queue.length; } }
+  P.cards++; const card=$('stage').querySelector('.card'); if(card) card.classList.add('ok');
+  await speak(sayNonsense(key)); await wait(500); P.i++; next();
+}
+async function onReal(b){
+  if(P.busy) return; P.busy=true; const isReal=b.dataset.real==='1', it=P.cur, right=isReal===it.real;
+  const s=currentSession(); s.realN++; if(right) s.realOk++;
+  if(!it.real&&isReal) S.confus[it.w]=(S.confus[it.w]||0)+1; if(it.real&&!isReal) S.realMiss[it.w]=(S.realMiss[it.w]||0)+1;
+  const card=$('stage').querySelector('.card'); const correctBtn=document.querySelector(`.choice[data-real="${it.real?1:0}"]`);
+  document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('dim',x!==correctBtn)); correctBtn.classList.add('glow');
+  if(it.real&&PIC_EMOJI[it.w]) card.insertAdjacentHTML('beforeend',`<span class="corner">${PIC_EMOJI[it.w]}</span>`);
+  card.classList.add(right?'ok':'oops');
+  const said=it.real?it.w:sayNonsense(it.w);
+  if(right){ P.ok++; await wait(300); await speak(said); await wait(600); } else { await showParts($('stage')); await speak(said); await wait(1800); }
+  P.cards++; P.i++; save(); next();
+}
+function endRound(){
+  leavePlay(); const s=currentSession();
+  if(P.act==='cards'){ s.cards+=P.cards; s.helped+=P.helped; }
+  if(P.act==='real') maybeUnlock();
+  S.today.rounds++; save();
+  const over=!!S.settings.limit&&(S.today.rounds>=6||S.today.ms>=24*60*1000); if(over){ S.today.done=true; save(); }
+  $('end-title').textContent=over?'The kite flew all the way up.':'The kite flew high.';
+  $('end-text').textContent=over?'Reading time is finished for today.':'';
+  $('btn-end-more').hidden=over; show('s-end');
+}
+$('btn-end-home').addEventListener('click',()=>{ renderHome(); show(S.settings.limit&&S.today.done?'s-alldone':'s-home'); });
+$('btn-end-more').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+$('btn-alldone-home').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+
+// ---------- Parent ----------
+function openParent(){ show('s-parent'); $('parent-period').textContent=PERIOD_NAMES[periodIdx()]; renderHow(); renderTimerPane(); renderProgress(); renderSettings(); }
+$('btn-parent-close').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t)); document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t.dataset.pane)); }));
+function band(k,v,pi){ const g=GOALS[k]; if(v===null||v===undefined) return 'grey'; if(g.blue&&v>=g.blue[pi]) return 'blue'; if(v>=g.green[pi]) return 'green'; if(v>=g.yellow[pi]) return 'yellow'; return 'red'; }
+const pill=(k,v,pi)=>`<span class="pill ${band(k,v,pi)}">${v}</span>`;
+function renderHow(){
+  $('pane-how').innerHTML=`<h2>How to play</h2>
+  <div class="grid2">
+  <div class="tipcard"><b>Flashcards</b>The child reads the make-believe word aloud, then taps the green check. The iPad says the word so the child can hear whether it matched. For a more natural voice, download an Enhanced or Premium English voice on the iPad (Settings, Accessibility, Spoken Content, Voices) and pick it under Settings here. Two-letter and silent-e words are respelled for the voice, but listen to a few first, since the voice guesses at spellings it has never seen.</div>
+  <div class="tipcard"><b>Real or make-believe? (alone)</b>A word appears. The monster on the left means make-believe, the book on the right means real. To decide, the child has to read the word and check it against words they know, so this tests decoding without anyone listening. Real words show a small picture when one exists. After each answer the iPad says the word. Mistakes show the parts first.</div>
+  <div class="tipcard"><b>Patterns unlock in stages</b>Short vowels first, then silent e and r-controlled vowels, then digraphs and blends, then three-consonant blends. A stage unlocks after two flashcard sessions above 90% without help. You can set the stage by hand in Settings.</div>
+  <div class="tipcard"><b>Three-second rule</b>If the child stalls for three seconds, tell them the word, tap the hand, and move on. Say what they did well, such as "you said every sound," rather than "good job."</div>
+  <div class="tipcard"><b>Levels</b>The kites on the home screen set the level for both games. Easy follows the unlocked pattern stage. Medium opens digraphs and blends and mixes in make-believe words that are one letter away from real ones. Hard uses every pattern including three-consonant blends. Expert adds two-syllable make-believe words such as fimzat, built from two short ones, and in "Real or make-believe?" the real words are long ones like pumpkin and umbrella while the fakes all look almost real.</div>
+  <div class="tipcard"><b>Keep it short</b>Rounds are 20 cards. The daily limit is off by default; turn it on in Settings to stop play after six rounds or twenty-four minutes. Make-believe words should be a small part of reading time. Read real books together every day.</div>
+  </div>`;
+}
+// ---------- Timed run (NWF) ----------
+const T={items:[],ch:new Set(),wr:new Set(),last:null,running:false,started:false,left:60,tick:null,recIdx:null};
+function genNWF(){ const bank={}; Object.keys(NWF).forEach(k=>bank[k]=shuffle(NWF[k])); const take=k=>bank[k].pop()||bank.cvc.pop(); const rows=[];
+  for(let r=0;r<15;r++){ let row; if(r<5) row=[take(Math.random()<0.2?'vc':'cvc'),take('cvc'),take('cvc'),take('cvc'),take('cvc')];
+    else if(r<9) row=[take('cvc'),take('cvce'),take('cvc'),take('rcon'),take(Math.random()<0.5?'cvce':'rcon')];
+    else if(r<12) row=[take('cvc'),take(Math.random()<0.5?'cvce':'rcon'),take('dig'),take('blend'),take(Math.random()<0.5?'dig':'blend')];
+    else row=[take('blend'),take('ccc'),take(Math.random()<0.5?'dig':'rcon'),take('ccc'),take('blend')];
+    rows.push(shuffle(row)); } return rows.flat(); }
+function renderTimerPane(){
+  const r=S.timed.slice(-1)[0]; const recent=r&&daysSince(r.date)<7;
+  $('pane-timer').innerHTML=`<h2>Timed run: make-believe words</h2>
+  <p>One minute on a fresh form laid out like the real Nonsense Word Fluency test, once a week at most. Script: "Here are some make-believe words. Point to each letter and tell me the sound, or read the whole word. Start here and go across the page. Ready? Begin."</p>
+  <p>Tap <b>Start</b> as you say Begin. Tap a letter to mark a missed sound. Tap the small circle after a word if the child did not say the whole word. When the clock ends, tap the last word the child attempted. Silent e is grey and does not score.</p>
+  <p class="note">${r?`Last run ${r.date}${recent?' (this week)':''}.`:'Not yet run.'}</p>
+  <button class="pbtn ${recent?'warn':'primary'}" id="btn-open-timer">${recent?'Run anyway':'Open a form'}</button>`;
+  $('btn-open-timer').addEventListener('click',openTimer);
+}
+function openTimer(){ T.items=genNWF(); T.ch=new Set(); T.wr=new Set(); T.last=null; T.running=false; T.started=false; T.left=60; T.recIdx=null; $('clock').textContent='1:00'; $('btn-timer-start').hidden=false; $('btn-timer-stop').hidden=true; $('timer-note').textContent='Tap Start as you say Begin.'; renderForm(); show('s-timer'); }
+function renderForm(){
+  let html='<div class="form">';
+  for(let r=0;r<T.items.length;r+=5){ html+=`<div class="fr">${T.items.slice(r,r+5).map((w,j)=>{ const i=r+j; const us=parseWord(w); return `<span class="fi ${T.last===i?'last':''} ${T.last!==null&&i>T.last?'after':''}" data-i="${i}">${us.map((u,k)=>`<span class="ch ${u.silent?'silent':''} ${T.ch.has(i+'-'+k)?'miss':''}" data-i="${i}" data-k="${k}">${u.t}</span>`).join('')}<span class="wr ${T.wr.has(i)?'miss':''}" data-i="${i}" data-wr="1"></span></span>`; }).join('')}</div>`; }
+  html+='</div><div id="timer-result"></div>';
+  $('timer-body').innerHTML=html;
+  $('timer-body').querySelectorAll('.fi,.ch,.wr').forEach(el=>el.addEventListener('click',e=>{ e.stopPropagation(); formTap(el); }));
+}
+function formTap(el){
+  const i=+el.dataset.i;
+  if(!T.started){ toast('Tap Start first.'); return; }
+  if(!T.running){ T.last=i; renderForm(); scoreForm(); return; }
+  if(el.dataset.wr){ T.wr.has(i)?T.wr.delete(i):T.wr.add(i); }
+  else if(el.dataset.k!==undefined){ const u=parseWord(T.items[i])[+el.dataset.k]; if(u.silent) return; const key=i+'-'+el.dataset.k; T.ch.has(key)?T.ch.delete(key):T.ch.add(key); }
+  renderForm();
+}
+function beep(){ try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); const o=ctx.createOscillator(),g=ctx.createGain(); o.frequency.value=660; g.gain.value=0.08; o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+0.25); }catch(e){} }
+$('btn-timer-start').addEventListener('click',()=>{ T.running=true; T.started=true; T.left=60; $('btn-timer-start').hidden=true; $('btn-timer-stop').hidden=false; $('timer-note').textContent='Tap any missed sound.'; T.tick=setInterval(()=>{ T.left--; $('clock').textContent='0:'+String(Math.max(0,T.left)).padStart(2,'0'); if(T.left<=0) stopTimer(); },1000); });
+$('btn-timer-stop').addEventListener('click',stopTimer);
+function stopTimer(){ clearInterval(T.tick); T.running=false; beep(); $('btn-timer-stop').hidden=true; $('timer-note').textContent='Time. Tap the last word the child attempted.'; }
+$('btn-timer-back').addEventListener('click',()=>{ clearInterval(T.tick); T.running=false; openParent(); });
+function scoreForm(){
+  const pi=periodIdx(), L=T.last, upto=[...Array(L+1).keys()]; let cls=0,wrc=0;
+  upto.forEach(i=>{ const units=parseWord(T.items[i]); let any=false; units.forEach((u,k)=>{ if(u.silent) return; if(T.ch.has(i+'-'+k)) any=true; else cls++; }); if(!any&&!T.wr.has(i)) wrc++; });
+  const disc=(L>=4&&upto.slice(0,5).every(i=>parseWord(T.items[i]).every((u,k)=>u.silent||T.ch.has(i+'-'+k))))?'Discontinue rule would apply: no correct sounds in the first five words.':'';
+  const prev=S.timed.filter((t,j)=>j!==T.recIdx).slice(-1)[0];
+  const rec={date:todayKey(),cls,wrc,period:pi,attempted:L+1,stage:stage()};
+  if(T.recIdx===null){ T.recIdx=S.timed.length; S.timed.push(rec); } else { S.timed[T.recIdx]=rec; } save();
+  $('timer-result').innerHTML=`<div class="result"><h3 style="margin-top:0">Result, ${PERIOD_NAMES[pi].toLowerCase()}</h3>
+  <div class="field"><span class="n">${cls}</span><span>${GOALS.cls.label}</span>${pill('cls',cls,pi)}${prev?`<span class="note">last time ${prev.cls}</span>`:''}</div>
+  <div class="field"><span class="n">${wrc}</span><span>${GOALS.wrc.label}</span>${pill('wrc',wrc,pi)}${prev?`<span class="note">last time ${prev.wrc}</span>`:''}</div>
+  <p class="note">Words attempted: ${L+1}. Green is the benchmark goal for core support, blue is negligible risk. ${disc}</p></div>`;
+  $('timer-note').textContent='Scored. Tap the last word again if you change any marks.';
+}
+// ---------- Progress ----------
+function renderProgress(){
+  const pi=periodIdx(); const week=S.sessions.filter(s=>daysSince(s.date)<7); const mins=Math.round(week.reduce((a,s)=>a+(s.minutes||0),0));
+  const learning=Object.keys(S.mastery).filter(k=>S.mastery[k].s===0&&S.mastery[k].seen>0);
+  const conf=Object.entries(S.confus).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  let html=`<h2>Progress</h2><p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. Current stage: ${stage()+1} of ${STAGES.length}, ${STAGES[stage()].name}.</p>`;
+  html+=`<h3>Sessions</h3>`+(S.sessions.length?`<table><tr><th>Date</th><th>Flashcards</th><th>Helped</th><th>Real or not</th><th>Stage</th></tr>${S.sessions.slice(-10).reverse().map(s=>`<tr><td>${s.date}</td><td>${s.cards}</td><td>${s.cards?Math.round(100*s.helped/s.cards)+'%':'-'}</td><td>${s.realN?Math.round(100*s.realOk/s.realN)+'% of '+s.realN:'-'}</td><td>${(s.stage||0)+1}</td></tr>`).join('')}</table>`:'<p class="note">No sessions yet.</p>');
+  html+=`<h3>Timed runs</h3>`+(S.timed.length?`<table><tr><th>Date</th><th>Letter sounds</th><th>Words recoded</th><th>Attempted</th></tr>${S.timed.slice(-8).reverse().map(r=>`<tr><td>${r.date}</td><td>${pill('cls',r.cls,r.period)}</td><td>${pill('wrc',r.wrc,r.period)}</td><td>${r.attempted}</td></tr>`).join('')}</table>`:'<p class="note">No timed runs yet.</p>');
+  html+=`<h3>Goals this period (${PERIOD_NAMES[pi].toLowerCase()})</h3><table><tr><th>Measure</th><th>Blue</th><th>Green</th><th>Yellow</th></tr>${Object.entries(GOALS).map(([k,g])=>`<tr><td>${g.label}</td><td>${g.blue[pi]}+</td><td>${g.green[pi]}+</td><td>${g.yellow[pi]}+</td></tr>`).join('')}</table>`;
+  html+=`<h3>Still learning</h3><p>${learning.length?learning.join(', '):'<span class="note">Nothing waiting.</span>'}</p>`;
+  html+=`<h3>Make-believe words judged real</h3><p>${conf.length?conf.map(([w,n])=>`${w} (${n})`).join(', '):'<span class="note">None yet.</span>'}</p>`;
+  html+=`<p><button class="pbtn" id="btn-export">Copy all data</button> <span class="note">Copies progress as text to paste into a note or email.</span></p>`;
+  $('pane-progress').innerHTML=html;
+  $('btn-export').addEventListener('click',async()=>{ const txt=JSON.stringify(S,null,1); try{ await navigator.clipboard.writeText(txt); toast('Copied.'); }catch(e){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); toast('Copied.'); }catch(err){ toast('Could not copy.'); } ta.remove(); } });
+}
+// ---------- Settings ----------
+function renderSettings(){
+  loadVoices(); const en=voices.filter(v=>/^en/i.test(v.lang));
+  $('pane-settings').innerHTML=`<h2>Settings</h2>
+  <div class="field"><label>Voice</label><select id="set-voice" style="font:inherit;font-size:16px;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);max-width:100%"><option value="">Automatic</option>${en.map(v=>`<option value="${v.name}" ${S.settings.voice===v.name?'selected':''}>${v.name} (${v.lang})</option>`).join('')}</select><button class="pbtn" id="set-test">Test: zat, fabe, ub</button></div>
+  <div class="field"><label>Speed</label><input type="range" id="set-rate" min="0.6" max="1.1" step="0.05" value="${S.settings.rate}"><span class="note" id="set-rate-v">${S.settings.rate}</span></div>
+  <div class="field"><label>Benchmark period</label>${[['auto','Automatic'],['B','Beginning'],['M','Middle'],['E','End']].map(([v,l])=>`<button class="pbtn ${S.settings.period===v?'on':''}" data-period="${v}">${l}</button>`).join('')}</div>
+  <div class="field"><label>Pattern stage</label><button class="pbtn ${S.settings.stageOverride===null?'on':''}" data-stage="auto">Automatic (${S.stage+1})</button>${STAGES.map((st,i)=>`<button class="pbtn ${S.settings.stageOverride===i?'on':''}" data-stage="${i}">${i+1}. ${st.name}</button>`).join('')}</div>
+  <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?'On: six rounds or 24 minutes':'Off'}</button><span class="note">When on, play stops for the day after six rounds or twenty-four minutes.</span></div>
+  <div class="field"><button class="pbtn" id="set-more">Allow one more round today</button><span class="note">${S.settings.limit&&S.today.done?'Today is marked finished.':'Today is not finished.'}</span></div>
+  <h3>On the iPad</h3><p>Open this page in Safari, tap Share, then "Add to Home Screen." It opens full screen and keeps its data on the device. Deleting the icon deletes the data, so copy the data from Progress now and then.</p>
+  <h3>Data</h3><div class="field"><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>
+  <p class="note">Practice words are original. The official DIBELS 8th Edition forms are copyright University of Oregon and are not included. Benchmark goals are the published first-grade cut points dated July 2020.</p>`;
+  $('set-voice').addEventListener('change',e=>{ S.settings.voice=e.target.value; save(); });
+  $('set-test').addEventListener('click',async()=>{ await speak(sayNonsense('zat')); await wait(300); await speak(sayNonsense('fabe')); await wait(300); await speak(sayNonsense('ub')); });
+  $('set-rate').addEventListener('input',e=>{ S.settings.rate=+e.target.value; $('set-rate-v').textContent=S.settings.rate; save(); });
+  $('pane-settings').querySelectorAll('[data-period]').forEach(b=>b.addEventListener('click',()=>{ S.settings.period=b.dataset.period; save(); openParent(); }));
+  $('pane-settings').querySelectorAll('[data-stage]').forEach(b=>b.addEventListener('click',()=>{ S.settings.stageOverride=b.dataset.stage==='auto'?null:+b.dataset.stage; save(); openParent(); }));
+  $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit) S.today.done=false; save(); renderSettings(); });
+  $('set-more').addEventListener('click',()=>{ rollDay(); S.today.done=false; S.today.rounds=Math.min(S.today.rounds,5); S.today.ms=Math.min(S.today.ms,20*60*1000); save(); toast('One more round allowed.'); renderSettings(); });
+  pointerHold($('set-reset'),3000,()=>{ localStorage.removeItem(KEY); S=JSON.parse(JSON.stringify(DEFAULT)); save(); toast('Erased.'); openParent(); });
+}
+// ---------- Start ----------
+rollDay(); renderHome(); show('s-home');
+</script>
+
+</body>
+</html>

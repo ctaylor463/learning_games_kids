@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F4F1EA">
+<title>Learning Games</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#F4F1EA; --card:#FFFFFF; --ink:#1F2A37; --ink-soft:#69778A; --edge:#E3DDD0;
+  --shadow:0 2px 0 rgba(31,42,55,.06),0 6px 18px rgba(31,42,55,.08);
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --ground:#141A21; --card:#1E262F; --ink:#E8EDF2; --ink-soft:#9AA7B6; --edge:#2B3642; --shadow:0 6px 18px rgba(0,0,0,.35); }
+}
+:root[data-theme="dark"]{ --ground:#141A21; --card:#1E262F; --ink:#E8EDF2; --ink-soft:#9AA7B6; --edge:#2B3642; --shadow:0 6px 18px rgba(0,0,0,.35); }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:Fredoka,ui-rounded,"SF Pro Rounded",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+main{max-width:980px;margin:0 auto;padding:max(28px,var(--sat)) max(16px,var(--sar)) max(36px,var(--sab)) max(16px,var(--sal))}
+h1{font-size:clamp(30px,6vw,44px);font-weight:600;margin:8px 0 26px}
+h2{font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:30px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{display:flex;align-items:center;gap:18px;padding:18px;border-radius:22px;background:var(--card);border:1px solid var(--edge);box-shadow:var(--shadow);color:inherit;text-decoration:none;transition:transform .12s ease}
+.card:active{transform:scale(.98)}
+@media (hover:hover){ .card:hover{transform:translateY(-2px)} }
+.card img{width:84px;height:84px;border-radius:20px;flex:none}
+.card b{display:block;font-size:24px;font-weight:600}
+.card span{display:block;margin-top:4px;font-size:16px;font-weight:500;color:var(--ink-soft);line-height:1.3}
+</style>
+</head>
+<body>
+<main>
+  <h1>Learning Games</h1>
+
+  <h2>Reading and math</h2>
+  <div class="grid">
+    <a class="card" href="reading/"><img src="reading/icon.svg" alt=""><div><b>Reading Game</b><span>Pictures and words, building words, vowel sounds</span></div></a>
+    <a class="card" href="dibels/"><img src="dibels/icon.svg" alt=""><div><b>Dibel Game</b><span>Make-believe words and timed reading</span></div></a>
+    <a class="card" href="math/"><img src="math/icon.svg" alt=""><div><b>Math Game</b><span>Ten frames, number bonds, crossing ten</span></div></a>
+  </div>
+
+  <h2>Maps</h2>
+  <div class="grid">
+    <a class="card" href="map_world/"><img src="map_world/icon.svg" alt=""><div><b>Map Game</b><span>Countries and cities of the world</span></div></a>
+    <a class="card" href="map_us/"><img src="map_us/icon.svg" alt=""><div><b>Map Game US</b><span>States and cities of the United States</span></div></a>
+  </div>
+</main>
+</body>
+</html>

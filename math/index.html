@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Math Game</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Math Game">
+<meta name="theme-color" content="#F7F8FA">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap">
+<style>
+@font-face{font-family:'ABeeZee';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,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) format('woff2');}
+:root{
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --ground:#F7F8FA; --grid:#DFE6EE; --card:#FFFFFF; --ink:#1F2A37; --ink-soft:#69778A; --line:#D3DBE4;
+  --accent:#E8730C; --good:#3E9B5F; --amber:#E0A13A; --shadow:0 6px 24px rgba(31,42,55,.10);
+  --c1:#F2F2F2; --c2:#D6413E; --c3:#7FB069; --c4:#8E6BB5; --c5:#F0C419;
+  --c6:#2E7D4F; --c7:#3B3B3B; --c8:#8D6E4F; --c9:#3D6FB5; --c10:#E8730C;
+  --f-num:'Fredoka','Trebuchet MS',sans-serif;
+  --f-read:'ABeeZee','Trebuchet MS','Verdana',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141A21; --grid:#243040; --card:#1E262F; --ink:#EDF1F5; --ink-soft:#9FADBD; --line:#36434F;
+    --accent:#F2903A; --good:#5DBA7A; --amber:#E8B04C; --shadow:0 6px 24px rgba(0,0,0,.35);
+    --c1:#4A5461; --c7:#9AA4AE;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141A21; --grid:#243040; --card:#1E262F; --ink:#EDF1F5; --ink-soft:#9FADBD; --line:#36434F;
+  --accent:#F2903A; --good:#5DBA7A; --amber:#E8B04C; --shadow:0 6px 24px rgba(0,0,0,.35);
+  --c1:#4A5461; --c7:#9AA4AE;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;color:var(--ink);font-family:var(--f-read);font-size:18px;-webkit-user-select:none;user-select:none;overscroll-behavior:none;touch-action:manipulation;
+  background:var(--ground);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#app{height:100%;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;min-height:0}
+.screen.on{display:flex}
+
+.strip{display:flex;align-items:center;gap:12px;padding:max(10px,var(--sat)) max(14px,var(--sar)) 10px max(14px,var(--sal));min-height:64px}
+.iconbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--card);box-shadow:var(--shadow)}
+.iconbtn svg{width:30px;height:30px}
+.iconbtn.small{width:44px;height:44px}
+.iconbtn.small svg{width:22px;height:22px}
+.track{flex:1;max-width:420px;height:40px;position:relative;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 2px var(--line);overflow:hidden;display:flex;align-items:center;padding:5px}
+.track .ticks{position:relative;display:flex;width:100%;height:100%;gap:4px}
+.track .ticks span{flex:1;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--line);position:relative}
+.track .ticks span.done::after{content:'';position:absolute;inset:16%;border-radius:50%;background:var(--c2)}
+@media (prefers-reduced-motion: reduce){.track .ticks span.done::after{transition:none}}
+
+.home{flex:1;display:flex;flex-direction:column;padding:max(6px,var(--sat)) max(18px,var(--sar)) max(18px,var(--sab)) max(18px,var(--sal));gap:14px;min-height:0}
+.hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;width:100%}
+.brand{font-family:var(--f-num);font-weight:600;font-size:30px}
+.brand small{display:block;font-family:var(--f-read);font-weight:400;font-size:15px;color:var(--ink-soft);margin-top:2px}
+.levels{display:flex;gap:12px}
+.lvl{flex:1;background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:4px solid transparent;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:84px}
+.lvl.on{border-color:var(--accent)}
+.lvl .rods{display:flex;align-items:flex-end;gap:3px;height:30px}
+.lvl .rods i{display:block;width:9px;border-radius:2px;background:var(--c5)}
+.lvl .lab{font-family:var(--f-num);font-size:14px;color:var(--ink-soft)}
+.lvl.on .lab{color:var(--ink)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;min-height:0}
+@media (max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.tiles{grid-template-columns:1fr}}
+.tile{background:var(--card);border-radius:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;border:4px solid transparent;min-height:130px}
+.tile:active{transform:scale(.98)}
+.tile .glyph{height:66px;display:flex;align-items:center;justify-content:center}
+.tile .glyph svg{height:66px;width:auto;display:block}
+.tile .label{font-family:var(--f-num);font-size:19px;color:var(--ink);text-align:center}
+.tile.locked{opacity:.45}
+.tile.adv{border-color:var(--c9)}
+.tile .advtag{font-size:13px;color:var(--ink-soft)}
+.homefoot{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.gate{width:56px;height:56px;border-radius:50%;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden}
+.gate svg{width:26px;height:26px;position:relative}
+.gate .fill{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--c5)}
+.done-note{font-size:15px;color:var(--ink-soft)}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 18px 14px;min-height:0;gap:16px}
+.card{background:var(--card);border-radius:26px;box-shadow:var(--shadow);width:100%;max-width:820px;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;position:relative;border:6px solid transparent;transition:border-color .3s}
+.card>div:not(.prompt):not(.eq){width:100%;display:flex;flex-direction:column;align-items:center;gap:10px}
+.card.ok{border-color:var(--good)}
+.card.oops{border-color:var(--amber)}
+.prompt{font-family:var(--f-num);font-weight:500;font-size:min(6vw,30px);color:var(--ink-soft);text-align:center}
+.eq{font-family:var(--f-num);font-weight:600;font-size:min(15vw,86px);display:flex;align-items:center;gap:.18em;line-height:1;font-variant-numeric:tabular-nums}
+.eq .box{min-width:1.1em;height:1.15em;border-radius:.14em;border:.06em dashed var(--line);display:inline-flex;align-items:center;justify-content:center;padding:0 .06em}
+.eq .box.filled{border-style:solid;border-color:var(--accent);color:var(--accent)}
+.eq .op{color:var(--ink-soft)}
+
+svg.tf{width:100%;max-width:min(92vw,560px);height:auto;display:block}
+svg.die{width:min(30vw,130px);height:auto;display:block}
+svg.dots{width:100%;max-width:min(80vw,420px);height:auto;display:block}
+svg.rek{width:100%;max-width:min(92vw,600px);height:auto;display:block}
+svg.nline{width:100%;max-width:min(94vw,760px);height:auto;display:block}
+svg.rod{height:34px;width:auto;display:block}
+svg.bt{height:min(22vw,124px);width:auto;display:block}
+svg.oline{width:100%;max-width:min(94vw,720px);height:auto;display:block}
+.btrow{display:flex;gap:16px;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+.btrow .op{font-family:var(--f-num);font-weight:600;font-size:34px;color:var(--ink-soft);align-self:center}
+svg.bond{width:min(70vw,320px);height:auto;display:block}
+.pairwrap{display:flex;gap:18px;align-items:center;justify-content:center}
+.twoside{display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap}
+.twoside svg.tf{max-width:min(44vw,300px)}
+.hidden-art{font-family:var(--f-num);font-weight:600;font-size:min(20vw,110px);color:var(--line);line-height:1}
+.pnote{min-height:26px;font-family:var(--f-num);font-size:19px;color:var(--good);opacity:0;transition:opacity .3s;text-align:center}
+.rodrow{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.rodrow .lbl{font-family:var(--f-num);font-size:15px;color:var(--ink-soft)}
+.choices{display:flex;gap:14px;width:100%;max-width:820px;justify-content:center;flex-wrap:wrap}
+.choice{flex:0 1 auto;min-width:92px;min-height:92px;padding:0 18px;background:var(--card);border-radius:20px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;font-family:var(--f-num);font-weight:600;font-size:min(9vw,48px);border:5px solid transparent;transition:border-color .2s,opacity .2s,transform .1s;font-variant-numeric:tabular-nums}
+.choice:active{transform:scale(.97)}
+.choice.glow{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--card))}
+.choice.dim{opacity:.32}
+.choice.wide{min-width:150px}
+
+.bar{display:flex;justify-content:center;gap:20px;padding:10px 18px max(20px,var(--sab));align-items:center;flex-wrap:wrap}
+.act{height:78px;min-width:140px;padding:0 28px;border-radius:39px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--f-num);font-weight:600;font-size:21px;box-shadow:var(--shadow)}
+.act svg{width:34px;height:34px}
+.act.plain{background:var(--card);color:var(--ink)}
+.act.go{background:var(--accent);color:#fff;min-width:190px}
+.act[disabled]{opacity:.35;pointer-events:none}
+
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+.center h1{font-family:var(--f-num);font-weight:600;font-size:34px;margin:0}
+.center p{margin:0;color:var(--ink-soft);max-width:34em}
+.bigart{width:min(52vw,280px)}
+.bigart svg{width:100%;height:auto;display:block}
+
+.parent{flex:1;display:flex;flex-direction:column;min-height:0;-webkit-user-select:text;user-select:text}
+.tabs{display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto}
+.tab{font-family:var(--f-num);font-weight:600;font-size:16px;padding:10px 16px;border-radius:999px;background:var(--card);color:var(--ink-soft);white-space:nowrap}
+.tab.on{background:var(--ink);color:var(--ground)}
+.pane{display:none;flex:1;overflow:auto;padding:0 18px 28px;min-height:0}
+.pane.on{display:block}
+.pane h2{font-family:var(--f-num);font-weight:600;font-size:22px;margin:18px 0 8px}
+.pane h3{font-family:var(--f-num);font-weight:600;font-size:15px;margin:16px 0 6px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.pane p,.pane li{font-size:16px;line-height:1.5;max-width:66ch}
+.pane table{border-collapse:collapse;width:100%;max-width:760px;font-size:15px;font-variant-numeric:tabular-nums}
+.pane th,.pane td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.pane th{font-family:var(--f-num);font-weight:600;color:var(--ink-soft);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.pbtn{font-family:var(--f-num);font-weight:600;font-size:16px;padding:12px 18px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);margin:4px 6px 4px 0;min-height:48px}
+.pbtn.warn{background:var(--amber);color:#1F2A37}
+.pbtn.on{outline:3px solid var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.tipcard{background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow)}
+.tipcard b{font-family:var(--f-num);display:block;margin-bottom:4px}
+.field{display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap}
+.note{font-size:15px;color:var(--ink-soft)}
+.factgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:5px;max-width:760px}
+.factgrid div{aspect-ratio:1.5;border-radius:7px;display:grid;place-items:center;font-size:12px;font-variant-numeric:tabular-nums;background:var(--line);color:var(--ink-soft)}
+.factgrid div.k0{background:#E9EDF2;color:#8C99A8}
+.factgrid div.k1{background:#F6D6C8;color:#7A3A1C}
+.factgrid div.k2{background:#F7E6A8;color:#6B5410}
+.factgrid div.k3{background:#BFE3C9;color:#1F5B34}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:12px 18px;border-radius:14px;font-size:16px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;z-index:50}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section class="screen on" id="s-home">
+  <div class="home">
+    <div class="hometop">
+      <div class="brand">Math Game<small id="home-sub">Numbers you can see</small></div>
+      <div style="display:flex;gap:12px">
+        <a class="iconbtn" href="../" aria-label="All games" title="All games" style="color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></a>
+        <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+      </div>
+    </div>
+    <div class="levels" id="levels"></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="homefoot">
+      <span class="done-note" id="home-note"></span>
+      <button class="gate" id="gate" aria-label="Grown-ups: hold for three seconds"><span class="fill"></span><span data-icon="lock"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s-play">
+  <div class="strip">
+    <button class="iconbtn" id="btn-home" aria-label="Home"><span data-icon="home"></span></button>
+    <div class="track" id="track"><div class="ticks" id="track-ticks"></div></div>
+    <button class="iconbtn" id="btn-play-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+  </div>
+  <div class="stage" id="stage"></div>
+  <div class="bar" id="bar"></div>
+</section>
+
+<section class="screen" id="s-end">
+  <div class="center">
+    <div class="bigart" id="end-art"></div>
+    <h1 id="end-title">Round finished.</h1>
+    <p id="end-text"></p>
+    <div class="bar" style="padding-bottom:0">
+      <button class="act plain" id="btn-end-home" aria-label="Home"><span data-icon="home"></span></button>
+      <button class="act go" id="btn-end-more" aria-label="Another round"><span data-icon="next"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s-alldone">
+  <div class="center">
+    <div class="bigart" id="alldone-art"></div>
+    <h1>All done for today.</h1>
+    <p>Math time is finished. Count something real together.</p>
+    <button class="act plain" id="btn-alldone-home" aria-label="Home"><span data-icon="home"></span></button>
+  </div>
+</section>
+
+<section class="screen" id="s-parent">
+  <div class="parent">
+    <div class="strip">
+      <button class="iconbtn small" id="btn-parent-close" aria-label="Close"><span data-icon="close"></span></button>
+      <div class="brand" style="font-size:22px;flex:1">Grown-ups</div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-pane="how">How to play</button>
+      <button class="tab" data-pane="progress">Progress</button>
+      <button class="tab" data-pane="facts">Fact map</button>
+      <button class="tab" data-pane="settings">Settings</button>
+    </div>
+    <div class="pane on" id="pane-how"></div>
+    <div class="pane" id="pane-progress"></div>
+    <div class="pane" id="pane-facts"></div>
+    <div class="pane" id="pane-settings"></div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+</div>
+<script>
+// ---------- Icons ----------
+const ICONS = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h11a5 5 0 0 1 0 10H8"/><path d="m8 4-4 4 4 4"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  fullscreen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',
+  fullscreenExit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m11 7h6m-6 0V4m0 6l7-7"/></svg>'
+};
+const RODC = ['','var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)','var(--c7)','var(--c8)','var(--c9)','var(--c10)'];
+
+// ---------- Ten frame ----------
+// n counters, or [a,b] for a two-colour part-whole fill. cap 10 per frame; >10 draws two frames.
+function tenFrame(spec, o){
+  o = o || {}; const cw = 46, gap = 5, pad = 6;
+  const parts = Array.isArray(spec) ? spec : [spec, 0];
+  const total = parts[0] + parts[1];
+  const frames = Math.max(1, Math.ceil(Math.max(total, o.min || 0) / 10));
+  const fw = 5 * cw + 4 * gap + 2 * pad, fh = 2 * cw + gap + 2 * pad;
+  const W = frames * fw + (frames - 1) * 16, H = fh;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="tf" role="img" aria-label="${total} counters">`;
+  let k = 0;
+  for (let f = 0; f < frames; f++) {
+    const ox = f * (fw + 16);
+    s += `<rect x="${ox + 1}" y="1" width="${fw - 2}" height="${fh - 2}" rx="10" fill="none" stroke="var(--line)" stroke-width="2"/>`;
+    for (let r = 0; r < 2; r++) for (let c = 0; c < 5; c++) {
+      const x = ox + pad + c * (cw + gap), y = pad + r * (cw + gap);
+      s += `<rect x="${x}" y="${y}" width="${cw}" height="${cw}" rx="7" fill="none" stroke="var(--line)" stroke-width="1.5"/>`;
+      k++;
+      if (k <= total) {
+        const col = k <= parts[0] ? (o.c1 || 'var(--c2)') : (o.c2 || 'var(--c9)');
+        const hide = o.hide && k > o.hide;
+        s += `<circle cx="${x + cw / 2}" cy="${y + cw / 2}" r="${cw * 0.36}" fill="${hide ? 'none' : col}" ${hide ? 'stroke="var(--line)" stroke-width="2" stroke-dasharray="4 3"' : ''}/>`;
+      }
+    }
+  }
+  return s + '</svg>';
+}
+
+// ---------- Subitizing dot patterns ----------
+const PIPS = {1:[[1,1]],2:[[0,0],[2,2]],3:[[0,0],[1,1],[2,2]],4:[[0,0],[2,0],[0,2],[2,2]],5:[[0,0],[2,0],[1,1],[0,2],[2,2]],6:[[0,0],[2,0],[0,1],[2,1],[0,2],[2,2]]};
+function dieFace(n, size){
+  size = size || 120; const u = size / 3;
+  let s = `<svg viewBox="0 0 ${size} ${size}" class="die" role="img" aria-label="${n}"><rect x="2" y="2" width="${size-4}" height="${size-4}" rx="${size*0.16}" fill="var(--card)" stroke="var(--line)" stroke-width="2.5"/>`;
+  (PIPS[n]||[]).forEach(([c,r])=>{ s += `<circle cx="${u*c + u/2 + (c-1)*2}" cy="${u*r + u/2 + (r-1)*2}" r="${u*0.20}" fill="var(--ink)"/>`; });
+  return s + '</svg>';
+}
+// Scattered or grouped dots for conceptual subitizing (7 to 10 shown as 5 plus n)
+function dotSet(n, style){
+  const R = 17, gap = 9;
+  if (style === 'die' && n <= 6) return dieFace(n, 130);
+  if (style === 'pair') { // two dice faces side by side, for 7 to 12
+    const a = Math.min(6, Math.ceil(n / 2)), b = n - a;
+    return `<span class="pairwrap">${dieFace(a, 108)}${dieFace(b, 108)}</span>`;
+  }
+  const cols = Math.min(5, n), rows = Math.ceil(n / 5);
+  const W = cols * (2*R) + (cols-1)*gap + 8, H = rows * (2*R) + (rows-1)*gap + 8;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="dots" role="img" aria-label="${n}">`;
+  for (let i = 0; i < n; i++) { const r = Math.floor(i/5), c = i%5;
+    s += `<circle cx="${4 + R + c*(2*R+gap)}" cy="${4 + R + r*(2*R+gap)}" r="${R}" fill="${r===0?'var(--c2)':'var(--c9)'}"/>`; }
+  return s + '</svg>';
+}
+
+// ---------- Rekenrek ----------
+function rekenrek(a, b){
+  const bw = 34, gap = 3, pad = 10, rowH = 46;
+  const W = 10 * bw + 9 * gap + 2 * pad + 40, H = 2 * rowH + pad * 2;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="rek" role="img" aria-label="${a+b} beads">`;
+  s += `<rect x="2" y="2" width="${W-4}" height="${H-4}" rx="12" fill="none" stroke="var(--line)" stroke-width="2.5"/>`;
+  [a, b].forEach((cnt, r) => {
+    const y = pad + r * rowH + rowH / 2;
+    s += `<line x1="${pad}" y1="${y}" x2="${W - pad}" y2="${y}" stroke="var(--line)" stroke-width="2"/>`;
+    for (let i = 0; i < 10; i++) {
+      const pushed = i < cnt;
+      const x = pushed ? pad + i * (bw + gap) + bw / 2 : W - pad - (10 - i) * (bw + gap) + bw / 2 + 6;
+      s += `<circle cx="${x}" cy="${y}" r="${bw/2 - 1}" fill="${i < 5 ? 'var(--c2)' : 'var(--c1)'}" stroke="var(--ink-soft)" stroke-width="1.5"/>`;
+    }
+  });
+  return s + '</svg>';
+}
+
+// ---------- Number line ----------
+function numberLine(min, max, o){
+  o = o || {}; const n = max - min, step = 62, pad = 34;
+  const W = n * step + pad * 2, H = o.hops && o.hops.length ? 132 : 86, base = H - 34;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="nline" role="img" aria-label="number line ${min} to ${max}">`;
+  s += `<line x1="${pad}" y1="${base}" x2="${W-pad}" y2="${base}" stroke="var(--ink-soft)" stroke-width="3" stroke-linecap="round"/>`;
+  for (let v = min; v <= max; v++) {
+    const x = pad + (v - min) * step, major = o.labelAll || v % (o.every || 1) === 0;
+    s += `<line x1="${x}" y1="${base - 9}" x2="${x}" y2="${base + 9}" stroke="var(--ink-soft)" stroke-width="${major?3:2}"/>`;
+    if (major && !o.blank) s += `<text x="${x}" y="${base + 30}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="21" fill="var(--ink-soft)">${v}</text>`;
+  }
+  (o.hops || []).forEach(h => {
+    const x1 = pad + (h.from - min) * step, x2 = pad + (h.to - min) * step, mid = (x1 + x2) / 2, r = Math.abs(x2 - x1) / 2;
+    s += `<path d="M ${x1} ${base-12} A ${r} ${Math.min(r,46)} 0 0 1 ${x2} ${base-12}" fill="none" stroke="${h.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<text x="${mid}" y="${base - Math.min(r,46) - 18}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="600" fill="${h.color||'var(--accent)'}">${h.label||''}</text>`;
+  });
+  if (o.mark !== undefined && o.mark !== null) {
+    const x = pad + (o.mark - min) * step;
+    s += `<circle cx="${x}" cy="${base}" r="12" fill="var(--accent)" stroke="var(--card)" stroke-width="3"/>`;
+  }
+  return s + '</svg>';
+}
+
+// ---------- Cuisenaire rods ----------
+function rod(n, o){
+  o = o || {}; const u = o.unit || 34, h = o.h || 34;
+  let s = `<svg viewBox="0 0 ${n*u+4} ${h+4}" class="rod" role="img" aria-label="rod of ${n}">`;
+  s += `<rect x="2" y="2" width="${n*u}" height="${h}" rx="6" fill="${RODC[n]||'var(--c10)'}" stroke="var(--ink-soft)" stroke-width="1.5"/>`;
+  if (o.marks) for (let i = 1; i < n; i++) s += `<line x1="${2+i*u}" y1="2" x2="${2+i*u}" y2="${h+2}" stroke="rgba(0,0,0,.22)" stroke-width="1.5"/>`;
+  return s + '</svg>';
+}
+
+// ---------- Number bond ----------
+function numberBond(whole, a, b, o){
+  o = o || {}; const W = 320, H = 210, r = 44;
+  const wx = W/2, wy = r + 6, ax = r + 14, ay = H - r - 6, bx = W - r - 14, by = ay;
+  const cell = (x, y, v, cls) => v === null
+    ? `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="7 6"/>`
+    : `<circle cx="${x}" cy="${y}" r="${r}" fill="var(--card)" stroke="var(--line)" stroke-width="3"/><text x="${x}" y="${y+13}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="40" font-weight="600" fill="var(--ink)">${v}</text>`;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="bond" role="img" aria-label="number bond">`;
+  s += `<line x1="${wx-14}" y1="${wy+r-6}" x2="${ax+22}" y2="${ay-r+6}" stroke="var(--line)" stroke-width="3"/>`;
+  s += `<line x1="${wx+14}" y1="${wy+r-6}" x2="${bx-22}" y2="${by-r+6}" stroke="var(--line)" stroke-width="3"/>`;
+  s += cell(wx, wy, whole) + cell(ax, ay, a) + cell(bx, by, b);
+  return s + '</svg>';
+}
+
+// ---------- Base ten blocks ----------
+// Tens as ten-stacks, ones as loose cubes, so a two digit number is a quantity not two digits.
+function baseTen(n, o){
+  o = o || {}; const u = o.u || 13, gap = 6, colGap = 16;
+  const tens = Math.floor(n / 10), ones = n % 10;
+  const cols = tens + (ones ? 1 : 0) || 1;
+  const W = tens * (u + gap) + (ones ? colGap + u : 0) + 6, H = 10 * u + 6;
+  let s = `<svg viewBox="0 0 ${Math.max(W, u + 6)} ${H}" class="bt" role="img" aria-label="${n}">`;
+  const col = o.color || 'var(--c9)', oneCol = o.oneColor || o.color || 'var(--c5)';
+  for (let t = 0; t < tens; t++) {
+    const x = 3 + t * (u + gap);
+    s += `<rect x="${x}" y="3" width="${u}" height="${10*u}" rx="2.5" fill="${col}" stroke="var(--ink-soft)" stroke-width="1.2"/>`;
+    for (let k = 1; k < 10; k++) s += `<line x1="${x}" y1="${3+k*u}" x2="${x+u}" y2="${3+k*u}" stroke="rgba(0,0,0,.25)" stroke-width="1"/>`;
+  }
+  for (let k = 0; k < ones; k++) {
+    const x = 3 + tens * (u + gap) + colGap;
+    s += `<rect x="${x}" y="${3 + (10-1-k) * u}" width="${u}" height="${u}" rx="2.5" fill="${oneCol}" stroke="var(--ink-soft)" stroke-width="1.2"/>`;
+  }
+  return s + '</svg>';
+}
+
+// ---------- Open number line ----------
+// No ticks. Only the landmarks the jumps actually land on, which is the point of it.
+function openLine(start, jumps){
+  const W = 720, H = 128, base = 92, pad = 40;
+  const total = jumps.reduce((a,j)=>a+Math.abs(j.d),0) || 1;
+  let x = pad, val = start;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="oline" role="img" aria-label="open number line from ${start}">`;
+  s += `<line x1="${pad-16}" y1="${base}" x2="${W-pad+16}" y2="${base}" stroke="var(--ink-soft)" stroke-width="3" stroke-linecap="round"/>`;
+  const mark=(px,v,strong)=>`<line x1="${px}" y1="${base-9}" x2="${px}" y2="${base+9}" stroke="var(--ink-soft)" stroke-width="3"/><text x="${px}" y="${base+30}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="${strong?600:500}" fill="${strong?'var(--accent)':'var(--ink-soft)'}">${v}</text>`;
+  s += mark(x, val, false);
+  jumps.forEach((j,i)=>{
+    const w = (Math.abs(j.d) / total) * (W - pad * 2);
+    const x2 = x + w, mid = (x + x2) / 2, r = w / 2;
+    s += `<path d="M ${x} ${base-11} A ${r} ${Math.min(r,42)} 0 0 1 ${x2} ${base-11}" fill="none" stroke="${j.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<text x="${mid}" y="${base - Math.min(r,42) - 16}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="${j.color||'var(--accent)'}">${j.d>0?'+':'−'}${Math.abs(j.d)}</text>`;
+    val += j.d; x = x2;
+    s += mark(x, val, i===jumps.length-1);
+  });
+  return s + '</svg>';
+}
+
+// ---------- Decorative ----------
+function rodStack(){
+  let s = '<svg viewBox="0 0 210 150">';
+  [10,7,4,9,5].forEach((n,i)=>{ s += `<rect x="6" y="${6+i*28}" width="${n*19}" height="22" rx="5" fill="${RODC[n]}" stroke="var(--ink-soft)" stroke-width="1.2"/>`; });
+  return s + '</svg>';
+}
+function trophyArt(){
+  return '<svg viewBox="0 0 200 160"><rect x="60" y="18" width="80" height="60" rx="10" fill="var(--c5)" stroke="var(--ink-soft)" stroke-width="2"/><path d="M60 30H42a16 16 0 0 0 18 22M140 30h18a16 16 0 0 1-18 22" fill="none" stroke="var(--ink-soft)" stroke-width="4"/><rect x="88" y="78" width="24" height="30" fill="var(--c8)"/><rect x="62" y="108" width="76" height="16" rx="5" fill="var(--c8)"/><rect x="52" y="124" width="96" height="18" rx="6" fill="var(--c10)"/></svg>';
+}
+</script>
+<script>
+// ---------- State ----------
+const KEY='math-game-v1';
+const DEFAULT={v:1, level:0, settings:{limit:false,dark:'auto'}, facts:{}, fam:{}, errors:[], sessions:[], tipIdx:0, todayKey:'', today:{rounds:0,ms:0,done:false}};
+let S=load();
+function load(){ try{ const raw=localStorage.getItem(KEY); if(raw){ const o=JSON.parse(raw); return Object.assign({},DEFAULT,o,{settings:Object.assign({},DEFAULT.settings,o.settings||{})}); } }catch(e){} return JSON.parse(JSON.stringify(DEFAULT)); }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function todayKey(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function rollDay(){ const k=todayKey(); if(S.todayKey!==k){ S.todayKey=k; S.today={rounds:0,ms:0,done:false}; save(); } }
+function currentSession(){ rollDay(); let s=S.sessions[S.sessions.length-1]; if(!s||s.date!==S.todayKey){ s={date:S.todayKey,items:0,first:0,retry:0,minutes:0,level:S.level||0,modes:{}}; S.sessions.push(s); } return s; }
+function daysSince(d){ return Math.floor((Date.now()-new Date(d+'T12:00:00').getTime())/86400000); }
+
+// ---------- Full Screen ----------
+function isFullscreen(){
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+function updateFsButtons(){
+  const active = isFullscreen();
+  const iconKey = active ? 'fullscreenExit' : 'fullscreen';
+  document.querySelectorAll('[data-fs-btn]').forEach(btn => {
+    const s = btn.querySelector('[data-icon]');
+    if(s){ s.dataset.icon = iconKey; s.innerHTML = ICONS[iconKey] || ''; }
+    btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen');
+  });
+}
+async function toggleFullscreen(){
+  if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+    toast('Already running full screen from Home Screen.');
+    return;
+  }
+  try{
+    if(isFullscreen()){
+      if(document.exitFullscreen) await document.exitFullscreen();
+      else if(document.webkitExitFullscreen) await document.webkitExitFullscreen();
+    } else {
+      const el = document.documentElement;
+      if(el.requestFullscreen) await el.requestFullscreen();
+      else if(el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+      else {
+        toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+      }
+    }
+  } catch(e){
+    toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+  }
+  updateFsButtons();
+}
+if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+  document.body.classList.add('standalone');
+}
+document.addEventListener('fullscreenchange', updateFsButtons);
+document.addEventListener('webkitfullscreenchange', updateFsButtons);
+document.querySelectorAll('[data-fs-btn]').forEach(btn => {
+  btn.addEventListener('click', toggleFullscreen);
+});
+
+// ---------- Utilities ----------
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const rnd=(lo,hi)=>lo+Math.floor(Math.random()*(hi-lo+1));
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('on'),2200); }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); }
+document.querySelectorAll('[data-icon]').forEach(el=>{ el.innerHTML=ICONS[el.dataset.icon]||''; });
+const icon=n=>ICONS[n]||'';
+
+// ---------- Fact tracking and error classification ----------
+// A fact key is the thing being practised, for example "8+5" or "bond10:7" or "count:6".
+function F(key){ return S.facts[key]=S.facts[key]||{seen:0,first:0,retry:0}; }
+function noteFact(key,firstTry){ const f=F(key); f.seen++; if(firstTry){ f.first++; f.due=false; } else { f.retry++; f.due=true; } f.last=S.todayKey; }
+// Fact families, so the parent view can report by strategy rather than by single fact.
+const FAM_LABEL={bonds10:'Pairs that make ten',doubles:'Doubles',plus012:'Plus nought, one or two',teen:'Ten and some more',bridging:'Bridging past ten',neardoubles:'Near doubles',within10:'Within ten',counting:'Counting and quantity',tens:'Whole tens, plus and minus',twodigit:'Two digit, no carry',carry:'Two digit with a carry',other:'Other'};
+function familyOf(it){
+  if(it.fam) return it.fam;
+  const a=it.a,b=it.b;
+  if(a===undefined||b===undefined) return it.kind==='howmany'||it.kind==='showme'?'counting':'other';
+  if(a+b===10) return 'bonds10';
+  if(a===b) return 'doubles';
+  if(a<=2||b<=2) return 'plus012';
+  if(a===10||b===10) return 'teen';
+  if(a+b>10) return 'bridging';
+  if(Math.abs(a-b)===1) return 'neardoubles';
+  return 'within10';
+}
+function FAM(k){ return S.fam[k]=S.fam[k]||{n:0,first:0,ms:[],scaf:0}; }
+function noteFam(it,firstTry,ms){ const f=FAM(familyOf(it)); f.n++; if(firstTry) f.first++; if(ms>0&&ms<60000){ f.ms.push(Math.round(ms)); if(f.ms.length>24) f.ms.shift(); } }
+function noteScaffold(it){ FAM(familyOf(it)).scaf++; }
+function medianMs(arr){ if(!arr||!arr.length) return null; const a=arr.slice().sort((x,y)=>x-y); const m=Math.floor(a.length/2); return a.length%2?a[m]:Math.round((a[m-1]+a[m])/2); }
+// Classify a wrong answer so the parent view can show patterns rather than a score.
+function classify(mode,item,given){
+  const c=item.answer, a=given;
+  if(a===undefined||a===null) return 'other';
+  if(item.a!==undefined&&item.b!==undefined){
+    const crosses=(item.a<10&&item.b<10&&item.a+item.b>10);
+    if(a===item.a||a===item.b) return 'gave-a-part';
+    if(Math.abs(a-c)===1) return crosses?'off-by-one-crossing':'off-by-one';
+    if(crosses&&a===10) return 'stopped-at-ten';
+    if(crosses&&Math.abs(a-c)>=2) return 'crossing-ten';
+    if(a===Math.abs(item.a-item.b)) return 'subtracted-instead';
+    if(a===c+10||a===c-10) return 'ten-off';
+  } else {
+    if(Math.abs(a-c)===1) return 'off-by-one';
+    if(a===c+10||a===c-10) return 'ten-off';
+  }
+  const rev=String(c).split('').reverse().join('');
+  if(String(a)===rev&&String(c).length>1) return 'digits-reversed';
+  return 'other';
+}
+const ERR_LABEL={'off-by-one':'Off by one, a counting slip','off-by-one-crossing':'Off by one while crossing ten','gave-a-part':'Answered with one of the two parts','stopped-at-ten':'Stopped at ten instead of going past','crossing-ten':'Lost the count crossing ten','subtracted-instead':'Subtracted instead of added','ten-off':'Ten out, a place value slip','digits-reversed':'Digits reversed','other':'Something else'};
+function noteError(mode,item,given){
+  const kind=classify(mode,item,given);
+  S.errors.push({d:S.todayKey,m:mode,q:item.label||'',g:given,c:item.answer,k:kind});
+  if(S.errors.length>400) S.errors=S.errors.slice(-400);
+  return kind;
+}
+
+// ---------- Levels ----------
+const LV_NAMES=['Easy','Medium','Hard','Expert'];
+const LV_RODS=[[3],[5,3],[7,5,3],[10,7,5,3]];
+const LV_DESC=['Numbers to 5, one frame at a time.','Numbers to 10, and the pairs that make ten.','Numbers to 20, crossing ten.','Both ways across ten, and the missing part.'];
+function lv(){ return S.level||0; }
+function topOf(){ return [5,10,20,20][lv()]; }
+
+// ---------- Home ----------
+// Four games. The ten frame, the number line and the number bond carry all of them,
+// so the child learns arithmetic rather than a new interface each time.
+const ACTS=[
+  {id:'howmany', label:'How many?', glyph:()=>dieFace(5,66)},
+  {id:'bonds', label:'Make the number', glyph:()=>numberBond(10,7,null)},
+  {id:'crossten', label:'Cross ten', glyph:()=>numberLine(6,14,{every:2,hops:[{from:8,to:10,label:'2'},{from:10,to:13,label:'3'}]})},
+  {id:'equals', label:'Is it true?', glyph:()=>'<svg viewBox="0 0 200 70"><text x="100" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="42" font-weight="600" fill="var(--ink)">6+4 = 7+3</text></svg>'},
+  {id:'big', label:'Bigger numbers', adv:true, glyph:()=>baseTen(23,{u:7})}
+];
+const MODE_NAME={howmany:'How many',bonds:'Make the number',crossten:'Cross ten',equals:'Is it true',big:'Bigger numbers'};
+function renderHome(){
+  rollDay(); const done=!!S.settings.limit&&S.today.done;
+  $('levels').innerHTML=[0,1,2,3].map(i=>`<button class="lvl ${lv()===i?'on':''}" data-lv="${i}" aria-label="${LV_NAMES[i]}"><span class="rods">${LV_RODS[i].map(n=>`<i style="height:${8+n*2}px;background:${RODC[n]}"></i>`).join('')}</span><span class="lab">${LV_NAMES[i]}</span></button>`).join('');
+  document.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>{ S.level=+b.dataset.lv; save(); renderHome(); }));
+  $('home-sub').textContent=LV_DESC[lv()];
+  $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${a.adv?'adv':''} ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph()}</span><span class="label">${a.label}</span>${a.adv?'<span class="advtag">once adding is easy</span>':''}</button>`).join('');
+  $('home-note').textContent=done?'Math time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
+  document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>{ if(S.settings.limit&&S.today.done){ show('s-alldone'); return; } start(t.dataset.act); }));
+}
+function pointerHold(el,ms,onDone,fillEl){ let t=null,st=0,raf=null;
+  const stop=()=>{ clearTimeout(t); t=null; if(raf) cancelAnimationFrame(raf); if(fillEl) fillEl.style.height='0'; };
+  const tick=()=>{ if(!t) return; const p=Math.min(1,(Date.now()-st)/ms); if(fillEl) fillEl.style.height=(p*100)+'%'; raf=requestAnimationFrame(tick); };
+  el.addEventListener('pointerdown',e=>{ e.preventDefault(); st=Date.now(); t=setTimeout(()=>{ stop(); onDone(); },ms); tick(); });
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,stop)); }
+pointerHold($('gate'),3000,()=>openParent(),$('gate').querySelector('.fill'));
+</script>
+<script>
+// ---------- Play engine ----------
+const P={act:null,queue:[],i:0,tries:0,busy:false,enter:0,cur:null,build:0,t0:0,scaf:0,praise:0};
+const ROUND_N=10;
+function setTrack(){ const n=P.queue.length||1; $('track-ticks').innerHTML=Array.from({length:n},(_,i)=>`<span class="${i<P.i?'done':''}"></span>`).join(''); }
+function leavePlay(){ if(P.enter){ const ms=Date.now()-P.enter; S.today.ms+=ms; const s=currentSession(); s.minutes=(s.minutes||0)+ms/60000; P.enter=0; } save(); }
+$('btn-home').addEventListener('click',()=>{ leavePlay(); renderHome(); show('s-home'); });
+$('btn-end-home').addEventListener('click',()=>{ renderHome(); show(S.settings.limit&&S.today.done?'s-alldone':'s-home'); });
+$('btn-end-more').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+$('btn-alldone-home').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+// Process praise, tied to what the child did. Never person praise, and never every item.
+const PRAISE={maketen:['you filled the ten','you knew how many were missing'],crossten:['you made a ten first','you jumped to ten, then carried on','you counted on from the bigger one'],breakapart:['you split it without counting again'],howmany:['you saw that without counting'],showme:['you built it straight off'],equals:['you checked both sides'],big:['you added the tens first','you jumped to the next ten']};
+
+// ---------- Item generators ----------
+function genHowMany(){ const L=lv(), top=[5,10,10,20][L];
+  const n=rnd(1,top);
+  const style=L===0?'die':(n<=6&&Math.random()<0.4?'die':(n>10||Math.random()<0.5?'frame':'dots'));
+  return {kind:'howmany',n,style,flash:L>=1,answer:n,label:'how many, '+n,fact:'count:'+n}; }
+function genShowMe(){ const top=[5,10,10,20][lv()]; const n=rnd(2,top); return {kind:'showme',n,answer:n,label:'show '+n,fact:'show:'+n}; }
+function genMakeTen(){ const L=lv();
+  if(L===0){ const a=rnd(1,4); return {kind:'maketen',target:5,a,b:5-a,answer:5-a,label:a+' and __ make 5',fact:'bond5:'+a}; }
+  const a=rnd(1,9); return {kind:'maketen',target:10,a,b:10-a,answer:10-a,label:a+' and __ make 10',fact:'bond10:'+a}; }
+function genBreak(){ const L=lv(), whole=L===0?rnd(3,5):L===1?rnd(4,10):rnd(6,L===2?14:20);
+  const a=rnd(1,whole-1);
+  // From Hard on, half of these are shown as subtraction, read as a missing addend.
+  const sub=L>=2&&Math.random()<0.5;
+  return {kind:'breakapart',whole,a,b:whole-a,sub,answer:whole-a,label:sub?(whole+' − '+a):(whole+' is '+a+' and __'),fact:'break:'+whole+'/'+a}; }
+function genCrossTen(){ const L=lv(); let a,b;
+  if(L===0){ a=rnd(1,3); b=rnd(1,5-a); } else if(L===1){ a=rnd(2,8); b=rnd(1,10-a); } else { a=rnd(5,9); b=rnd(10-a+1,9); }
+  return {kind:'crossten',a,b,answer:a+b,label:a+' + '+b,fact:a+'+'+b}; }
+function genRods(){ const L=lv(); const w=L===0?5:L===1?10:rnd(8,12); const a=rnd(1,w-1);
+  return {kind:'rods',whole:w,a,b:w-a,answer:w-a,label:'rod '+w+' after '+a,fact:'rod:'+w+'/'+a}; }
+// Equivalence: the equals sign as balance, not as "answer next". McNeil-style formats.
+function genEquals(){ const L=lv(), top=L===0?5:L===1?10:L===2?14:18;
+  const forms=L===0?['std','rev']:L===1?['std','rev','missA','tf']:['rev','missA','both','tf','both'];
+  const form=pick(forms);
+  let a=rnd(1,Math.min(9,top-2)), b=rnd(1,top-a), c=a+b;
+  if(form==='std') return {kind:'equals',form,a,b,c,answer:c,label:a+' + '+b+' = __',fact:a+'+'+b};
+  if(form==='rev') return {kind:'equals',form,a,b,c,answer:c,label:'__ = '+a+' + '+b,fact:a+'+'+b};
+  if(form==='missA') return {kind:'equals',form,a,b,c,answer:b,label:a+' + __ = '+c,fact:a+'+'+b};
+  if(form==='both'){ let d=rnd(1,c-1); if(d===a) d=d===1?2:d-1; const e=c-d;
+    return {kind:'equals',form,a,b,c,d,e,answer:e,label:a+' + '+b+' = '+d+' + __',fact:a+'+'+b}; }
+  const isTrue=Math.random()<0.5; const shown=isTrue?c:(c+pick([-2,-1,1,2]));
+  return {kind:'equals',form:'tf',a,b,c,shown,answer:isTrue?1:0,label:a+' + '+b+' = '+shown,fact:a+'+'+b};
+}
+// Each game mixes item types that share a representation, rather than being one screen forever.
+// How many runs both directions, name the quantity and build it. Make the number runs
+// bonds to a target and the same relation split apart, which from Hard is written as subtraction.
+// The advanced game. Same bridging idea, one place value up: jump the tens, then fill to
+// the next ten, then the rest. Base ten blocks keep it a quantity rather than two digits.
+function jumpsFor(a,b){
+  const out=[]; let cur=a;
+  if(b<0){ out.push({d:b,color:'var(--c9)'}); return out; }
+  const tb=Math.floor(b/10), ob=b%10;
+  if(tb>0){ out.push({d:tb*10,color:'var(--c9)'}); cur+=tb*10; }
+  if(ob>0){ const toTen=(10-cur%10)%10;
+    if(toTen>0&&ob>toTen){ out.push({d:toTen,color:'var(--accent)'}); out.push({d:ob-toTen,color:'var(--c3)'}); }
+    else out.push({d:ob,color:'var(--accent)'}); }
+  return out.length?out:[{d:0,color:'var(--accent)'}];
+}
+function genBig(){ const L=lv(); let a,b,fam;
+  if(L===0){ a=rnd(2,8)*10+rnd(0,9); b=pick([10,10,-10]); fam='tens'; }
+  else if(L===1){ if(Math.random()<0.35){ a=rnd(2,8)*10+rnd(0,9); b=pick([10,20,-10]); fam='tens'; }
+    else { a=rnd(2,8)*10+rnd(4,9); b=rnd(10-(a%10)+1,9); fam='twodigit'; } }
+  else if(L===2){ const ta=rnd(1,5),oa=rnd(1,4),tb=rnd(1,3),ob=rnd(1,9-oa); a=ta*10+oa; b=tb*10+ob; fam='twodigit'; }
+  else { const ta=rnd(1,5),oa=rnd(4,9),tb=rnd(1,4),ob=rnd(10-oa+1,9); a=ta*10+oa; b=tb*10+ob; fam='carry'; }
+  const answer=a+b;
+  return {kind:'big',a,b,fam,answer,label:a+(b<0?' − '+Math.abs(b):' + '+b),fact:'big:'+a+(b<0?'-':'+')+Math.abs(b)};
+}
+const GEN={
+  howmany:()=>Math.random()<(lv()<=1?0.4:0.3)?genShowMe():genHowMany(),
+  bonds:()=>Math.random()<(lv()<=1?0.6:0.4)?genMakeTen():genBreak(),
+  crossten:genCrossTen,
+  equals:genEquals,
+  big:genBig
+};
+function buildRound(act){
+  const out=[], seen=new Set(); let guard=0;
+  while(out.length<ROUND_N&&guard++<400){ const it=GEN[act](); if(seen.has(it.fact)&&guard<120) continue; seen.add(it.fact); out.push(it); }
+  // Facts missed in an earlier session come back at the front of the next one.
+  return out.sort((x,y)=>((S.facts[y.fact]||{}).due?1:0)-((S.facts[x.fact]||{}).due?1:0));
+}
+function start(act){ rollDay(); P.act=act; P.i=0; P.busy=false; P.praise=0; P.enter=Date.now(); P.queue=buildRound(act); show('s-play'); setTrack(); next(); }
+
+// ---------- Choices ----------
+function choiceRow(vals,handler,cls){
+  $('bar').innerHTML=`<div class="choices">${vals.map(v=>`<button class="choice ${cls||''}" data-v="${v.v!==undefined?v.v:v}">${v.t!==undefined?v.t:v}</button>`).join('')}</div>`;
+  document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>handler(b,+b.dataset.v)));
+}
+function options(correct,lo,hi,n){
+  const out=new Set([correct]); let guard=0;
+  while(out.size<n&&guard++<200){ const v=correct+pick([-2,-1,1,2,3]); if(v>=lo&&v<=hi) out.add(v); }
+  while(out.size<n){ const v=rnd(lo,hi); out.add(v); }
+  return [...out].sort((a,b)=>a-b);
+}
+function dimOthers(correct){ document.querySelectorAll('.choice').forEach(b=>{ const v=+b.dataset.v; b.classList.toggle('dim',v!==correct); if(v===correct) b.classList.add('glow'); }); }
+
+// ---------- Answer handling ----------
+// Right: brief, then on. Wrong: no buzzer, the picture plays out the answer, then the same item is asked again.
+async function settle(right,item,given,redraw){
+  const card=$('stage').querySelector('.card'); const s=currentSession();
+  s.modes[P.act]=s.modes[P.act]||{n:0,first:0};
+  if(right){
+    const firstTry=P.tries===0, ms=Date.now()-P.t0;
+    if(firstTry){ s.first++; s.modes[P.act].first++; }
+    s.items++; s.modes[P.act].n++; noteFact(item.fact,firstTry); noteFam(item,firstTry,ms);
+    dimOthers(item.answer); card.classList.add('ok'); if(redraw) redraw(item.answer,true);
+    if(firstTry&&P.praise<2&&Math.random()<0.15){ P.praise++; const bank=PRAISE[item.kind]||[]; if(bank.length) note(pick(bank)); }
+    await wait(1000); P.i++; save(); setTrack(); next();
+  } else {
+    if(P.tries===0){ noteError(P.act,item,given); }
+    P.tries++; card.classList.add('oops'); if(redraw) redraw(given,false);
+    await wait(1000); card.classList.remove('oops');
+    if(P.tries>=2){
+      s.items++; s.modes[P.act].n++; noteFact(item.fact,false); noteFam(item,false,0);
+      dimOthers(item.answer); card.classList.add('ok'); if(redraw) redraw(item.answer,true);
+      // Ask it again later in this round as well as at the start of the next session.
+      const at=Math.min(P.queue.length,P.i+rnd(5,8));
+      if(!P.queue.slice(P.i+1).some(q=>q.fact===item.fact)) P.queue.splice(at,0,Object.assign({},item));
+      await wait(1700); P.i++; save(); setTrack(); next();
+    } else { document.querySelectorAll('.choice').forEach(b=>{ if(+b.dataset.v===given) b.classList.add('dim'); });
+      if(redraw) redraw(null,false); P.busy=false; }
+  }
+}
+function note(t){ const el=$('mg-note'); if(el){ el.textContent=t; el.style.opacity=1; setTimeout(()=>{ if(el) el.style.opacity=0; },1800); } }
+function cardHTML(inner){ return `<div class="card">${inner}<div class="pnote" id="mg-note"></div></div>`; }
+function begin(){ P.t0=Date.now(); P.scaf=0; }
+
+// ---------- Modes ----------
+function next(){
+  if(P.i>=P.queue.length) return endRound();
+  P.cur=P.queue[P.i]; P.tries=0; P.busy=false; P.build=0; begin();
+  const it=P.cur;
+  ({howmany:renderHowMany,showme:renderShowMe,maketen:renderMakeTen,breakapart:renderBreak,crossten:renderCross,equals:renderEquals,big:renderBig})[it.kind](it);
+}
+
+// 1. How many? A brief look, so the child sees the group rather than counting it.
+function renderHowMany(it){
+  const art=()=> it.style==='die'?dieFace(it.n,150):it.style==='frame'?tenFrame(it.n,{}):dotSet(it.n,it.n>6?'pair':'plain');
+  const draw=(given,ok)=>{ const e=$('mg-echo'); if(!e) return;
+    e.innerHTML=(given===null||given===undefined)?'':`<div class="prompt">you said ${given}</div>`+dotSet(given,'plain'); };
+  $('stage').innerHTML=cardHTML(`<div class="prompt">How many?</div><div id="mg-art">${art()}</div><div id="mg-echo"></div>`);
+  if(it.flash){ setTimeout(()=>{ const a=$('mg-art'); if(a&&P.cur===it&&P.tries===0) a.innerHTML='<div class="hidden-art">?</div>'; },1700); }
+  const top=Math.max(6,Math.min(20,it.n+3));
+  choiceRow(options(it.n,1,top,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.n,it,v,draw); });
+  if(it.flash) $('bar').insertAdjacentHTML('afterbegin',`<button class="act plain" id="mg-look" aria-label="Look again">${icon('eye')}</button>`);
+  const lk=$('mg-look'); if(lk) lk.addEventListener('click',()=>{ if(P.busy) return; P.scaf++; noteScaffold(it); const a=$('mg-art'); a.innerHTML=art(); setTimeout(()=>{ if($('mg-art')&&P.cur===it) $('mg-art').innerHTML='<div class="hidden-art">?</div>'; },1500); });
+}
+
+// 2. Show me: build the number, do not pick it.
+function renderShowMe(it){
+  const cells=it.n>10?20:10;
+  const paint=()=>{ $('mg-frame').innerHTML=tenFrame([P.build,0],{min:cells}); };
+  $('stage').innerHTML=cardHTML(`<div class="prompt">Show me <b style="color:var(--accent)">${it.n}</b></div><div id="mg-frame"></div>`);
+  paint();
+  $('bar').innerHTML=`<div class="choices"><button class="choice wide" id="mg-less">&minus;1</button><button class="choice wide" id="mg-more">+1</button><button class="act go" id="mg-done" style="min-width:140px">${icon('check')}</button></div>`;
+  const upd=d=>{ P.build=Math.max(0,Math.min(cells,P.build+d)); paint(); };
+  $('mg-less').addEventListener('click',()=>{ if(!P.busy) upd(-1); });
+  $('mg-more').addEventListener('click',()=>{ if(!P.busy) upd(1); });
+  $('mg-done').addEventListener('click',()=>{ if(P.busy) return; P.busy=true;
+    settle(P.build===it.n,it,P.build,(v)=>{ if(v===null) return; P.build=v; paint(); }); });
+}
+
+// 3. Make ten: the pairs everything else leans on.
+function renderMakeTen(it){
+  const T=it.target;
+  const paint=(extra)=>{ const add=extra===null||extra===undefined?0:extra;
+    const over=Math.max(0,it.a+add-T);
+    $('mg-frame').innerHTML=tenFrame([it.a,Math.min(add,T-it.a)],{min:T,hide:add?undefined:it.a})+
+      (over?`<div class="prompt" style="color:var(--amber)">${over} did not fit</div>`:''); };
+  $('stage').innerHTML=cardHTML(`<div class="prompt"><b style="color:var(--accent)">${it.a}</b> so far. How many more make ${T}?</div><div id="mg-frame"></div>`);
+  paint(null);
+  choiceRow(options(it.b,1,T-1,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
+}
+
+// 4. Break it apart, and from Hard on the same thing written as subtraction.
+function renderBreak(it){
+  const paint=(given)=>{ const b=given===null||given===undefined?null:given;
+    $('mg-bond').innerHTML=numberBond(it.whole,it.a,b);
+    $('mg-frame').innerHTML=tenFrame([it.a,b===null?0:b],{min:it.whole>10?20:10}); };
+  const head=it.sub
+    ? `<div class="eq"><span>${it.whole}</span><span class="op">&minus;</span><span>${it.a}</span><span class="op">=</span><span class="box">?</span></div><div class="prompt">${it.a} and how many more make ${it.whole}?</div>`
+    : `<div class="prompt"><b style="color:var(--accent)">${it.whole}</b> is ${it.a} and how many?</div>`;
+  $('stage').innerHTML=cardHTML(`${head}<div id="mg-bond"></div><div id="mg-frame"></div>`);
+  paint(null);
+  choiceRow(options(it.b,1,it.whole-1,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
+}
+
+// 5. Cross ten: fill the ten, then carry on. The strategy, made visible.
+function renderCross(it){
+  const need=10-it.a, rest=it.b-need, crosses=rest>0;
+  const paint=(given)=>{
+    const total=given===null||given===undefined?null:given;
+    const hops=[{from:it.a,to:Math.min(10,it.a+it.b),label:'+'+Math.min(need,it.b),color:'var(--c9)'}];
+    if(crosses) hops.push({from:10,to:it.a+it.b,label:'+'+rest,color:'var(--accent)'});
+    $('mg-line').innerHTML=numberLine(Math.max(0,it.a-1),Math.max(it.a+it.b+1,12),{every:1,hops:total===null?[]:hops,mark:total===null?it.a:total});
+    $('mg-frame').innerHTML=tenFrame([it.a,total===null?0:Math.min(it.b,10-it.a)],{min:it.a+it.b>10?20:10,c2:'var(--c9)'});
+    const bx=$('mg-box'); if(bx){ bx.textContent=total===null?'?':total; bx.classList.toggle('filled',total!==null); } };
+  $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-frame"></div><div id="mg-line"></div>`);
+  paint(null);
+  choiceRow(options(it.answer,Math.max(2,it.answer-4),it.answer+4,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+}
+
+// 6. Match the rod: a number as a length.
+function renderRods(it){
+  const paint=(given)=>{ const b=given===null||given===undefined?null:given;
+    $('mg-rods').innerHTML=`<div class="rodrow"><span class="lbl">this long</span>${rod(it.whole,{marks:true})}
+      <span class="lbl">${b===null?'finish the row':'you made '+(it.a+b)}</span>
+      <span style="display:flex;gap:4px;align-items:center">${rod(it.a,{marks:true})}${b?rod(b,{marks:true}):'<span style="display:inline-block;width:70px;height:34px;border:3px dashed var(--line);border-radius:6px"></span>'}</span></div>`; };
+  $('stage').innerHTML=cardHTML(`<div class="prompt">Which rod finishes the row?</div><div id="mg-rods"></div>`);
+  paint(null);
+  choiceRow(options(it.b,1,10,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
+}
+
+// 7. Is it true? The equals sign as balance rather than "the answer comes next".
+function renderEquals(it){
+  const boxed=v=>`<span class="box ${v===null?'':'filled'}" id="mg-box">${v===null?'?':v}</span>`;
+  const line=v=>{
+    if(it.form==='std') return `<span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span>${boxed(v)}`;
+    if(it.form==='rev') return `${boxed(v)}<span class="op">=</span><span>${it.a}</span><span class="op">+</span><span>${it.b}</span>`;
+    if(it.form==='missA') return `<span>${it.a}</span><span class="op">+</span>${boxed(v)}<span class="op">=</span><span>${it.c}</span>`;
+    if(it.form==='both') return `<span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span><span>${it.d}</span><span class="op">+</span>${boxed(v)}`;
+    return `<span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span><span>${it.shown}</span>`;
+  };
+  const paint=(given)=>{
+    const v=given===null||given===undefined?null:given;
+    $('mg-eq').innerHTML=line(it.form==='tf'?null:v);
+    if(it.form==='tf'){ $('mg-frame').innerHTML=v===null?'':tenFrame([it.a,it.b],{min:Math.max(10,it.a+it.b>10?20:10),c2:'var(--c9)'})+`<div class="prompt">${it.a} and ${it.b} is ${it.c}</div>`; }
+    else if(it.form==='both'){ $('mg-frame').innerHTML=`<div class="twoside">${tenFrame([it.a,it.b],{min:10,c2:'var(--c9)'})}${v===null?'':tenFrame([it.d,v],{min:10,c2:'var(--c9)'})}</div>`; }
+    else { $('mg-frame').innerHTML=v===null?'':tenFrame([it.a,it.form==='missA'?v:0],{min:Math.max(10,it.c>10?20:10),c2:'var(--c9)'}); } };
+  const q=it.form==='tf'?'Is it true?':it.form==='both'?'Make both sides the same':'What goes in the box?';
+  $('stage').innerHTML=cardHTML(`<div class="prompt">${q}</div><div class="eq" id="mg-eq"></div><div id="mg-frame"></div>`);
+  paint(null);
+  if(it.form==='tf') choiceRow([{v:1,t:'true'},{v:0,t:'false'}],(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); },'wide');
+  else choiceRow(options(it.answer,1,Math.max(4,it.answer+4),4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+}
+
+// 8. Bigger numbers: two digit work on base ten blocks and an open number line.
+function renderBig(it){
+  const paint=(given)=>{
+    const v=given===null||given===undefined?null:given;
+    const bx=$('mg-box'); if(bx){ bx.textContent=v===null?'?':v; bx.classList.toggle('filled',v!==null); }
+    $('mg-blocks').innerHTML=v!==null?'':`<div class="btrow">${baseTen(it.a,{color:'var(--c9)',oneColor:'var(--c5)'})}<span class="op">${it.b<0?'−':'+'}</span>${baseTen(Math.abs(it.b),{color:'var(--c3)',oneColor:'var(--c5)'})}</div>`;
+    $('mg-open').innerHTML=v===null?'':openLine(it.a,jumpsFor(it.a,it.b)); };
+  $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">${it.b<0?'−':'+'}</span><span>${Math.abs(it.b)}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-blocks"></div><div id="mg-open"></div>`);
+  paint(null);
+  // One distractor is the answer with the carry dropped, which is the classic slip.
+  const opts=new Set([it.answer, it.answer-10, it.answer+1, it.answer-1]);
+  const arr=[...opts].filter(v=>v>0).slice(0,4).sort((x,y)=>x-y);
+  while(arr.length<4){ const v=it.answer+rnd(-3,3); if(v>0&&!arr.includes(v)) arr.push(v); arr.sort((x,y)=>x-y); }
+  choiceRow(arr,(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+}
+
+// ---------- Round end ----------
+function endRound(){
+  leavePlay(); S.today.rounds++; save();
+  const over=!!S.settings.limit&&(S.today.rounds>=6||S.today.ms>=24*60*1000); if(over){ S.today.done=true; save(); }
+  $('end-art').innerHTML=trophyArt(); $('alldone-art').innerHTML=rodStack();
+  $('end-title').textContent=over?'That is the lot for today.':'Round finished.';
+  $('end-text').textContent='';
+  $('btn-end-more').hidden=over; show('s-end');
+}
+</script>
+<script>
+// ---------- Grown-ups ----------
+function openParent(){ show('s-parent'); renderHow(); renderProgress(); renderFacts(); renderSettings(); }
+$('btn-parent-close').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t)); document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t.dataset.pane)); }));
+
+function renderHow(){
+  $('pane-how').innerHTML=`<h2>How to play</h2>
+  <p>Every game asks the child to move between a quantity they can see and the numeral that names it. There is no score, no timer and no wrong buzzer. When the child taps a number, the picture changes to show what that number actually does, and they can look and try again. Two misses and the game shows the answer in the picture and moves on.</p>
+  <p>Four games, plus one for later. They share three pictures between them, the ten frame, the number line and the number bond, so the child spends the time on arithmetic rather than on learning a new screen each go.</p>
+  <div class="grid2">
+  <div class="tipcard"><b>How many?</b>Two directions in one game. A dice pattern or ten frame appears briefly and the child names it, with a look-again button if the glance was not enough. Sometimes it runs the other way and the child builds the number on a frame instead, which is harder and tells you more.</div>
+  <div class="tipcard"><b>Make the number</b>Bonds. Some counters are in the frame and the child says how many more make five or ten, and later how a whole splits into two parts. From Hard the same relation is written as subtraction, so thirteen minus eight is asked as eight and how many more make thirteen. These pairs are the facts everything else leans on.</div>
+  <div class="tipcard"><b>Cross ten</b>The heart of it. For eight plus five the frame fills to ten first and the number line shows two hops, the jump to ten and then the rest. This is the strategy that turns counting into knowing.</div>
+  <div class="tipcard"><b>Is it true?</b>The equals sign written every way round, including six plus four equals seven plus three. Most children read equals as "the answer comes next", and that misreading is what makes algebra hard years later. This is the cheapest fix for it.</div>
+  <div class="tipcard" style="border:2px solid var(--c9)"><b>Bigger numbers</b>For once adding within twenty is easy. Two digit work shown as base ten blocks, with an open number line that adds the tens first, then fills to the next ten, then the rest. It is the same bridging idea one place value up. One of the wrong answers is always the right one with the carry dropped, because that is the slip to watch for.</div>
+  </div>
+  <h3>Sitting with them</h3>
+  <p>Ask how they knew, not whether they are sure. If they count every counter from one, point at the filled ten and ask whether they need to start again. Counting on from the larger number, then bridging through ten, is the progression to listen for.</p>
+  <p>When they are stuck, show the objects rather than explaining the rule, and stop after a few minutes. Anxious helping transmits more anxiety than it fixes, so a short cheerful session beats a long corrective one.</p>
+  <h3>What this game does not do</h3>
+  <p>No timed drill, no streaks, no coins. Speed comes from knowing the pairs to ten and being able to bridge, not from being hurried. There is no curriculum here either. It practises one narrow band, composing and decomposing to twenty, which is the band that matters most at this age.</p>`;
+}
+
+function renderProgress(){
+  const week=S.sessions.filter(s=>daysSince(s.date)<7); const mins=Math.round(week.reduce((a,s)=>a+(s.minutes||0),0));
+  const pct=(o,n)=>n?Math.round(100*o/n)+'%':'-';
+  const rows=S.sessions.slice(-12).reverse();
+  const modeName={howmany:'How many',showme:'Show me',maketen:'Make ten',breakapart:'Break apart',crossten:'Cross ten',rods:'Rods'};
+  const byMode={}; S.sessions.forEach(s=>Object.entries(s.modes||{}).forEach(([m,v])=>{ byMode[m]=byMode[m]||{n:0,first:0}; byMode[m].n+=v.n; byMode[m].first+=v.first; }));
+  $('pane-progress').innerHTML=`<h2>Progress</h2>
+  <p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. The figure to watch is first-try, which counts only the answers given without a second look.</p>
+  <h3>By game, all time</h3>${Object.keys(byMode).length?`<table><tr><th>Game</th><th>Answers</th><th>First try</th></tr>${Object.entries(byMode).map(([m,v])=>`<tr><td>${modeName[m]||m}</td><td>${v.n}</td><td>${pct(v.first,v.n)}</td></tr>`).join('')}</table>`:'<p class="note">Nothing yet.</p>'}
+  <h3>Sessions</h3>${rows.length?`<table><tr><th>Date</th><th>Answers</th><th>First try</th><th>Minutes</th><th>Level</th></tr>${rows.map(s=>`<tr><td>${s.date}</td><td>${s.items}</td><td>${pct(s.first,s.items)}</td><td>${Math.round(s.minutes||0)}</td><td>${LV_NAMES[s.level||0]}</td></tr>`).join('')}</table>`:'<p class="note">No sessions yet.</p>'}`;
+}
+
+const OFFSCREEN=[
+ 'Put out seven buttons and ask how many more make ten.',
+ 'Lay the table and ask how many more forks are needed.',
+ 'Count the stairs going up, then count back down.',
+ 'Roll two dice and ask for the total without counting the pips one at a time.',
+ 'Ask what nine and six is, then ask how they worked it out.',
+ 'Hold up some fingers on both hands and ask how many are folded down.',
+ 'Share out grapes between two people and ask if it is fair.',
+ 'Ask how many wheels on three bicycles.',
+ 'Say a number and ask for the one that makes ten with it, back and forth in the car.',
+ 'Build a tower of ten bricks, take some away behind your back, and ask how many are hidden.'];
+function renderFacts(){
+  const f=k=>S.facts[k];
+  const cls=k=>{ const x=f(k); if(!x||!x.seen) return 'k0'; const r=x.first/x.seen; return r>=0.9?'k3':r>=0.6?'k2':'k1'; };
+  const title=k=>{ const x=f(k); return x?`${x.first} of ${x.seen} first try`:'not seen yet'; };
+  let grid='';
+  for(let a=1;a<=10;a++) for(let b=1;b<=10;b++){ const k=a+'+'+b; grid+=`<div class="${cls(k)}" title="${a} + ${b}, ${title(k)}">${a}+${b}</div>`; }
+  let bonds=''; for(let a=1;a<=9;a++){ const k='bond10:'+a; bonds+=`<div class="${cls(k)}" title="${a} and ${10-a}, ${title(k)}">${a}+${10-a}</div>`; }
+  const errs={}; S.errors.forEach(e=>{ errs[e.k]=(errs[e.k]||0)+1; });
+  const top=Object.entries(errs).sort((x,y)=>y[1]-x[1]);
+  const recent=S.errors.slice(-14).reverse();
+  const crossing=S.errors.filter(e=>e.k==='crossing-ten'||e.k==='off-by-one-crossing'||e.k==='stopped-at-ten').length;
+  $('pane-facts').innerHTML=`<h2>Fact map</h2>
+  <p>Every addition pair to ten plus ten. Green means answered first try almost every time, amber means mixed, red means usually needed a second look, grey means not yet seen. Hover or long press a square to see the counts.</p>
+  <div class="factgrid" style="grid-template-columns:repeat(10,1fr);max-width:640px">${grid}</div>
+  <h3>Pairs that make ten</h3>
+  <div class="factgrid" style="grid-template-columns:repeat(9,1fr);max-width:580px">${bonds}</div>
+  <h3>By strategy group</h3>
+  ${Object.keys(S.fam).length?`<table><tr><th>Group</th><th>Answers</th><th>First try</th><th>Typical time</th><th>Looked again</th></tr>${Object.entries(S.fam).sort((a,b)=>(a[1].first/Math.max(1,a[1].n))-(b[1].first/Math.max(1,b[1].n))).map(([k,v])=>{ const md=medianMs(v.ms); return `<tr><td>${FAM_LABEL[k]||k}</td><td>${v.n}</td><td>${v.n?Math.round(100*v.first/v.n)+'%':'-'}</td><td>${md?(md/1000).toFixed(1)+'s':'-'}</td><td>${v.scaf||0}</td></tr>`; }).join('')}</table>
+  <p class="note">Worst first. Time is not a score. A group that is accurate but slow means the child is still working the answer out, which is the normal stage before simply knowing it. A group that is accurate but often needed a second look is not secure yet.</p>`:'<p class="note">Nothing yet.</p>'}
+  <h3>Error patterns</h3>
+  ${top.length?`<table><tr><th>Pattern</th><th>Times</th></tr>${top.map(([k,n])=>`<tr><td>${ERR_LABEL[k]||k}</td><td>${n}</td></tr>`).join('')}</table>
+  <p class="note">${crossing?`${crossing} of the misses happened while crossing ten. That is the place to spend time: practise the pairs that make ten first, then Cross ten.`:'No clear crossing-ten pattern yet.'}</p>`:'<p class="note">No errors recorded yet.</p>'}
+  <h3>Most often missed</h3>
+  ${(()=>{ const c={}; S.errors.forEach(e=>{ if(e.q) c[e.q]=(c[e.q]||0)+1; });
+    const t=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    return t.length?`<p>${t.map(([q,n])=>`<b>${q}</b> missed ${n} time${n>1?'s':''}`).join('. ')}.</p>`:'<p class="note">Nothing stands out yet.</p>'; })()}
+  <h3>Last few misses</h3>
+  ${recent.length?`<table><tr><th>Date</th><th>Question</th><th>Said</th><th>Was</th><th>Looks like</th></tr>${recent.map(e=>`<tr><td>${e.d}</td><td>${e.q}</td><td>${e.g}</td><td>${e.c}</td><td>${ERR_LABEL[e.k]||e.k}</td></tr>`).join('')}</table>`:'<p class="note">Nothing to show.</p>'}
+  <h3>Try away from the screen</h3>
+  <p>${OFFSCREEN[(S.tipIdx||0)%OFFSCREEN.length]}</p>
+  <p><button class="pbtn" id="fact-tip">Another one</button></p>`;
+  const tb=$('fact-tip'); if(tb) tb.addEventListener('click',()=>{ S.tipIdx=((S.tipIdx||0)+1)%OFFSCREEN.length; save(); renderFacts(); });
+}
+
+function renderSettings(){
+  $('pane-settings').innerHTML=`<h2>Settings</h2>
+  <div class="field"><label>Level</label>${LV_NAMES.map((n,i)=>`<button class="pbtn ${lv()===i?'on':''}" data-lv="${i}">${n}</button>`).join('')}</div>
+  <p class="note">${LV_DESC[lv()]} The level is yours to set. Nothing unlocks on its own, so the child stays where the work is useful.</p>
+  <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?'On: six rounds or 24 minutes':'Off'}</button></div>
+  <div class="field"><button class="pbtn" id="set-more">Allow one more round today</button><span class="note">${S.settings.limit&&S.today.done?'Today is marked finished.':'Today is not finished.'}</span></div>
+  <h3>On the iPad</h3><p>Open in Safari, tap Share, then Add to Home Screen. Everything stays on the device. Nothing is uploaded and there is no account.</p>
+  <h3>Data</h3><div class="field"><button class="pbtn" id="set-export">Copy all data</button><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>`;
+  document.querySelectorAll('[data-lv]').forEach(b=>b.addEventListener('click',()=>{ S.level=+b.dataset.lv; save(); renderSettings(); renderHome(); }));
+  $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit) S.today.done=false; save(); renderSettings(); });
+  $('set-more').addEventListener('click',()=>{ rollDay(); S.today.done=false; S.today.rounds=Math.min(S.today.rounds,5); S.today.ms=Math.min(S.today.ms,20*60*1000); save(); toast('One more round allowed.'); renderSettings(); });
+  $('set-export').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(JSON.stringify(S,null,1)); toast('Copied.'); }catch(e){ toast('Could not copy.'); } });
+  pointerHold($('set-reset'),3000,()=>{ localStorage.removeItem(KEY); S=JSON.parse(JSON.stringify(DEFAULT)); save(); toast('Erased.'); openParent(); renderHome(); });
+}
+
+rollDay(); renderHome(); show('s-home');
+</script>
+
+</body>
+</html>
