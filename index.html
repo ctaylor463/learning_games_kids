@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Games">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#F4F1EA">
 <title>Learning Games</title>
@@ -56,5 +59,6 @@ h2{font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
     <a class="card" href="map_us/"><img src="map_us/icon.svg" alt=""><div><b>Map Game US</b><span>States and cities of the United States</span></div></a>
   </div>
 </main>
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready).then(r=>r.active&&r.active.postMessage('warm')).catch(()=>{});</script>
 </body>
 </html>

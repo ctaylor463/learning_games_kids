@@ -635,7 +635,7 @@
       "langs": [
         "English"
       ],
-      "fact": "The Gateway Arch in St. Louis is the tallest monument in the country at 192 metres."
+      "fact": "The Gateway Arch in St. Louis is the tallest monument in the country at 630 feet."
     },
     "photos": [
       {
@@ -909,7 +909,7 @@
         "English",
         "Spanish"
       ],
-      "fact": "The second-largest state, with more cattle than any other."
+      "fact": "The largest of the lower 48 states, with more cattle than any other."
     }
   },
   "Oklahoma": {
@@ -1029,7 +1029,7 @@
       "langs": [
         "English"
       ],
-      "fact": "The smallest state, but with about 640 km of coastline."
+      "fact": "The smallest state, but with about 400 miles of coastline."
     }
   },
   "Utah": {
@@ -1557,7 +1557,7 @@
         "English",
         "Spanish"
       ],
-      "fact": "The Grand Canyon is more than 400 km long and up to 1.8 km deep."
+      "fact": "The Grand Canyon is 277 miles long and more than a mile deep."
     }
   },
   "North Dakota": {

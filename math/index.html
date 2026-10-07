@@ -138,6 +138,7 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
 .choice.glow{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--card))}
 .choice.dim{opacity:.32}
 .choice.wide{min-width:150px}
+.choice svg{width:1.1em;height:1.1em;display:block}
 
 .bar{display:flex;justify-content:center;gap:20px;padding:10px 18px max(20px,var(--sab));align-items:center;flex-wrap:wrap}
 .act{height:78px;min-width:140px;padding:0 28px;border-radius:39px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--f-num);font-weight:600;font-size:21px;box-shadow:var(--shadow)}
@@ -181,6 +182,14 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
 .factgrid div.k3{background:#BFE3C9;color:#1F5B34}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:12px 18px;border-radius:14px;font-size:16px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;z-index:50}
 .toast.on{opacity:1}
+/* Text labels under icon buttons, so each one says what it does. Same rules in every game. */
+.iconbtn,.gate{position:relative}
+.iconbtn[data-label],.gate[data-label]{margin-bottom:18px}
+.iconbtn[data-label]::after,.gate[data-label]::after{content:attr(data-label);position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);font-family:var(--f-num);font-weight:600;font-size:13px;line-height:1;color:var(--ink-soft);white-space:nowrap}
+.gate{overflow:visible}
+.gate .clip{position:absolute;inset:0;border-radius:50%;overflow:hidden}
+/* Opened from the Home Screen the game is already full screen, so the button has nothing to do. */
+.standalone [data-fs-btn]{display:none}
 </style>
 </head>
 <body>
@@ -191,24 +200,25 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
     <div class="hometop">
       <div class="brand">Math Game<small id="home-sub">Numbers you can see</small></div>
       <div style="display:flex;gap:12px">
-        <a class="iconbtn" href="../" aria-label="All games" title="All games" style="color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></a>
-        <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+        <a class="iconbtn" href="../" aria-label="All games" title="All games" data-label="Games" style="color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></a>
+        <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen" title="Full screen" data-label="Full screen"><span data-icon="fullscreen"></span></button>
       </div>
     </div>
     <div class="levels" id="levels"></div>
     <div class="tiles" id="tiles"></div>
     <div class="homefoot">
       <span class="done-note" id="home-note"></span>
-      <button class="gate" id="gate" aria-label="Grown-ups: hold for three seconds"><span class="fill"></span><span data-icon="lock"></span></button>
+      <button class="gate" id="gate" aria-label="Grown-ups: hold for three seconds" title="Grown-ups: hold for three seconds" data-label="Grown-ups"><span class="clip"><span class="fill"></span></span><span data-icon="lock"></span></button>
     </div>
   </div>
 </section>
 
 <section class="screen" id="s-play">
   <div class="strip">
-    <button class="iconbtn" id="btn-home" aria-label="Home"><span data-icon="home"></span></button>
+    <button class="iconbtn" id="btn-home" aria-label="Home" title="Home" data-label="Home"><span data-icon="home"></span></button>
     <div class="track" id="track"><div class="ticks" id="track-ticks"></div></div>
-    <button class="iconbtn" id="btn-play-fs" data-fs-btn aria-label="Toggle full screen"><span data-icon="fullscreen"></span></button>
+    <button class="iconbtn" id="btn-say" aria-label="Say it again" title="Say it again" data-label="Hear it"><span data-icon="speaker"></span></button>
+    <button class="iconbtn" id="btn-play-fs" data-fs-btn aria-label="Toggle full screen" title="Full screen" data-label="Full screen"><span data-icon="fullscreen"></span></button>
   </div>
   <div class="stage" id="stage"></div>
   <div class="bar" id="bar"></div>
@@ -220,8 +230,8 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
     <h1 id="end-title">Round finished.</h1>
     <p id="end-text"></p>
     <div class="bar" style="padding-bottom:0">
-      <button class="act plain" id="btn-end-home" aria-label="Home"><span data-icon="home"></span></button>
-      <button class="act go" id="btn-end-more" aria-label="Another round"><span data-icon="next"></span></button>
+      <button class="act plain" id="btn-end-home" aria-label="Home"><span data-icon="home"></span>Home</button>
+      <button class="act go" id="btn-end-more" aria-label="Another round"><span data-icon="next"></span>Play again</button>
     </div>
   </div>
 </section>
@@ -231,14 +241,14 @@ svg.bond{width:min(70vw,320px);height:auto;display:block}
     <div class="bigart" id="alldone-art"></div>
     <h1>All done for today.</h1>
     <p>Math time is finished. Count something real together.</p>
-    <button class="act plain" id="btn-alldone-home" aria-label="Home"><span data-icon="home"></span></button>
+    <button class="act plain" id="btn-alldone-home" aria-label="Home"><span data-icon="home"></span>Home</button>
   </div>
 </section>
 
 <section class="screen" id="s-parent">
   <div class="parent">
     <div class="strip">
-      <button class="iconbtn small" id="btn-parent-close" aria-label="Close"><span data-icon="close"></span></button>
+      <button class="iconbtn small" id="btn-parent-close" aria-label="Close" title="Close" data-label="Close"><span data-icon="close"></span></button>
       <div class="brand" style="font-size:22px;flex:1">Grown-ups</div>
     </div>
     <div class="tabs">
@@ -266,6 +276,7 @@ const ICONS = {
   lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
   undo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h11a5 5 0 0 1 0 10H8"/><path d="m8 4-4 4 4 4"/></svg>',
   eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  speaker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
   fullscreen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',
   fullscreenExit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m11 7h6m-6 0V4m0 6l7-7"/></svg>'
 };
@@ -413,7 +424,10 @@ function baseTen(n, o){
 function openLine(start, jumps, step){
   const W = 720, H = 128, base = 92, pad = 40;
   const total = jumps.reduce((a,j)=>a+Math.abs(j.d),0) || 1;
-  let x = pad, val = start;
+  // Adding jumps right and taking away jumps left, so the start sits where the whole path fits.
+  const lowest = Math.min(...jumps.reduce((a,j)=>a.concat([a[a.length-1]+j.d]),[0]));
+  const px = c => pad + ((c - lowest) / total) * (W - pad * 2);
+  let x = px(0), val = start, cum = 0;
   let s = `<svg viewBox="0 0 ${W} ${H}" class="oline" role="img" aria-label="open number line from ${start}">`;
   s += `<line x1="${pad-16}" y1="${base}" x2="${W-pad+16}" y2="${base}" stroke="var(--ink-soft)" stroke-width="3" stroke-linecap="round"/>`;
   // With a step (seconds), each jump draws in turn and its landing number appears after it.
@@ -421,10 +435,10 @@ function openLine(start, jumps, step){
   const mark=(px,v,strong,d)=>`<g${d==null?'':rv(d)}><line x1="${px}" y1="${base-9}" x2="${px}" y2="${base+9}" stroke="var(--ink-soft)" stroke-width="3"/><text x="${px}" y="${base+30}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="${strong?600:500}" fill="${strong?'var(--accent)':'var(--ink-soft)'}">${v}</text></g>`;
   s += mark(x, val, false, null);
   jumps.forEach((j,i)=>{
-    const w = (Math.abs(j.d) / total) * (W - pad * 2);
-    const x2 = x + w, mid = (x + x2) / 2, r = w / 2, t = i * (step || 0);
+    cum += j.d;
+    const x2 = px(cum), mid = (x + x2) / 2, r = Math.abs(x2 - x) / 2, t = i * (step || 0);
     const dp = step==null ? '' : ` pathLength="1" class="rvdraw" style="--d:${t}s"`;
-    s += `<path${dp} d="M ${x} ${base-11} A ${r} ${Math.min(r,42)} 0 0 1 ${x2} ${base-11}" fill="none" stroke="${j.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
+    s += `<path${dp} d="M ${x} ${base-11} A ${r} ${Math.min(r,42)} 0 0 ${x2 > x ? 1 : 0} ${x2} ${base-11}" fill="none" stroke="${j.color||'var(--accent)'}" stroke-width="4" stroke-linecap="round"/>`;
     s += `<text${rv(t+.6)} x="${mid}" y="${base - Math.min(r,42) - 16}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="${j.color||'var(--accent)'}">${j.d>0?'+':'−'}${Math.abs(j.d)}</text>`;
     val += j.d; x = x2;
     s += mark(x, val, i===jumps.length-1, t+.7);
@@ -445,7 +459,7 @@ function trophyArt(){
 <script>
 // ---------- State ----------
 const KEY='math-game-v1';
-const DEFAULT={v:1, level:0, settings:{limit:false,dark:'auto'}, facts:{}, fam:{}, errors:[], sessions:[], tipIdx:0, todayKey:'', today:{rounds:0,ms:0,done:false}};
+const DEFAULT={v:1, level:0, settings:{limit:false,dark:'auto',speech:true}, facts:{}, fam:{}, errors:[], sessions:[], tipIdx:0, todayKey:'', today:{rounds:0,ms:0,done:false}};
 let S=load();
 function load(){ try{ const raw=localStorage.getItem(KEY); if(raw){ const o=JSON.parse(raw); return Object.assign({},DEFAULT,o,{settings:Object.assign({},DEFAULT.settings,o.settings||{})}); } }catch(e){} return JSON.parse(JSON.stringify(DEFAULT)); }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
@@ -464,7 +478,7 @@ function updateFsButtons(){
   document.querySelectorAll('[data-fs-btn]').forEach(btn => {
     const s = btn.querySelector('[data-icon]');
     if(s){ s.dataset.icon = iconKey; s.innerHTML = ICONS[iconKey] || ''; }
-    btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen');
+    btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen'); btn.title = active ? 'Exit full screen' : 'Full screen'; btn.dataset.label = active ? 'Exit' : 'Full screen';
   });
 }
 async function toggleFullscreen(){
@@ -508,6 +522,21 @@ function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on')
 function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); }
 document.querySelectorAll('[data-icon]').forEach(el=>{ el.innerHTML=ICONS[el.dataset.icon]||''; });
 const icon=n=>ICONS[n]||'';
+
+// ---------- Speech ----------
+// Every prompt is spoken, so a child who cannot read yet can still play. Silent where speech is missing.
+let voices=[];
+const hasSpeech='speechSynthesis' in window;
+function loadVoices(){ try{ voices=speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
+if(hasSpeech){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
+function pickVoice(){ if(!voices.length) loadVoices(); if(!voices.length) return null; const en=voices.filter(v=>/^en[-_]US/i.test(v.lang)); return en.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||en[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0]; }
+const canSpeak=()=>hasSpeech&&S.settings.speech!==false;
+function speak(text){ return new Promise(res=>{ if(!canSpeak()||!text) return res(); let done=false; const fin=()=>{ if(!done){ done=true; res(); } }; try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); } }); }
+function hush(){ try{ if(hasSpeech) speechSynthesis.cancel(); }catch(e){} }
+// iOS only lets a page speak after a first utterance started inside a tap.
+let primed=false;
+const prime=()=>{ if(primed||!hasSpeech) return; primed=true; try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} };
+['touchend','click'].forEach(ev=>document.addEventListener(ev,prime,{capture:true}));
 
 // ---------- Fact tracking and error classification ----------
 // A fact key is the thing being practised, for example "8+5" or "bond10:7" or "count:6".
@@ -575,19 +604,22 @@ const PATH=[
   {name:'Two-digit adding', act:'big', L:2},
   {name:'Two-digit carrying', act:'big', L:3}
 ];
+const isObj=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
+const recentOf=()=>Array.isArray(S.path.recent)?S.path.recent:[];
 function pathStep(){
   // Carry over the old Easy/Medium/Hard/Expert choice the first time.
-  if(!S.path){ S.path={step:[0,3,6,6][S.level||0],recent:[]}; save(); }
+  if(!isObj(S.path)||!Number.isInteger(S.path.step)||S.path.step<0){ S.path={step:[0,3,6,6][S.level||0],recent:[]}; save(); }
   return Math.min(S.path.step,PATH.length-1); }
 function lv(){ return PATH[pathStep()].L; }
-function notePath(firstTry){ if(P.act!=='learn') return; S.path.recent=(S.path.recent||[]).concat([firstTry]).slice(-15); }
-function advancePath(){ const st=pathStep(), r=S.path.recent||[];
+function notePath(firstTry){ if(P.act!=='learn') return; S.path.recent=recentOf().concat([firstTry]).slice(-15); }
+function advancePath(){ const st=pathStep(), r=recentOf();
   if(st>=PATH.length-1||r.length<15||r.filter(Boolean).length<13) return null;
-  S.path.step=st+1; S.path.recent=[]; save(); return PATH[st+1].name; }
+  S.path.step=st+1; S.path.recent=[]; resumeInLevel(); save(); return PATH[S.path.step].name; }
 
 // ---------- Levels ----------
-// A level is a stretch of the path and of the fact sets. Choosing one moves both Play and Facts
-// to its start, unless the child is already inside it. Both still move on by themselves.
+// A level is a stretch of the path and of the fact sets. Each level remembers the furthest place reached
+// inside it. Choosing a level, or moving up into one, picks up there (its start the first time). A grown-up's
+// choice in Settings replaces the memory, so tapping a level never throws away progress.
 const LEVELS=[
   {name:'Easy', steps:[0,3], sets:[0,0], rods:[3]},
   {name:'Medium', steps:[4,5], sets:[1,2], rods:[5,3]},
@@ -595,9 +627,19 @@ const LEVELS=[
   {name:'Expert', steps:[8,10], sets:[5,5], rods:[10,7,5,3]}
 ];
 function curLevel(){ const st=pathStep(); return Math.max(0,LEVELS.findIndex(l=>st>=l.steps[0]&&st<=l.steps[1])); }
-function chooseLevel(i){ const L=LEVELS[i], st=pathStep(), fs=drillSet();
-  if(st<L.steps[0]||st>L.steps[1]){ S.path.step=L.steps[0]; S.path.recent=[]; }
-  if(fs<L.sets[0]||fs>L.sets[1]) S.drill.set=L.sets[0];
+function levelMemo(){ const m=S.lvlPos=isObj(S.lvlPos)?S.lvlPos:{}; if(!isObj(m.play)) m.play={}; if(!isObj(m.facts)) m.facts={}; return m; }
+function noteLevelPos(forcePlay,forceFacts){ const m=levelMemo(), st=pathStep(), fs=drillSet();
+  const pi=LEVELS.findIndex(l=>st>=l.steps[0]&&st<=l.steps[1]), fi=LEVELS.findIndex(l=>fs>=l.sets[0]&&fs<=l.sets[1]);
+  if(pi>=0){ const p=m.play[pi]; if(forcePlay||!isObj(p)||!Number.isInteger(p.step)||st>=p.step) m.play[pi]={step:st,recent:recentOf().slice(-15)}; }
+  if(fi>=0){ const f=m.facts[fi]; if(forceFacts||!Number.isInteger(f)||fs>=f) m.facts[fi]=fs; } }
+function resumeInLevel(){ const st=S.path.step, i=LEVELS.findIndex(l=>st===l.steps[0]), p=i>=0?levelMemo().play[i]:null;
+  if(isObj(p)&&Number.isInteger(p.step)&&p.step>st&&p.step<=LEVELS[i].steps[1]){ S.path.step=p.step; S.path.recent=Array.isArray(p.recent)?p.recent.slice(-15):[]; } }
+function resumeFactsInLevel(){ const fs=S.drill.set, i=LEVELS.findIndex(l=>fs===l.sets[0]), f=i>=0?levelMemo().facts[i]:null;
+  if(Number.isInteger(f)&&f>fs&&f<=LEVELS[i].sets[1]) S.drill.set=f; }
+function chooseLevel(i){ const L=LEVELS[i], st=pathStep(), fs=drillSet(); noteLevelPos(); const m=levelMemo();
+  if(st<L.steps[0]||st>L.steps[1]){ const p=m.play[i], ok=!!p&&Number.isInteger(p.step)&&p.step>=L.steps[0]&&p.step<=L.steps[1];
+    S.path.step=ok?p.step:L.steps[0]; S.path.recent=ok&&Array.isArray(p.recent)?p.recent.slice(-15):[]; }
+  if(fs<L.sets[0]||fs>L.sets[1]){ const f=m.facts[i]; S.drill.set=Number.isInteger(f)&&f>=L.sets[0]&&f<=L.sets[1]?f:L.sets[0]; }
   save(); renderHome(); }
 
 // ---------- Home ----------
@@ -616,8 +658,8 @@ const ACTS=[
   {id:'facts', label:'Facts', glyph:()=>'<svg viewBox="0 0 200 70"><text x="100" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="42" font-weight="600" fill="var(--ink)">7+5 = ?</text></svg>', sub:()=>FACT_SETS[drillSet()].name}
 ];
 function renderHome(){
-  rollDay(); const done=!!S.settings.limit&&S.today.done, cl=curLevel();
-  $('levels').innerHTML=LEVELS.map((l,i)=>`<button class="lvl ${cl===i?'on':''}" data-lv="${i}" aria-label="${l.name}"><span class="rods">${l.rods.map(n=>`<i style="height:${8+n*2}px;background:${RODC[n]}"></i>`).join('')}</span><span class="lab">${l.name}</span></button>`).join('');
+  rollDay(); noteLevelPos(); const done=!!S.settings.limit&&S.today.done, cl=curLevel();
+  $('levels').innerHTML=LEVELS.map((l,i)=>`<button class="lvl ${cl===i?'on':''}" data-lv="${i}" aria-label="${l.name}" aria-pressed="${cl===i}"><span class="rods">${l.rods.map(n=>`<i style="height:${8+n*2}px;background:${RODC[n]}"></i>`).join('')}</span><span class="lab">${l.name}</span></button>`).join('');
   document.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>chooseLevel(+b.dataset.lv)));
   $('tiles').innerHTML=ACTS.map(a=>`<button class="tile ${done?'locked':''}" data-act="${a.id}" aria-label="${a.label}"><span class="glyph">${a.glyph()}</span><span class="label">${a.label}</span><span class="sub">${a.sub()}</span></button>`).join('');
   $('home-note').textContent=done?'Math time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
@@ -632,11 +674,17 @@ pointerHold($('gate'),3000,()=>openParent(),$('gate').querySelector('.fill'));
 </script>
 <script>
 // ---------- Play engine ----------
-const P={act:null,queue:[],i:0,tries:0,busy:false,enter:0,cur:null,build:0,t0:0,scaf:0,praise:0};
+// P.tok changes whenever a round starts or is left. Anything that waits checks it first, so a
+// tap on Home mid-answer cannot carry on into the home screen or into the next round.
+const P={act:null,queue:[],i:0,tries:0,busy:false,enter:0,cur:null,build:0,t0:0,scaf:0,praise:0,tok:0,say:''};
 const ROUND_N=10;
 function setTrack(){ const n=P.queue.length||1; $('track-ticks').innerHTML=Array.from({length:n},(_,i)=>`<span class="${i<P.i?'done':''}"></span>`).join(''); }
 function leavePlay(){ if(P.enter){ const ms=Date.now()-P.enter; S.today.ms+=ms; const s=currentSession(); s.minutes=(s.minutes||0)+ms/60000; P.enter=0; } save(); }
-$('btn-home').addEventListener('click',()=>{ leavePlay(); renderHome(); show('s-home'); });
+$('btn-home').addEventListener('click',()=>{ P.tok++; hush(); leavePlay(); renderHome(); show('s-home'); });
+// Time with the page hidden or the iPad asleep does not count toward the daily limit.
+document.addEventListener('visibilitychange',()=>{ if(!$('s-play').classList.contains('on')) return; if(document.hidden){ hush(); leavePlay(); } else if(!P.enter) P.enter=Date.now(); });
+function say(t){ P.say=t; speak(t); }
+$('btn-say').addEventListener('click',()=>speak(P.say));
 $('btn-end-home').addEventListener('click',()=>{ renderHome(); show(S.settings.limit&&S.today.done?'s-alldone':'s-home'); });
 $('btn-end-more').addEventListener('click',()=>{ renderHome(); show('s-home'); });
 $('btn-alldone-home').addEventListener('click',()=>{ renderHome(); show('s-home'); });
@@ -671,9 +719,9 @@ function genEquals(){ const L=lv(), top=L===0?5:L===1?10:L===2?14:18;
   if(form==='std') return {kind:'equals',form,a,b,c,answer:c,label:a+' + '+b+' = __',fact:a+'+'+b};
   if(form==='rev') return {kind:'equals',form,a,b,c,answer:c,label:'__ = '+a+' + '+b,fact:a+'+'+b};
   if(form==='missA') return {kind:'equals',form,a,b,c,answer:b,label:a+' + __ = '+c,fact:a+'+'+b};
-  if(form==='both'){ let d=rnd(1,c-1); if(d===a) d=d===1?2:d-1; const e=c-d;
+  if(form==='both'){ let d=rnd(1,c-1); if(d===a&&c>2) d=d===1?2:d-1; const e=c-d;
     return {kind:'equals',form,a,b,c,d,e,answer:e,label:a+' + '+b+' = '+d+' + __',fact:a+'+'+b}; }
-  const isTrue=Math.random()<0.5; const shown=isTrue?c:(c+pick([-2,-1,1,2]));
+  const isTrue=Math.random()<0.5; const shown=isTrue?c:(c+pick(c>2?[-2,-1,1,2]:[1,2]));
   return {kind:'equals',form:'tf',a,b,c,shown,answer:isTrue?1:0,label:a+' + '+b+' = '+shown,fact:a+'+'+b};
 }
 // Each game mixes item types that share a representation, rather than being one screen forever.
@@ -693,10 +741,10 @@ function jumpsFor(a,b){
 }
 function genBig(){ const L=lv(); let a,b,fam;
   if(L===0){ a=rnd(2,8)*10+rnd(0,9); b=pick([10,10,-10]); fam='tens'; }
-  else if(L===1){ if(Math.random()<0.35){ a=rnd(2,8)*10+rnd(0,9); b=pick([10,20,-10]); fam='tens'; }
-    else { a=rnd(2,8)*10+rnd(4,9); b=rnd(10-(a%10)+1,9); fam='twodigit'; } }
+  // Adding tens is whole tens only, such as 47 + 10, 47 + 20 or 47 − 10. Answers stay two digit.
+  else if(L===1){ a=rnd(2,7)*10+rnd(0,9); b=pick([10,20,-10]); fam='tens'; }
   else if(L===2){ const ta=rnd(1,5),oa=rnd(1,4),tb=rnd(1,3),ob=rnd(1,9-oa); a=ta*10+oa; b=tb*10+ob; fam='twodigit'; }
-  else { const ta=rnd(1,5),oa=rnd(4,9),tb=rnd(1,4),ob=rnd(10-oa+1,9); a=ta*10+oa; b=tb*10+ob; fam='carry'; }
+  else { const ta=rnd(1,5),oa=rnd(4,9),tb=rnd(1,3),ob=rnd(10-oa+1,9); a=ta*10+oa; b=tb*10+ob; fam='carry'; }
   const answer=a+b;
   return {kind:'big',a,b,fam,answer,label:a+(b<0?' − '+Math.abs(b):' + '+b),fact:'big:'+a+(b<0?'-':'+')+Math.abs(b)};
 }
@@ -717,7 +765,7 @@ function factKnown(k){ return factDays(k).length>=2; }
 function noteDrill(it,firstTry){ const f=F(it.fact);
   if(!firstTry){ f.dd=[]; return; }
   f.dd=f.dd||[]; if(!f.dd.includes(S.todayKey)) f.dd.push(S.todayKey); f.dd=f.dd.slice(-3); }
-function drillSet(){ S.drill=S.drill||{set:0}; return S.drill.set; }
+function drillSet(){ if(!isObj(S.drill)||!Number.isInteger(S.drill.set)||S.drill.set<0||S.drill.set>=FACT_SETS.length) S.drill={set:0}; return S.drill.set; }
 function setKnown(i){ return FACT_SETS[i].items.filter(x=>factKnown(x.fact)).length; }
 function buildFacts(){
   const cur=drillSet(), pool=FACT_SETS[cur].items;
@@ -737,7 +785,7 @@ function buildFacts(){
 // Move on to the next set once every fact in the current one is known.
 function advanceFacts(){ const cur=drillSet(); if(cur>=FACT_SETS.length-1) return null;
   if(setKnown(cur)<FACT_SETS[cur].items.length) return null;
-  S.drill.set=cur+1; save(); return FACT_SETS[cur+1].name; }
+  S.drill.set=cur+1; resumeFactsInLevel(); save(); return FACT_SETS[S.drill.set].name; }
 // Once adding and taking away are in play, about one item in seven is an equals-sign item.
 const withEq=g=>()=>Math.random()<0.15?genEquals():g();
 const GEN={
@@ -758,14 +806,16 @@ function buildRound(act){
   while(out.length<ROUND_N&&guard++<400){ const it=GEN[act](); if(seen.has(it.fact)&&guard<120) continue; seen.add(it.fact); out.push(it); }
   return out;
 }
-function start(act){ rollDay(); P.act=act; P.i=0; P.busy=false; P.praise=0; P.enter=Date.now(); P.queue=act==='facts'?buildFacts():buildRound(PATH[pathStep()].act); show('s-play'); setTrack(); next(); }
+function start(act){ rollDay(); P.tok++; P.act=act; P.i=0; P.busy=false; P.praise=0; P.enter=Date.now(); P.queue=act==='facts'?buildFacts():buildRound(PATH[pathStep()].act); $('btn-say').hidden=!canSpeak(); show('s-play'); setTrack(); next(); }
 
 // ---------- Choices ----------
 function choiceRow(vals,handler,cls){
-  $('bar').innerHTML=`<div class="choices">${vals.map(v=>`<button class="choice ${cls||''}" data-v="${v.v!==undefined?v.v:v}">${v.t!==undefined?v.t:v}</button>`).join('')}</div>`;
+  $('bar').innerHTML=`<div class="choices">${vals.map(v=>`<button class="choice ${cls||''}" data-v="${v.v!==undefined?v.v:v}"${v.a?` aria-label="${v.a}"`:''}>${v.t!==undefined?v.t:v}</button>`).join('')}</div>`;
   document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>handler(b,+b.dataset.v)));
 }
+// n choices, or fewer when the range holds fewer, so 3 = 1 + __ shows two buttons.
 function options(correct,lo,hi,n){
+  n=Math.min(n,hi-lo+1);
   const out=new Set([correct]); let guard=0;
   while(out.size<n&&guard++<200){ const v=correct+pick([-2,-1,1,2,3]); if(v>=lo&&v<=hi) out.add(v); }
   while(out.size<n){ const v=rnd(lo,hi); out.add(v); }
@@ -778,9 +828,9 @@ function dimOthers(correct){ document.querySelectorAll('.choice').forEach(b=>{ c
 // Wrong: no buzzer, the child's answer is shown, then a second try. After a second miss the
 // strategy plays out more slowly and waits for a tap, so there is time to look at it.
 // redraw(value, ok, anim) returns how many seconds its animation runs.
-function tapNext(){ return new Promise(res=>{ $('bar').insertAdjacentHTML('beforeend',`<button class="act go" id="mg-next" aria-label="Next">${icon('next')}</button>`); $('mg-next').addEventListener('click',res,{once:true}); }); }
+function tapNext(){ return new Promise(res=>{ $('bar').insertAdjacentHTML('beforeend',`<button class="act go" id="mg-next" aria-label="Next">${icon('next')}Next</button>`); $('mg-next').addEventListener('click',res,{once:true}); }); }
 async function settle(right,item,given,redraw){
-  const card=$('stage').querySelector('.card'); const s=currentSession();
+  const card=$('stage').querySelector('.card'), s=currentSession(), tok=P.tok;
   const mk=item.kind; s.modes[mk]=s.modes[mk]||{n:0,first:0};
   if(right){
     const firstTry=P.tries===0, ms=Date.now()-P.t0;
@@ -790,11 +840,11 @@ async function settle(right,item,given,redraw){
     notePath(firstTry); if(!firstTry) noteRedo(item);
     dimOthers(item.answer); card.classList.add('ok'); const dur=(redraw&&redraw(item.answer,true,{step:1.2}))||0;
     if(firstTry&&P.praise<2&&Math.random()<0.15){ P.praise++; const bank=PRAISE[item.kind]||[]; if(bank.length) note(pick(bank)); }
-    await wait(Math.max(1000,dur*1000+1000)); P.i++; save(); setTrack(); next();
+    await wait(Math.max(1000,dur*1000+1000)); if(tok!==P.tok) return; P.i++; save(); setTrack(); next();
   } else {
     if(P.tries===0){ noteError(P.act,item,given); }
     P.tries++; card.classList.add('oops'); if(redraw) redraw(given,false);
-    await wait(1000); card.classList.remove('oops');
+    await wait(1000); if(tok!==P.tok) return; card.classList.remove('oops');
     if(P.tries>=2){
       s.items++; s.modes[mk].n++; noteFact(item.fact,false); noteFam(item,false,0);
       if(item.kind==='fact') noteDrill(item,false);
@@ -803,7 +853,7 @@ async function settle(right,item,given,redraw){
       // Ask it again later in this round as well as at the start of the next session.
       const at=Math.min(P.queue.length,P.i+rnd(5,8));
       if(!P.queue.slice(P.i+1).some(q=>q.fact===item.fact)) P.queue.splice(at,0,Object.assign({},item));
-      await wait(dur*1000+300); await tapNext(); P.i++; save(); setTrack(); next();
+      await wait(dur*1000+300); if(tok!==P.tok) return; await tapNext(); if(tok!==P.tok) return; P.i++; save(); setTrack(); next();
     } else { document.querySelectorAll('.choice').forEach(b=>{ if(+b.dataset.v===given) b.classList.add('dim'); });
       if(redraw) redraw(null,false); P.busy=false; }
   }
@@ -829,8 +879,9 @@ function renderHowMany(it){
   if(it.flash){ setTimeout(()=>{ const a=$('mg-art'); if(a&&P.cur===it&&P.tries===0) a.innerHTML='<div class="hidden-art">?</div>'; },1700); }
   const top=Math.max(6,Math.min(20,it.n+3));
   choiceRow(options(it.n,1,top,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.n,it,v,draw); });
-  if(it.flash) $('bar').insertAdjacentHTML('afterbegin',`<button class="act plain" id="mg-look" aria-label="Look again">${icon('eye')}</button>`);
+  if(it.flash) $('bar').insertAdjacentHTML('afterbegin',`<button class="act plain" id="mg-look" aria-label="Look again">${icon('eye')}Look again</button>`);
   const lk=$('mg-look'); if(lk) lk.addEventListener('click',()=>{ if(P.busy) return; P.scaf++; noteScaffold(it); const a=$('mg-art'); a.innerHTML=art(); setTimeout(()=>{ if($('mg-art')&&P.cur===it) $('mg-art').innerHTML='<div class="hidden-art">?</div>'; },1500); });
+  say('How many?');
 }
 
 // 2. Show me: build the number, do not pick it.
@@ -845,6 +896,7 @@ function renderShowMe(it){
   $('mg-more').addEventListener('click',()=>{ if(!P.busy) upd(1); });
   $('mg-done').addEventListener('click',()=>{ if(P.busy) return; P.busy=true;
     settle(P.build===it.n,it,P.build,(v)=>{ if(v===null) return; P.build=v; paint(); }); });
+  say(`Show me ${it.n}.`);
 }
 
 // 3. Make ten: the pairs everything else leans on.
@@ -858,6 +910,7 @@ function renderMakeTen(it){
   $('stage').innerHTML=cardHTML(`<div class="prompt"><b style="color:var(--accent)">${it.a}</b> so far. How many more make ${T}?</div><div id="mg-frame"></div>`);
   paint(null);
   choiceRow(options(it.b,1,T-1,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
+  say(`${it.a} so far. How many more make ${T}?`);
 }
 
 // 4. Break it apart, and from Hard on the same thing written as subtraction.
@@ -872,6 +925,7 @@ function renderBreak(it){
   $('stage').innerHTML=cardHTML(`${head}<div id="mg-bond"></div><div id="mg-frame"></div>`);
   paint(null);
   choiceRow(options(it.b,1,it.whole-1,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.b,it,v,paint); });
+  say(it.sub?`${it.whole} take away ${it.a}. ${it.a} and how many more make ${it.whole}?`:`${it.whole} is ${it.a} and how many?`);
 }
 
 // 5. Cross ten: fill the ten, then carry on. The strategy, made visible.
@@ -892,6 +946,7 @@ function renderCross(it){
   $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">+</span><span>${it.b}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-frame"></div><div id="mg-line"></div>`);
   paint(null);
   choiceRow(options(it.answer,Math.max(2,it.answer-4),it.answer+4,4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+  say(`What is ${it.a} plus ${it.b}?`);
 }
 
 // 7. Is it true? The equals sign as balance rather than "the answer comes next".
@@ -913,8 +968,12 @@ function renderEquals(it){
   const q=it.form==='tf'?'Is it true?':it.form==='both'?'Make both sides the same':'What goes in the box?';
   $('stage').innerHTML=cardHTML(`<div class="prompt">${q}</div><div class="eq" id="mg-eq"></div><div id="mg-frame"></div>`);
   paint(null);
-  if(it.form==='tf') choiceRow([{v:1,t:'true'},{v:0,t:'false'}],(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); },'wide');
+  if(it.form==='tf') choiceRow([{v:1,t:icon('check'),a:'True'},{v:0,t:icon('close'),a:'False'}],(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); },'wide');
   else choiceRow(options(it.answer,1,Math.max(4,it.answer+4),4),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+  say(it.form==='tf'?`${it.a} plus ${it.b} equals ${it.shown}. Is that right? Tap the check if it is, or the cross if it is not.`
+    :it.form==='both'?`${it.a} plus ${it.b} equals ${it.d} plus what? Make both sides the same.`
+    :it.form==='rev'?`What number equals ${it.a} plus ${it.b}?`
+    :it.form==='missA'?`${it.a} plus what makes ${it.c}?`:`${it.a} plus ${it.b} equals what?`);
 }
 
 // 8. Bigger numbers: two digit work on base ten blocks and an open number line.
@@ -933,6 +992,7 @@ function renderBig(it){
   const arr=[...opts].filter(v=>v>0).slice(0,4).sort((x,y)=>x-y);
   while(arr.length<4){ const v=it.answer+rnd(-3,3); if(v>0&&!arr.includes(v)) arr.push(v); arr.sort((x,y)=>x-y); }
   choiceRow(arr,(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+  say(`What is ${it.a} ${it.b<0?'take away':'plus'} ${Math.abs(it.b)}?`);
 }
 
 // The picture for a missed fact. Without show it is a hint with no answer on it. With show the
@@ -979,6 +1039,7 @@ function renderFact(it){
     if(k==='del'){ entry=entry.slice(0,-1); upd(); return; }
     if(k==='ok'){ if(!entry) return; P.busy=true; const v=+entry; settle(v===it.answer,it,v,draw); return; }
     if(entry.length<2){ entry=(entry==='0'?'':entry)+k; upd(); } }));
+  say(it.op==='+'?`${it.a} plus ${it.b}`:`${it.m} take away ${it.s}`);
 }
 document.addEventListener('keydown',e=>{ if(!P.cur||P.cur.kind!=='fact'||!$('s-play').classList.contains('on')) return;
   const k=/^[0-9]$/.test(e.key)?e.key:e.key==='Backspace'?'del':e.key==='Enter'?'ok':null;
@@ -1006,7 +1067,8 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ do
 function renderHow(){
   $('pane-how').innerHTML=`<h2>How to play</h2>
   <p>Two buttons. <b>Play</b> is the picture games, and <b>Facts</b> is plain sums on a number pad. Each button shows where the child is, and both move on by themselves. There is no score, no timer and no wrong buzzer.</p>
-  <p>The level row above them picks a starting point for both: ${LEVELS.map(l=>`<b>${l.name}</b> is ${PATH.slice(l.steps[0],l.steps[1]+1).map(p=>p.name.toLowerCase()).join(', ')} in Play, and ${FACT_SETS.slice(l.sets[0],l.sets[1]+1).map(f=>f.name.toLowerCase()).join(', ')} in Facts`).join('. ')}. Passing the last step of a level carries on into the next one.</p>
+  <p>The level row above them picks a starting point for both: ${LEVELS.map(l=>`<b>${l.name}</b> is ${PATH.slice(l.steps[0],l.steps[1]+1).map(p=>p.name.toLowerCase()).join(', ')} in Play, and ${FACT_SETS.slice(l.sets[0],l.sets[1]+1).map(f=>f.name.toLowerCase()).join(', ')} in Facts`).join('. ')}. Going back to a level, or moving up into it, picks up at the furthest point the child reached inside it, and passing the last step of a level carries on into the next one.</p>
+  <p>Every question is read aloud when it appears, and the speaker button at the top says it again. Spoken prompts can be turned off in Settings.</p>
   <h3>Play</h3>
   <p>One kind of question at a time, in this order: ${PATH.map(p=>p.name.toLowerCase()).join(', ')}. The child moves to the next step after 13 first-try answers in the last 15. Every answer is shown in a picture, a ten frame, a number line or a number bond, and the picture plays out the strategy step by step: for eight plus five, the frame fills to ten first and the line shows two hops, the jump to ten and then the rest. After two misses the picture plays slowly and waits for a tap. Anything missed comes back in the next round.</p>
   <p>Taking away is written as subtraction and pictured as the missing part, so thirteen minus eight is shown as eight and how many more make thirteen. From adding to ten on, about one question in seven writes the equals sign the other way round, such as 7 = 4 + 3, because children who read equals as "the answer comes next" struggle with algebra later.</p>
@@ -1024,7 +1086,7 @@ function renderProgress(){
   const modeName={howmany:'How many',showme:'Show me',maketen:'Making 5 and 10',breakapart:'Parts and taking away',crossten:'Adding with pictures',equals:'Equals sign',big:'Bigger numbers',fact:'Facts',bonds:'Make the number (old)',facts:'Facts (old)',rods:'Rods (old)'};
   const byMode={}; S.sessions.forEach(s=>Object.entries(s.modes||{}).forEach(([m,v])=>{ byMode[m]=byMode[m]||{n:0,first:0}; byMode[m].n+=v.n; byMode[m].first+=v.first; }));
   $('pane-progress').innerHTML=`<h2>Progress</h2>
-  <p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. Play is on step ${pathStep()+1} of ${PATH.length}, ${PATH[pathStep()].name.toLowerCase()}, with ${(S.path.recent||[]).filter(Boolean).length} first-try answers in the last ${(S.path.recent||[]).length} (13 of 15 moves on). The figure to watch is first-try, which counts only the answers given without a second look.</p>
+  <p>${mins} minute${mins===1?'':'s'} in the last seven days across ${week.length} day${week.length===1?'':'s'}. Play is on step ${pathStep()+1} of ${PATH.length}, ${PATH[pathStep()].name.toLowerCase()}, with ${recentOf().filter(Boolean).length} first-try answers in the last ${recentOf().length} (13 of 15 moves on). The figure to watch is first-try, which counts only the answers given without a second look.</p>
   <h3>By kind of question, all time</h3>${Object.keys(byMode).length?`<table><tr><th>Kind</th><th>Answers</th><th>First try</th></tr>${Object.entries(byMode).map(([m,v])=>`<tr><td>${modeName[m]||m}</td><td>${v.n}</td><td>${pct(v.first,v.n)}</td></tr>`).join('')}</table>`:'<p class="note">Nothing yet.</p>'}
   <h3>Sessions</h3>${rows.length?`<table><tr><th>Date</th><th>Answers</th><th>First try</th><th>Minutes</th></tr>${rows.map(s=>`<tr><td>${s.date}</td><td>${s.items}</td><td>${pct(s.first,s.items)}</td><td>${Math.round(s.minutes||0)}</td></tr>`).join('')}</table>`:'<p class="note">No sessions yet.</p>'}`;
 }
@@ -1047,6 +1109,9 @@ function renderFacts(){
   let grid='';
   for(let a=1;a<=10;a++) for(let b=1;b<=10;b++){ const k=a+'+'+b; grid+=`<div class="${cls(k)}" title="${a} + ${b}, ${title(k)}">${a}+${b}</div>`; }
   let bonds=''; for(let a=1;a<=9;a++){ const k='bond10:'+a; bonds+=`<div class="${cls(k)}" title="${a} and ${10-a}, ${title(k)}">${a}+${10-a}</div>`; }
+  // Taking away, laid out as in the Facts sets: one row per whole, one column per number taken away.
+  const subGrid=(m0,m1,cols)=>{ let g=''; for(let m=m0;m<=m1;m++) for(let s=1;s<=cols;s++){ const d=m-s, k=m+'-'+s;
+    g+=d<1||d>10?'<div style="visibility:hidden"></div>':`<div class="${cls(k)}" title="${m} − ${s}, ${title(k)}">${m}−${s}</div>`; } return g; };
   const errs={}; S.errors.forEach(e=>{ errs[e.k]=(errs[e.k]||0)+1; });
   const top=Object.entries(errs).sort((x,y)=>y[1]-x[1]);
   const recent=S.errors.slice(-14).reverse();
@@ -1056,8 +1121,12 @@ function renderFacts(){
   <p>The Facts game works through these sets in order. A fact counts as known once it has been answered right on the first try on two different days, and a miss resets it. The next set opens when every fact in the current one is known.</p>
   <table><tr><th>Set</th><th>Known</th></tr>${FACT_SETS.slice(0,-1).map((st,i)=>`<tr><td>${i===cur?'<b>'+st.name+'</b> (now)':st.name}</td><td>${setKnown(i)} of ${st.items.length}</td></tr>`).join('')}${cur===FACT_SETS.length-1?'<tr><td><b>Everything mixed</b> (now)</td><td></td></tr>':''}</table>
   <h2>Fact map</h2>
-  <p>Every addition pair to ten plus ten. Green means answered first try almost every time, amber means mixed, red means usually needed a second look, grey means not yet seen. Hover or long press a square to see the counts.</p>
+  <p>Every adding and taking-away fact the Facts game uses. Green means answered first try almost every time, amber means mixed, red means usually needed a second look, grey means not yet seen. Hover or long press a square to see the counts.</p>
   <div class="factgrid" style="grid-template-columns:repeat(10,1fr);max-width:640px">${grid}</div>
+  <h3>Taking away within 10</h3>
+  <div class="factgrid" style="grid-template-columns:repeat(9,1fr);max-width:580px">${subGrid(2,10,9)}</div>
+  <h3>Taking away within 20</h3>
+  <div class="factgrid" style="grid-template-columns:repeat(10,1fr);max-width:640px">${subGrid(11,20,10)}</div>
   <h3>Pairs that make ten</h3>
   <div class="factgrid" style="grid-template-columns:repeat(9,1fr);max-width:580px">${bonds}</div>
   <h3>By strategy group</h3>
@@ -1083,20 +1152,23 @@ function renderSettings(){
   <div class="field"><label>Play step</label><select id="set-step">${PATH.map((p,i)=>`<option value="${i}" ${i===pathStep()?'selected':''}>${i+1}. ${p.name}</option>`).join('')}</select></div>
   <div class="field"><label>Facts set</label><select id="set-fset">${FACT_SETS.map((f,i)=>`<option value="${i}" ${i===drillSet()?'selected':''}>${i+1}. ${f.name}</option>`).join('')}</select></div>
   <p class="note">Both move on by themselves. Change them only if the child is clearly in the wrong place.</p>
+  <div class="field"><label>Spoken prompts</label><button class="pbtn ${canSpeak()?'on':''}" id="set-speech" ${hasSpeech?'':'disabled'}>${!hasSpeech?'Not available in this browser':canSpeak()?'On':'Off'}</button></div>
   <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?'On: six rounds or 24 minutes':'Off'}</button></div>
   <div class="field"><button class="pbtn" id="set-more">Allow one more round today</button><span class="note">${S.settings.limit&&S.today.done?'Today is marked finished.':'Today is not finished.'}</span></div>
   <h3>On the iPad</h3><p>Open in Safari, tap Share, then Add to Home Screen. Everything stays on the device. Nothing is uploaded and there is no account.</p>
   <h3>Data</h3><div class="field"><button class="pbtn" id="set-export">Copy all data</button><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>`;
-  $('set-step').addEventListener('change',e=>{ pathStep(); S.path.step=+e.target.value; S.path.recent=[]; save(); renderHome(); });
-  $('set-fset').addEventListener('change',e=>{ drillSet(); S.drill.set=+e.target.value; save(); renderHome(); });
+  $('set-step').addEventListener('change',e=>{ pathStep(); S.path.step=+e.target.value; S.path.recent=[]; noteLevelPos(true,false); save(); renderHome(); });
+  $('set-fset').addEventListener('change',e=>{ drillSet(); S.drill.set=+e.target.value; noteLevelPos(false,true); save(); renderHome(); });
+  $('set-speech').addEventListener('click',()=>{ S.settings.speech=!canSpeak(); save(); renderSettings(); if(canSpeak()) speak('Spoken prompts are on.'); else hush(); });
   $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit) S.today.done=false; save(); renderSettings(); });
   $('set-more').addEventListener('click',()=>{ rollDay(); S.today.done=false; S.today.rounds=Math.min(S.today.rounds,5); S.today.ms=Math.min(S.today.ms,20*60*1000); save(); toast('One more round allowed.'); renderSettings(); });
   $('set-export').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(JSON.stringify(S,null,1)); toast('Copied.'); }catch(e){ toast('Could not copy.'); } });
-  pointerHold($('set-reset'),3000,()=>{ localStorage.removeItem(KEY); S=JSON.parse(JSON.stringify(DEFAULT)); save(); toast('Erased.'); openParent(); renderHome(); });
+  pointerHold($('set-reset'),3000,()=>{ try{ localStorage.removeItem(KEY); }catch(e){} S=JSON.parse(JSON.stringify(DEFAULT)); save(); toast('Erased.'); openParent(); renderHome(); });
 }
 
 rollDay(); renderHome(); show('s-home');
 </script>
 
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(()=>{});</script>
 </body>
 </html>
