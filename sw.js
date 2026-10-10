@@ -4,12 +4,13 @@
 // Any storage failure falls back to a plain network fetch, so broken storage never blocks the site.
 // Cache names carry no version: pages refresh on every online visit, and tile, font and lib URLs never change content.
 const PAGES='lgk-pages', STATIC='lgk-static', KEEP=[PAGES,STATIC];
-const GAMES=['','reading/','dibels/','math/','map_world/','map_us/'];
+const GAMES=['','reading/','dibels/','math/','map_world/','map_us/','map_europe/'];
 const CORE=GAMES.flatMap(g=>[g+'index.html',g+'manifest.json',g+'icon-192.png',g+'apple-touch-icon.png']).concat(GAMES.slice(1).map(g=>g+'icon.svg'));
 const LIBS=['lib/leaflet-1.9.4.min.js'];
 // Warmed in the background when the landing page asks, so a map opened offline is not blank.
-const WARM_DATA=['map_world/places.json','map_world/rivers.json','map_world/lakes.json','map_world/countries_hi.json','map_us/places.json','map_us/rivers.json','map_us/lakes.json','map_us/states_hi.json'];
-const WARM_TILES=[['map_world',0,3,[-90,-180,90,180]],['map_us',2,4,[11.25,-135,56.25,-56.25]]];
+const WARM_DATA=['map_world/places.json','map_world/rivers.json','map_world/lakes.json','map_world/countries_hi.json','map_us/places.json','map_us/rivers.json','map_us/lakes.json','map_us/states_hi.json','map_europe/places.json','map_europe/rivers.json','map_europe/lakes.json','map_europe/countries_hi.json'];
+// The Europe game shares the world tiles; its starting views need zoom 4-5 over Europe as well.
+const WARM_TILES=[['map_world',0,3,[-90,-180,90,180]],['map_world',4,5,[34,-25,71,45]],['map_us',2,4,[11.25,-135,56.25,-56.25]]];
 
 // One cache key per page: folder URLs map to their index.html, and query strings (?v=...) are dropped,
 // so the copy refreshed on each visit is the one served offline, whichever form the launch URL takes.

@@ -273,6 +273,8 @@ const DUP_N=new Set(CITIES.map(c=>c.n).filter((n,i,a)=>a.indexOf(n)!==i));
 function cityTier(c){ return c.t; }
 CITIES.forEach(c=>{ c.t=cityTier(c); });
 const COUNTRY_LIST=COUNTRIES.features.filter(f=>f.properties.area>=2500).map(f=>{ const p=f.properties; const t=p.t; return {name:fixName(p.name),raw:p.name,geom:f.geometry,area:p.area,cont:p.cont,cx:p.cx,cy:p.cy,t}; });
+// Countries left out of Drag the country because the piece would not fit on the screen.
+const NO_DRAG=new Set();
 const TIER_DESC=['The biggest cities.','Mid-sized cities and the other state capitals.','Smaller cities. Adults welcome.'];
 const TIER_DESC_DRAG=['The biggest states, with every border drawn.','The same states, no borders.','Every other state, starting zoomed to its region.'];
 const TIER_DESC_WHICH=['The biggest states, with the border outlined.','Mid-sized states, no outline.','Small states. Adults welcome.'];
@@ -303,7 +305,9 @@ function loadWater(){ if(!water) water=Promise.all([getJSON('rivers.json?v='+DAT
 requestAnimationFrame(()=>setTimeout(loadWater,0));
 map.on('zoomend',()=>{ coast50.setStyle(coastStyle); if(coast10) coast10.setStyle(coastStyle); coastDetail(); showWater(); loadWater(); });
 const WORLD_B=[[23,-126],[50,-66]], ASK_ZOOM=5.5, ANSWER_ZOOM=7;
-function worldView(){ map.fitBounds(WORLD_B,{animate:false}); }
+// Whole-map views start inside maxBounds, so Leaflet never adds its quarter-second correction, which could cut short a glide that began during it.
+function worldView(){ map.fitBounds(WORLD_B,{animate:false}); map.panInsideBounds(map.options.maxBounds,{animate:false}); }
+function worldGlide(){ const z=map.getBoundsZoom(WORLD_B); map.flyTo(map._limitCenter(L.latLngBounds(WORLD_B).getCenter(),z,L.latLngBounds(map.options.maxBounds)),z,{duration:.8}); }
 worldView();
 const marks=L.layerGroup().addTo(map);
 const HI={}; let hiPromise=null, HI_GJ=null, borders=null;
@@ -382,11 +386,11 @@ $('btn-start').addEventListener('click',()=>{ primeSpeech(); startRound(); });
 $('btn-again').addEventListener('click',()=>{ primeSpeech(); $('end').hidden=true; startRound(); });
 $('btn-menu').addEventListener('click',()=>{ $('end').hidden=true; $('start').hidden=false; showBest(); });
 $('btn-quit').addEventListener('click',()=>{ endRound(true); });
-$('btn-world').addEventListener('click',()=>map.flyToBounds(WORLD_B,{duration:.8}));
+$('btn-world').addEventListener('click',()=>worldGlide());
 
 // ---------- Round ----------
 const CHOICE_MODES=new Set(['name','whichCountry']);
-function tooSmall(c){ if(G.mode!=='country'||G.tier<2||!CONT_B[c.cont]) return false; let w=Infinity,s=Infinity,e=-Infinity,n=-Infinity; pieceOf(c.geom).forEach(poly=>poly[0].forEach(p=>{ if(p[1]<w)w=p[1]; if(p[1]>e)e=p[1]; if(p[0]<s)s=p[0]; if(p[0]>n)n=p[0]; })); const z=map.getBoundsZoom(L.latLngBounds(CONT_B[c.cont]).extend(L.latLngBounds([[s,w],[n,e]]).pad(.3))); return Math.max(e-w,n-s)*256*2**z/180<12; }
+function tooSmall(c){ if(G.mode==='country'&&NO_DRAG.has(c.raw)) return true; if(G.mode!=='country'||G.tier<2||!CONT_B[c.cont]) return false; let w=Infinity,s=Infinity,e=-Infinity,n=-Infinity; pieceOf(c.geom).forEach(poly=>poly[0].forEach(p=>{ if(p[1]<w)w=p[1]; if(p[1]>e)e=p[1]; if(p[0]<s)s=p[0]; if(p[0]>n)n=p[0]; })); const z=map.getBoundsZoom(L.latLngBounds(CONT_B[c.cont]).extend(L.latLngBounds([[s,w],[n,e]]).pad(.3))); return Math.max(e-w,n-s)*256*2**z/180<12; }
 function poolFor(){
   if(G.mode==='country'||G.mode==='whichCountry'){
     const tiers=G.mode==='country'?(G.tier<=1?[0]:[1,2]):[G.tier]; let p=COUNTRY_LIST.filter(c=>tiers.includes(c.t)&&!tooSmall(c)); if(p.length<10) p=COUNTRY_LIST.filter(c=>c.t<=G.tier&&!tooSmall(c));
@@ -408,7 +412,7 @@ function nextItem(){
   if(G.i>=G.items.length) return endRound(false);
   const it=G.items[G.i]; $('hud-round').textContent=`${G.i+1} / ${G.items.length}`; $('hud-score').textContent=G.score;
   $('post').hidden=true; const pc=it.raw&&PLACES[it.raw]; G.picks=pc?{it,list:pickPhotos(pc)}:null; if(G.picks&&navigator.onLine) G.picks.list.forEach(p=>{ new Image().src=p.src; });
-  if(G.mode==='city') map.flyToBounds(WORLD_B,{duration:.8}); else if(!CHOICE_MODES.has(G.mode)) worldView();
+  if(G.mode==='city') worldGlide(); else if(!CHOICE_MODES.has(G.mode)) worldView();
   if(G.mode==='city'){ $('hud-prompt').innerHTML=`Where is <em>${it.n}</em>, ${it.cd}?`; $('bar').innerHTML=`<button class="btn ghost" id="b-skip">Skip</button><button class="btn primary" id="b-lock" disabled>Tap the map to drop a pin</button>`; $('b-lock').addEventListener('click',lockIn); $('b-skip').addEventListener('click',skip); }
   if(G.mode==='country'){ $('hud-prompt').innerHTML=`Drag <em>${it.name}</em> into place. <button class="say" id="b-say" aria-label="Say the name again">&#128266;</button>`; $('b-say').addEventListener('click',()=>say(it.name)); say(it.name); $('hud-shape').hidden=false; $('hud-shape').innerHTML=`<span style="font-size:13px;color:var(--ink-soft)">${it.cont} &middot; ${Math.round(it.area*0.3861).toLocaleString()} mi&sup2;</span>`; $('bar').innerHTML=`<button class="btn ghost" id="b-skip">Skip</button><button class="btn primary" id="b-lock" disabled>Drag the shape into place</button>`; $('b-lock').addEventListener('click',lockIn); $('b-skip').addEventListener('click',skip); makePiece(it); if(G.i===0) toast('Drag the shape to where it belongs'); }
   if(G.mode==='name'){ const zq=Math.max(map.getBoundsZoom(WORLD_B),ASK_ZOOM); $('hud-prompt').innerHTML=`Which city is at the <em>white pin</em>?`; L.marker([it.la,it.lo],{icon:pinIcon('ask',''),interactive:false}).addTo(marks); map.flyTo([it.la,it.lo],zq,{duration:.8});
