@@ -131,7 +131,6 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .toast.on{opacity:1}
 #post{position:fixed;inset:0;z-index:1900;display:flex;align-items:center;justify-content:center;padding:max(16px,var(--sat)) max(16px,var(--sar)) max(16px,var(--sab)) max(16px,var(--sal));background:rgba(24,16,8,.45)}
 .post{max-width:940px;gap:10px}
-.post h2 small{display:block;font-family:var(--f-ui);font-size:14px;color:var(--ink-soft);margin-top:4px}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .facts div{background:rgba(43,29,14,.06);border:1px solid var(--line);border-radius:8px;padding:6px 10px;min-width:0}
 .facts b{display:block;font-family:var(--f-caps);font-weight:400;letter-spacing:.08em;font-size:12px;color:var(--accent)}
@@ -146,11 +145,15 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .photos.one img{height:280px}
 .photos figure{margin:0;background:rgba(43,29,14,.06);border-radius:8px;overflow:hidden;border:1px solid var(--line)}
 .photos img{width:100%;height:250px;object-fit:cover;display:block;background:rgba(43,29,14,.08)}
-.photos img.person{object-position:50% 15%}
+/* Portraits are shown whole over a soft blurred copy of themselves, so faces are never cropped. */
+.photos .pbox{position:relative;height:250px;overflow:hidden;background:rgba(43,29,14,.08)}
+.photos .pbox::before{content:"";position:absolute;inset:-30px;background:var(--bg) center/cover;filter:blur(18px);opacity:.5}
+.photos .pbox img{position:relative;height:100%;object-fit:contain;background:none}
+.photos.one .pbox{height:280px}
 .photos figcaption{padding:8px 10px;font-size:14px;line-height:1.3}
 .photos figcaption b{font-family:var(--f-caps);font-weight:400;letter-spacing:.08em;font-size:13px;color:var(--accent);display:block}
 .credits{font-size:11px;color:var(--ink-soft);line-height:1.4}
-@media (max-width:700px){.photos{grid-template-columns:1fr}.photos img{height:200px}.post .banner{height:80px}}
+@media (max-width:700px){.photos{grid-template-columns:1fr}.photos img,.photos .pbox{height:200px}.post .banner{height:80px}}
 .drag-piece{cursor:grab}
 .drag-piece.dragging{cursor:grabbing}
 </style>
@@ -344,7 +347,7 @@ function pickPhotos(pc){
 }
 function showPostcard(it){
   const pc=PLACES[it.raw]; if(!pc) return;
-  $('post-title').innerHTML=`Postcard from ${it.name}<small>A glimpse of the landscape, culture, and cuisine.</small>`;
+  $('post-title').textContent=`Postcard from ${it.name}`;
   const fx=pc.facts||{}; const big=n=>n>=1e9?(n/1e9).toFixed(1).replace(/\.0$/,'')+' billion':n>=1e6?(n/1e6<10?(n/1e6).toFixed(1).replace(/\.0$/,''):Math.round(n/1e6))+' million':Math.round(n/1e3)+',000';
   const areaTxt=fx.area?(US_UNITS?Math.round(fx.area*0.3861).toLocaleString()+' mi²':(fx.area>=1e6?(fx.area/1e6).toFixed(1).replace(/\.0$/,'')+' million km²':Math.round(fx.area/1000).toLocaleString()+',000 km²')):'';
   const cell=(k,v,sub)=>v?`<div><b>${k}</b><span>${v}${sub?` <small>${sub}</small>`:''}</span></div>`:'';
@@ -353,7 +356,10 @@ function showPostcard(it){
   const bsm=pc.banner&&pc.banner.src.replace('/1920px-','/960px-'); $('post-banner').innerHTML=pc.banner&&navigator.onLine?`<img class="banner" onerror="this.remove()" src="${bsm}"${bsm!==pc.banner.src?` srcset="${bsm} 960w, ${pc.banner.src} 1920w" sizes="(max-width:700px) 100vw, 940px"`:''} alt="${it.name}">`:'';
   const picks=!navigator.onLine?[]:(G.picks&&G.picks.it===it)?G.picks.list:pickPhotos(pc);
   const kindLabel=k=>k==='person'?'Famous person':k==='food'?'Food & Drink':k==='culture'?'Culture & Tradition':k==='people'?'People':'Landscape';
-  const fig=p=>`<figure><img onerror="this.parentNode.remove()"${p.kind==='person'?' class="person"':''} src="${p.src}" alt="${p.kind==='person'?p.name:kindLabel(p.kind)+' in '+it.name}"><figcaption><b>${kindLabel(p.kind)}</b>${p.title}</figcaption></figure>`;
+  const fig=p=>{
+    const img=`<img onerror="this.closest('figure').remove()" src="${p.src}" alt="${p.kind==='person'?p.name:kindLabel(p.kind)+' in '+it.name}">`;
+    return `<figure>${p.kind==='person'?`<div class="pbox" style="--bg:url('${p.src}')">${img}</div>`:img}<figcaption><b>${kindLabel(p.kind)}</b>${p.title}</figcaption></figure>`;
+  };
   $('post-photos').className='photos'+(picks.length===2?'':' one'); $('post-photos').innerHTML=picks.map(fig).join('');
   const cred=[navigator.onLine&&pc.banner].concat(picks).filter(Boolean).map(p=>`${p.by||'Wikimedia Commons'} (${p.lic||'free license'})`);
   $('post-credits').textContent=cred.length?'Photos from Wikimedia Commons and Wikivoyage: '+cred.join('; ')+'.':'';
