@@ -3,6 +3,7 @@
   "short_name": "Math",
   "description": "Visual number sense, ten frames, and bonds",
   "start_url": "./index.html",
+  "scope": "../",
   "display": "standalone",
   "display_override": [
     "fullscreen",

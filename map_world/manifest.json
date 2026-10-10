@@ -3,14 +3,15 @@
   "short_name": "Map Game",
   "description": "Unlabeled physical atlas world geography game",
   "start_url": "./index.html",
+  "scope": "../",
   "display": "standalone",
   "display_override": [
     "fullscreen",
     "standalone"
   ],
   "orientation": "any",
-  "background_color": "#2B211A",
-  "theme_color": "#2B211A",
+  "background_color": "#F3E9D2",
+  "theme_color": "#F3E9D2",
   "icons": [
     {
       "src": "icon.svg",

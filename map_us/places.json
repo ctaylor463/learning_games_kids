@@ -39,6 +39,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Kegchislicsmall.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Sitting_Bull.jpg/500px-Sitting_Bull.jpg",
+        "w": 500,
+        "h": 898,
+        "title": "Sitting Bull, Lakota leader and holy man",
+        "by": "David Francis Barry",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ASitting_Bull.jpg",
+        "kind": "person",
+        "name": "Sitting Bull"
       }
     ],
     "facts": {
@@ -96,6 +107,17 @@
         "lic": "CC BY-SA / Public Domain",
         "page": "https://commons.wikimedia.org/wiki/File:Oak_Alley_Plantation%2C_Louisiana_(Scott_Oldham).jpg",
         "kind": "land"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Louis_Armstrong_restored.jpg/500px-Louis_Armstrong_restored.jpg",
+        "w": 500,
+        "h": 390,
+        "title": "Louis Armstrong, jazz trumpet player and singer",
+        "by": "World-Telegram staff photographer",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ALouis_Armstrong_restored.jpg",
+        "kind": "person",
+        "name": "Louis Armstrong"
       }
     ]
   },
@@ -129,6 +151,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Fried_green_tomatoes.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Helen_Keller_circa_1920_-_restored.jpg/500px-Helen_Keller_circa_1920_-_restored.jpg",
+        "w": 500,
+        "h": 640,
+        "title": "Helen Keller, writer who was deaf and blind",
+        "by": "Los Angeles Times",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AHelen_Keller_circa_1920_-_restored.jpg",
+        "kind": "person",
+        "name": "Helen Keller"
       }
     ],
     "facts": {
@@ -194,6 +227,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Pork_tenderloin_sandwich.JPG",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Margaret_Hamilton_1995.jpg/500px-Margaret_Hamilton_1995.jpg",
+        "w": 500,
+        "h": 666,
+        "title": "Margaret Hamilton, coder for the Moon landing",
+        "by": "Daphne Weld Nichols",
+        "lic": "CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AMargaret_Hamilton_1995.jpg",
+        "kind": "person",
+        "name": "Margaret Hamilton"
       }
     ],
     "facts": {
@@ -269,6 +313,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Shredded_pork_burrito.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Sally_Ride_%281984%29.jpg/500px-Sally_Ride_%281984%29.jpg",
+        "w": 500,
+        "h": 625,
+        "title": "Sally Ride, first American woman in space",
+        "by": "NASA",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ASally_Ride_%281984%29.jpg",
+        "kind": "person",
+        "name": "Sally Ride"
       }
     ],
     "facts": {
@@ -335,6 +390,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:4-way_Cincinnati_chili_from_Camp_Washington_Chili_in_Cincinnati_OH_USA.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Thomas_Edison2.jpg/500px-Thomas_Edison2.jpg",
+        "w": 500,
+        "h": 640,
+        "title": "Thomas Edison, inventor of a long-lasting light bulb",
+        "by": "Louis Bachrach",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AThomas_Edison2.jpg",
+        "kind": "person",
+        "name": "Thomas Edison"
       }
     ],
     "facts": {
@@ -392,6 +458,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Scrapple_comparison.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Annie_Jump_Cannon_1922_Portrait.jpg/500px-Annie_Jump_Cannon_1922_Portrait.jpg",
+        "w": 500,
+        "h": 703,
+        "title": "Annie Jump Cannon, astronomer who sorted the stars",
+        "by": "New York World-Telegram and the Sun",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AAnnie_Jump_Cannon_1922_Portrait.jpg",
+        "kind": "person",
+        "name": "Annie Jump Cannon"
       }
     ]
   },
@@ -425,6 +502,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Sally's_apizza_half_tomato_half_with_cheese_(72126).jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Barbara_McClintock_%281902-1992%29_shown_in_her_laboratory_in_1947.jpg/500px-Barbara_McClintock_%281902-1992%29_shown_in_her_laboratory_in_1947.jpg",
+        "w": 500,
+        "h": 409,
+        "title": "Barbara McClintock, scientist who studied corn genes",
+        "by": "Smithsonian Institution",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABarbara_McClintock_%281902-1992%29_shown_in_her_laboratory_in_1947.jpg",
+        "kind": "person",
+        "name": "Barbara McClintock"
       }
     ],
     "facts": {
@@ -482,6 +570,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Inside_of_the_Juicy_Lucy_from_the_5-8_Club%2C_July_2011.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Charles_Schulz_NYWTS.jpg/500px-Charles_Schulz_NYWTS.jpg",
+        "w": 500,
+        "h": 329,
+        "title": "Charles M. Schulz, creator of Charlie Brown and Snoopy",
+        "by": "Roger Higgins",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ACharles_Schulz_NYWTS.jpg",
+        "kind": "person",
+        "name": "Charles M. Schulz"
       }
     ]
   },
@@ -535,6 +634,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:Cocktail_1_bg_060702.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/9/93/Andre_Agassi_%282011%29.jpg",
+        "w": 412,
+        "h": 520,
+        "title": "Andre Agassi, tennis champion",
+        "by": "Shinya Suzuki",
+        "lic": "CC BY 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AAndre_Agassi_%282011%29.jpg",
+        "kind": "person",
+        "name": "Andre Agassi"
       }
     ],
     "facts": {
@@ -600,6 +710,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:Cheese_Curds_with_scale_measurement.png",
         "kind": "food"
+      },
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/1/10/Laura_Ingalls_Wilder.jpg",
+        "w": 300,
+        "h": 380,
+        "title": "Laura Ingalls Wilder, author of the Little House books",
+        "by": "Unknown author",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ALaura_Ingalls_Wilder.jpg",
+        "kind": "person",
+        "name": "Laura Ingalls Wilder"
       }
     ],
     "facts": {
@@ -657,6 +778,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Toasted_Ravioli.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/MarkTwain.LOC.jpg/500px-MarkTwain.LOC.jpg",
+        "w": 500,
+        "h": 620,
+        "title": "Mark Twain, author of Tom Sawyer",
+        "by": "Unknown author",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AMarkTwain.LOC.jpg",
+        "kind": "person",
+        "name": "Mark Twain"
       }
     ]
   },
@@ -702,6 +834,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Runza_01.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Fred_Astaire.png/500px-Fred_Astaire.png",
+        "w": 500,
+        "h": 647,
+        "title": "Fred Astaire, famous movie dancer",
+        "by": "Studio publicity still",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AFred_Astaire.png",
+        "kind": "person",
+        "name": "Fred Astaire"
       }
     ]
   },
@@ -775,6 +918,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:Maple_syrup.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/John_Deere_portrait.jpg/500px-John_Deere_portrait.jpg",
+        "w": 500,
+        "h": 682,
+        "title": "John Deere, maker of the steel plow",
+        "by": "Appletons' Cyclopaedia of American Biography",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJohn_Deere_portrait.jpg",
+        "kind": "person",
+        "name": "John Deere"
       }
     ],
     "facts": {
@@ -841,6 +995,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Sashimi_-_Maguro_Restaurant%2C_Bangna%2C_Bangkok_(44856596864).jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Linda_Buck_2015_%28cropped%29.jpg/500px-Linda_Buck_2015_%28cropped%29.jpg",
+        "w": 500,
+        "h": 500,
+        "title": "Linda Buck, scientist who studied smell",
+        "by": "Royal Society",
+        "lic": "CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3ALinda_Buck_2015_%28cropped%29.jpg",
+        "kind": "person",
+        "name": "Linda Buck"
       }
     ],
     "facts": {
@@ -896,6 +1061,17 @@
         "lic": "GFDL",
         "page": "https://commons.wikimedia.org/wiki/File:Central_Texas_Style_Barbecue_in_Pearland%2C_TX.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Bessie_Coleman_in_1923.jpg/500px-Bessie_Coleman_in_1923.jpg",
+        "w": 500,
+        "h": 653,
+        "title": "Bessie Coleman, first African American woman pilot",
+        "by": "Unknown author",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABessie_Coleman_in_1923.jpg",
+        "kind": "person",
+        "name": "Bessie Coleman"
       }
     ],
     "facts": {
@@ -952,6 +1128,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Chicken_Fried_Steak.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Stephen_Hillenburg_by_Carlos_Cazurro.jpg/500px-Stephen_Hillenburg_by_Carlos_Cazurro.jpg",
+        "w": 500,
+        "h": 608,
+        "title": "Stephen Hillenburg, creator of SpongeBob SquarePants",
+        "by": "Carlos Cazurro Burgos",
+        "lic": "CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AStephen_Hillenburg_by_Carlos_Cazurro.jpg",
+        "kind": "person",
+        "name": "Stephen Hillenburg"
       }
     ],
     "facts": {
@@ -1017,6 +1204,17 @@
         "lic": "CC0",
         "page": "https://commons.wikimedia.org/wiki/File:Clam_cakes.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Gilbert_Stuart_Selfportrait.jpg/500px-Gilbert_Stuart_Selfportrait.jpg",
+        "w": 500,
+        "h": 668,
+        "title": "Gilbert Stuart, painter of George Washington on the dollar bill",
+        "by": "Gilbert Stuart",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AGilbert_Stuart_Selfportrait.jpg",
+        "kind": "person",
+        "name": "Gilbert Stuart"
       }
     ],
     "facts": {
@@ -1082,6 +1280,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:Funeralpotatoesserving.JPG",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Philo_T_Farnsworth.jpg/500px-Philo_T_Farnsworth.jpg",
+        "w": 500,
+        "h": 678,
+        "title": "Philo Farnsworth, inventor of electronic television",
+        "by": "Harris & Ewing",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3APhilo_T_Farnsworth.jpg",
+        "kind": "person",
+        "name": "Philo Farnsworth"
       }
     ],
     "facts": {
@@ -1118,6 +1327,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Country_ham.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg/500px-Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg",
+        "w": 500,
+        "h": 722,
+        "title": "Ella Fitzgerald, jazz singer",
+        "by": "Carl Van Vechten",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AElla_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_%28cropped%29.jpg",
+        "kind": "person",
+        "name": "Ella Fitzgerald"
       }
     ],
     "facts": {
@@ -1164,6 +1384,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Pork_roll_slices_frying.JPG",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Buzz_Aldrin.jpg/500px-Buzz_Aldrin.jpg",
+        "w": 500,
+        "h": 625,
+        "title": "Buzz Aldrin, astronaut who walked on the Moon",
+        "by": "NASA",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABuzz_Aldrin.jpg",
+        "kind": "person",
+        "name": "Buzz Aldrin"
       }
     ],
     "facts": {
@@ -1219,6 +1450,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Lobster_Roll.png",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Henry_Wadsworth_Longfellow_-_Project_Gutenberg_eText_16786.jpg/500px-Henry_Wadsworth_Longfellow_-_Project_Gutenberg_eText_16786.jpg",
+        "w": 500,
+        "h": 667,
+        "title": "Henry Wadsworth Longfellow, poet of Paul Revere's Ride",
+        "by": "Hanstaingl",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AHenry_Wadsworth_Longfellow_-_Project_Gutenberg_eText_16786.jpg",
+        "kind": "person",
+        "name": "Henry Wadsworth Longfellow"
       }
     ],
     "facts": {
@@ -1264,6 +1506,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Mississippi_mud_pie_(7963392610).jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Jim_Henson%2C_creator%2C_The_Muppets.jpg/500px-Jim_Henson%2C_creator%2C_The_Muppets.jpg",
+        "w": 500,
+        "h": 667,
+        "title": "Jim Henson, creator of the Muppets",
+        "by": "Bernard Gotfryd",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJim_Henson%2C_creator%2C_The_Muppets.jpg",
+        "kind": "person",
+        "name": "Jim Henson"
       }
     ],
     "facts": {
@@ -1339,6 +1592,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:A_Delicious_Crabcake_at_the_Middleton_Tavern.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Harriet_Tubman_%28circa_1885%29.jpg/500px-Harriet_Tubman_%28circa_1885%29.jpg",
+        "w": 500,
+        "h": 667,
+        "title": "Harriet Tubman, hero who led people to freedom",
+        "by": "Horatio Seymour Squyer",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AHarriet_Tubman_%28circa_1885%29.jpg",
+        "kind": "person",
+        "name": "Harriet Tubman"
       }
     ],
     "facts": {
@@ -1384,6 +1648,17 @@
         "lic": "GFDL 1.2",
         "page": "https://commons.wikimedia.org/wiki/File:ClassicTenderMaid.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Norman_Borlaug%2C_2004_%28cropped%29.jpg/500px-Norman_Borlaug%2C_2004_%28cropped%29.jpg",
+        "w": 500,
+        "h": 708,
+        "title": "Norman Borlaug, scientist who fought world hunger",
+        "by": "Ben Zinner, USAID",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ANorman_Borlaug%2C_2004_%28cropped%29.jpg",
+        "kind": "person",
+        "name": "Norman Borlaug"
       }
     ],
     "facts": {
@@ -1469,6 +1744,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:American_bison_k5680-1.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Jackson_Pollock_by_Hans_Namuth.jpg/500px-Jackson_Pollock_by_Hans_Namuth.jpg",
+        "w": 500,
+        "h": 666,
+        "title": "Jackson Pollock, painter who dripped paint",
+        "by": "Hans Namuth",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJackson_Pollock_by_Hans_Namuth.jpg",
+        "kind": "person",
+        "name": "Jackson Pollock"
       }
     ],
     "facts": {
@@ -1544,6 +1830,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Sonoran_dog_GC_0052.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Lynda_Carter_2000.jpg/500px-Lynda_Carter_2000.jpg",
+        "w": 500,
+        "h": 644,
+        "title": "Lynda Carter, actress who played Wonder Woman",
+        "by": "John Mathew Smith & www.celebrity-photos.com",
+        "lic": "CC BY-SA 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3ALynda_Carter_2000.jpg",
+        "kind": "person",
+        "name": "Lynda Carter"
       }
     ],
     "facts": {
@@ -1590,6 +1887,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Lefse_on_a_griddle.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Peggy_Lee_1950.JPG/500px-Peggy_Lee_1950.JPG",
+        "w": 500,
+        "h": 615,
+        "title": "Peggy Lee, singer in Lady and the Tramp",
+        "by": "General Artists Corporation",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3APeggy_Lee_1950.JPG",
+        "kind": "person",
+        "name": "Peggy Lee"
       }
     ],
     "facts": {
@@ -1635,6 +1943,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Madame_Jeanette_and_other_chillies.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Carolyn_Shoemaker.jpg",
+        "w": 422,
+        "h": 600,
+        "title": "Carolyn Shoemaker, astronomer who found many comets",
+        "by": "Gene Shoemaker",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ACarolyn_Shoemaker.jpg",
+        "kind": "person",
+        "name": "Carolyn Shoemaker"
       }
     ],
     "facts": {
@@ -1711,6 +2030,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:NYPizzaPie.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg/500px-Eleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg",
+        "w": 500,
+        "h": 666,
+        "title": "Eleanor Roosevelt, champion of human rights",
+        "by": "FDR Presidential Library & Museum",
+        "lic": "CC BY 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AEleanor_Roosevelt_at_the_United_Nations%2C_circa_1946-1947_%283x4_cropped%29.jpg",
+        "kind": "person",
+        "name": "Eleanor Roosevelt"
       }
     ],
     "facts": {
@@ -1776,6 +2106,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Shrimp_and_grits_at_the_Green_Goddess.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Chadwick_Boseman_by_Gage_Skidmore_July_2017_%28cropped%29.jpg/500px-Chadwick_Boseman_by_Gage_Skidmore_July_2017_%28cropped%29.jpg",
+        "w": 500,
+        "h": 662,
+        "title": "Chadwick Boseman, actor who played Black Panther",
+        "by": "Gage Skidmore",
+        "lic": "CC BY-SA 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AChadwick_Boseman_by_Gage_Skidmore_July_2017_%28cropped%29.jpg",
+        "kind": "person",
+        "name": "Chadwick Boseman"
       }
     ],
     "facts": {
@@ -1833,6 +2174,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Competition_Barbecue_submission._This_is_beef_brisket..jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Amelia_Earhart_1935.jpg/500px-Amelia_Earhart_1935.jpg",
+        "w": 500,
+        "h": 626,
+        "title": "Amelia Earhart, pilot who flew across the ocean",
+        "by": "NBC Photo-NBC Radio",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AAmelia_Earhart_1935.jpg",
+        "kind": "person",
+        "name": "Amelia Earhart"
       }
     ]
   },
@@ -1866,6 +2218,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:Quail_07_bg_041506.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg/500px-Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
+        "w": 500,
+        "h": 616,
+        "title": "Benjamin Franklin, inventor and founding father",
+        "by": "Joseph-Siffred Duplessis",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJoseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
+        "kind": "person",
+        "name": "Benjamin Franklin"
       }
     ],
     "facts": {
@@ -1951,6 +2314,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:RogersMazzaPepperoniRoll.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/500px-Katherine_Johnson_1983.jpg",
+        "w": 500,
+        "h": 625,
+        "title": "Katherine Johnson, NASA mathematician",
+        "by": "NASA",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AKatherine_Johnson_1983.jpg",
+        "kind": "person",
+        "name": "Katherine Johnson"
       }
     ],
     "facts": {
@@ -2026,6 +2400,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Marionberries_(2493507934).jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Beverly_Cleary_1971.jpg/500px-Beverly_Cleary_1971.jpg",
+        "w": 500,
+        "h": 626,
+        "title": "Beverly Cleary, author of the Ramona books",
+        "by": "Unknown author",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABeverly_Cleary_1971.jpg",
+        "kind": "person",
+        "name": "Beverly Cleary"
       }
     ],
     "facts": {
@@ -2083,6 +2468,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Hot_Brown%2C_Brown_Hotel.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/500px-Abraham_Lincoln_O-77_matte_collodion_print.jpg",
+        "w": 500,
+        "h": 644,
+        "title": "Abraham Lincoln, president who ended slavery",
+        "by": "Alexander Gardner",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AAbraham_Lincoln_O-77_matte_collodion_print.jpg",
+        "kind": "person",
+        "name": "Abraham Lincoln"
       }
     ]
   },
@@ -2126,6 +2522,17 @@
         "lic": "CC BY 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Cobbler_(7303683612).jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Jackie_Robinson%2C_NPG_97_135.jpg/500px-Jackie_Robinson%2C_NPG_97_135.jpg",
+        "w": 500,
+        "h": 644,
+        "title": "Jackie Robinson, baseball player who broke barriers",
+        "by": "Harry Warnecke",
+        "lic": "CC0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJackie_Robinson%2C_NPG_97_135.jpg",
+        "kind": "person",
+        "name": "Jackie Robinson"
       }
     ],
     "facts": {
@@ -2201,6 +2608,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Bog_huckleberry.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Brad_Bird_2018.jpg/500px-Brad_Bird_2018.jpg",
+        "w": 500,
+        "h": 644,
+        "title": "Brad Bird, director of The Incredibles",
+        "by": "Boungawa",
+        "lic": "CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABrad_Bird_2018.jpg",
+        "kind": "person",
+        "name": "Brad Bird"
       }
     ],
     "facts": {
@@ -2246,6 +2664,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Detroit_Style_Pizza_in_Lloyds_Detroit_Style_Pan.png",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Serena_Williams_at_2013_US_Open.jpg/500px-Serena_Williams_at_2013_US_Open.jpg",
+        "w": 500,
+        "h": 659,
+        "title": "Serena Williams, tennis champion",
+        "by": "Edwin Martinez",
+        "lic": "CC BY 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3ASerena_Williams_at_2013_US_Open.jpg",
+        "kind": "person",
+        "name": "Serena Williams"
       }
     ],
     "facts": {
@@ -2301,6 +2730,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Siluriformes.png",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Johnny_Cash_%22The_Johnny_Cash_Spring_Special%22_%281979_CBS_press_photo%29.jpg/500px-Johnny_Cash_%22The_Johnny_Cash_Spring_Special%22_%281979_CBS_press_photo%29.jpg",
+        "w": 500,
+        "h": 653,
+        "title": "Johnny Cash, country music singer",
+        "by": "CBS Television",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AJohnny_Cash_%22The_Johnny_Cash_Spring_Special%22_%281979_CBS_press_photo%29.jpg",
+        "kind": "person",
+        "name": "Johnny Cash"
       }
     ],
     "facts": {
@@ -2366,6 +2806,17 @@
         "lic": "CC BY-SA 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:PatsCheesesteak.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Fred_Rogers_and_Neighborhood_Trolley.jpg/500px-Fred_Rogers_and_Neighborhood_Trolley.jpg",
+        "w": 500,
+        "h": 543,
+        "title": "Fred Rogers, host of Mister Rogers' Neighborhood",
+        "by": "Walt Seng",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AFred_Rogers_and_Neighborhood_Trolley.jpg",
+        "kind": "person",
+        "name": "Fred Rogers"
       }
     ],
     "facts": {
@@ -2411,6 +2862,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Slice_of_Key_Lime_Pie.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Sidney_Poitier_1968.jpg/500px-Sidney_Poitier_1968.jpg",
+        "w": 500,
+        "h": 610,
+        "title": "Sidney Poitier, award-winning film actor",
+        "by": "Unknown photographer",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ASidney_Poitier_1968.jpg",
+        "kind": "person",
+        "name": "Sidney Poitier"
       }
     ],
     "facts": {
@@ -2467,6 +2929,17 @@
         "lic": "Public domain",
         "page": "https://commons.wikimedia.org/wiki/File:BakedPotatoWithButter.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Sacagawea_Detail_Lewis_%26_Clark_at_Three_Forks_%28cropped%29.jpg/500px-Sacagawea_Detail_Lewis_%26_Clark_at_Three_Forks_%28cropped%29.jpg",
+        "w": 500,
+        "h": 588,
+        "title": "Sacagawea, guide for Lewis and Clark",
+        "by": "Edgar Samuel Paxson",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ASacagawea_Detail_Lewis_%26_Clark_at_Three_Forks_%28cropped%29.jpg",
+        "kind": "person",
+        "name": "Sacagawea"
       }
     ],
     "facts": {
@@ -2542,6 +3015,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Rocky_mountain_oysters.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Mikaela_Shiffrin_%28Portrait%29.jpg/500px-Mikaela_Shiffrin_%28Portrait%29.jpg",
+        "w": 500,
+        "h": 593,
+        "title": "Mikaela Shiffrin, ski racer with record wins",
+        "by": "Manfred Werner (Tsui)",
+        "lic": "CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File%3AMikaela_Shiffrin_%28Portrait%29.jpg",
+        "kind": "person",
+        "name": "Mikaela Shiffrin"
       }
     ],
     "facts": {
@@ -2587,6 +3071,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Apple_cider_doughnuts.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Business_suit_portrait_of_Al_Shepard.jpg/500px-Business_suit_portrait_of_Al_Shepard.jpg",
+        "w": 500,
+        "h": 630,
+        "title": "Alan Shepard, first American in space",
+        "by": "NASA",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3ABusiness_suit_portrait_of_Al_Shepard.jpg",
+        "kind": "person",
+        "name": "Alan Shepard"
       }
     ],
     "facts": {
@@ -2632,6 +3127,17 @@
         "lic": "CC BY-SA 2.0",
         "page": "https://commons.wikimedia.org/wiki/File:Princes_hot_chicken.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Young-Dolly-Parton.jpg/500px-Young-Dolly-Parton.jpg",
+        "w": 500,
+        "h": 615,
+        "title": "Dolly Parton, singer who gives children books",
+        "by": "David Gahr",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AYoung-Dolly-Parton.jpg",
+        "kind": "person",
+        "name": "Dolly Parton"
       }
     ],
     "facts": {
@@ -2697,6 +3203,17 @@
         "lic": "CC BY-SA 4.0",
         "page": "https://commons.wikimedia.org/wiki/File:Chicago-Style_Stuffed_Pizza.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/d/df/Walt_Disney_1946.JPG",
+        "w": 450,
+        "h": 675,
+        "title": "Walt Disney, creator of Mickey Mouse",
+        "by": "Boy Scouts of America",
+        "lic": "Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File%3AWalt_Disney_1946.JPG",
+        "kind": "person",
+        "name": "Walt Disney"
       }
     ],
     "facts": {
@@ -2754,6 +3271,17 @@
         "lic": "CC BY 3.0",
         "page": "https://commons.wikimedia.org/wiki/File:Pulled_pork_008.jpg",
         "kind": "food"
+      },
+      {
+        "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Nina_Simone_1965_-_restoration1.jpg/500px-Nina_Simone_1965_-_restoration1.jpg",
+        "w": 500,
+        "h": 626,
+        "title": "Nina Simone, singer and pianist",
+        "by": "Ron Kroon for Anefo",
+        "lic": "CC0",
+        "page": "https://commons.wikimedia.org/wiki/File%3ANina_Simone_1965_-_restoration1.jpg",
+        "kind": "person",
+        "name": "Nina Simone"
       }
     ]
   }

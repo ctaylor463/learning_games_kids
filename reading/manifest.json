@@ -3,6 +3,7 @@
   "short_name": "Reading",
   "description": "Pictures and words early phonics practice",
   "start_url": "./index.html",
+  "scope": "../",
   "display": "standalone",
   "display_override": [
     "fullscreen",

@@ -218,19 +218,10 @@ button:focus-visible{outline:3px solid var(--name);outline-offset:3px}
 const ICONS = {
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></svg>',
   next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>',
-  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
   close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
-  parts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="8" width="5" height="8" rx="1.5"/><rect x="9.5" y="8" width="5" height="8" rx="1.5"/><rect x="16" y="8" width="5" height="8" rx="1.5"/></svg>',
-  hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V11"/><path d="M10 10V5a1.5 1.5 0 0 1 3 0v6"/><path d="M13 10V6.5a1.5 1.5 0 0 1 3 0V12"/><path d="M16 11.5a1.5 1.5 0 0 1 3 1V15c0 3.5-2.5 6-6 6h-1c-2 0-3.5-1-4.5-2.5L4.5 14a1.5 1.5 0 0 1 2.5-1.5L8 14"/></svg>',
-  adult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="6" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4"/><circle cx="18" cy="10" r="2.2"/><path d="M15 21v-3a3 3 0 0 1 6 0v3"/></svg>',
-  child:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg>',
   kite:'<svg viewBox="0 0 64 64"><path d="M32 4 52 26 32 50 12 26Z" fill="#E4572E"/><path d="M32 4 32 50M12 26h40" stroke="#F5C242" stroke-width="2.5"/><path d="M32 50c-2 5 4 7 1 12" stroke="#1B2A41" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M28 58l4-3 4 3M27 63l5-3 5 3" stroke="#4C7DD1" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
   kiteHigh:'<svg viewBox="0 0 64 64"><circle cx="50" cy="14" r="8" fill="#F5C242"/><path d="M22 10 42 32 22 56 2 32Z" fill="#E4572E"/><path d="M22 10V56M2 32h40" stroke="#F5C242" stroke-width="2.5"/><path d="M22 56c-2 5 4 7 1 8" stroke="#1B2A41" stroke-width="2" fill="none"/></svg>',
-  book:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><path d="M8 12h20a4 4 0 0 1 4 4v36a4 4 0 0 0-4-4H8z" fill="#BFD9F2"/><path d="M56 12H36a4 4 0 0 0-4 4v36a4 4 0 0 1 4-4h20z" fill="#DCE8FA"/><path d="M14 22h10M14 30h10M40 22h10M40 30h10"/></svg>',
-  monster:'<svg viewBox="0 0 64 64"><path d="M12 30a20 20 0 0 1 40 0v18a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z" fill="#3E9B5F"/><circle cx="24" cy="30" r="6" fill="#fff"/><circle cx="40" cy="30" r="6" fill="#fff"/><circle cx="25" cy="31" r="2.5" fill="#1B2A41"/><circle cx="41" cy="31" r="2.5" fill="#1B2A41"/><path d="M22 44q10 8 20 0" stroke="#1B2A41" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M20 12l-4-8M44 12l4-8" stroke="#3E9B5F" stroke-width="4" stroke-linecap="round"/></svg>',
-  cards:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><rect x="16" y="10" width="36" height="44" rx="5" fill="#DCE8FA" transform="rotate(8 34 32)"/><rect x="10" y="12" width="36" height="44" rx="5" fill="#fff"/><text x="28" y="42" font-family="Andika,sans-serif" font-size="20" text-anchor="middle" fill="#E4572E" stroke="none">zat</text></svg>',
-  picture:'<svg viewBox="0 0 64 64" fill="none" stroke="#1B2A41" stroke-width="3" stroke-linejoin="round"><rect x="8" y="10" width="48" height="36" rx="5" fill="#FBE8D2"/><circle cx="22" cy="24" r="5" fill="#F5C242"/><path d="M12 42l14-12 8 8 8-6 12 10" fill="#3E9B5F"/><path d="M20 54h24"/></svg>',
   fullscreen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',
   fullscreenExit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m11 7h6m-6 0V4m0 6l7-7"/></svg>'
 };
@@ -248,8 +239,10 @@ const PIC_EMOJI=Object.fromEntries(PICS);
 <script>
 // ---------- State ----------
 const KEY='cat-hat-map-v1';
-const DEFAULT={v:1, level:0, settings:{voice:'',rate:0.85,limit:false}, miss:{}, sessions:[], todayKey:'', today:{rounds:0,ms:0,done:false}};
+const DEFAULT={v:1, level:0, settings:{voice:'',rate:0.75,limit:false}, miss:{}, sessions:[], todayKey:'', today:{rounds:0,ms:0,done:false}};
 let S=load();
+// Speech became a little slower in October 2026: a saved speed still at the old default moves to the new one, once.
+if(!S.settings.rate2){ if(S.settings.rate===0.85) S.settings.rate=0.75; S.settings.rate2=true; }
 function load(){ try{ const raw=localStorage.getItem(KEY); if(raw){ const o=JSON.parse(raw); return Object.assign({},DEFAULT,o,{settings:Object.assign({},DEFAULT.settings,o.settings||{})}); } }catch(e){} return JSON.parse(JSON.stringify(DEFAULT)); }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
 function todayKey(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
@@ -261,7 +254,7 @@ const $=id=>document.getElementById(id);
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('on'),2200); }
+function toast(t,ms){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('on'),ms||2200); }
 function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); }
 document.querySelectorAll('[data-icon]').forEach(el=>{ el.innerHTML=ICONS[el.dataset.icon]||''; });
 const icon=n=>ICONS[n]||'';
@@ -280,11 +273,14 @@ function updateFsButtons(){
     btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen'); btn.title = active ? 'Exit full screen' : 'Full screen'; btn.dataset.label = active ? 'Exit' : 'Full screen';
   });
 }
+// iPad and iPhone: Safari's full-screen mode is made for video and handles whole pages badly. The Home Screen app is full screen, so the button explains that instead.
+const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 async function toggleFullscreen(){
   if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
     toast('Already running full screen from Home Screen.');
     return;
   }
+  if(IOS&&!isFullscreen()){ toast('For full screen, tap Share, then Add to Home Screen, and open the games from that icon.',7000); return; }
   try{
     if(isFullscreen()){
       if(document.exitFullscreen) await document.exitFullscreen();
@@ -294,11 +290,11 @@ async function toggleFullscreen(){
       if(el.requestFullscreen) await el.requestFullscreen();
       else if(el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
       else {
-        toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+        toast('Full screen is not available in this browser.');
       }
     }
   } catch(e){
-    toast('To view full screen on iOS: tap Share, then Add to Home Screen.');
+    toast('Full screen is not available in this browser.');
   }
   updateFsButtons();
 }
@@ -316,7 +312,7 @@ let voices=[];
 function loadVoices(){ try{ voices=speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
 if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
 function pickVoice(){ if(!voices.length) return null; if(S.settings.voice){ const v=voices.find(v=>v.name===S.settings.voice); if(v) return v; } const en=voices.filter(v=>/^en[-_]US/i.test(v.lang)); return en.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||en[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0]; }
-function speak(text){ return new Promise(res=>{ if(!('speechSynthesis' in window)||!text) return res(); let done=false; const fin=()=>{ if(!done){ done=true; res(); } }; try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=S.settings.rate||0.85; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); } }); }
+function speak(text){ return new Promise(res=>{ if(!('speechSynthesis' in window)||!text) return res(); let done=false; const fin=()=>{ if(!done){ done=true; res(); } }; try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=S.settings.rate||0.75; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); } }); }
 // iOS only lets speech start from a tap, so the first tap anywhere speaks a silent utterance.
 let primed=false; function primeSpeech(){ if(primed||!('speechSynthesis' in window)) return; primed=true; try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
 ['touchend','click'].forEach(ev=>document.addEventListener(ev,primeSpeech,true));
@@ -374,7 +370,7 @@ function distractors(w,n,hard){
 
 // ---------- Levels and pools ----------
 const LV_NAMES=['Easy','Medium','Hard','Expert'];
-// Easy: first sounds only. Medium: whole three-letter short-vowel words. Hard: everything else. Expert: long words, five choices, real-word distractors.
+// Easy: first sounds only. Medium: whole three-letter short-vowel words. Hard: everything else. Expert: words of five letters or more, five choices. Hard and Expert use real words as wrong choices when one exists.
 function lvlStage(){ return [0,0,3,3][S.level||0]; }
 const HARD_ONSET=/^(ph|wr|kn|qu)/;
 const SOFT_WORDS=new Set(['gem','giraffe','cherry','cent','city','circle','gerbil','giant','genie','circus']);
@@ -391,15 +387,15 @@ const ONSET_POOL=[...new Set(PICS.filter(([w])=>firstSoundOk(w)).map(([w])=>onse
 function letterChoices(w,n){
   const o=onsetOf(w), rest=w.slice(o.length); const altFirst=[...(NAMES[w]||[])].filter(x=>x!==w).map(x=>x[0]);
   const okC=x=>!rudeNew(x+rest,w)&&!altFirst.includes(x[0])&&x!==SAME_ONSET[o];
-  if(o.length===1){ const avoid=new Set([o].concat(SAME_SOUND[o]||[])); const cands=(VOW.includes(o)?VOW:'bcdfghjklmnprstvwyz').split('').filter(c=>!avoid.has(c)&&okC(c)); return shuffle([o,...shuffle(cands).slice(0,n-1)]); }
+  if(o.length===1){ const avoid=new Set([o].concat(SAME_SOUND[o]||[])); const cands=(VOW.includes(o)?VOW:CONS).split('').filter(c=>!avoid.has(c)&&okC(c)); return shuffle([o,...shuffle(cands).slice(0,n-1)]); }
   const same=shuffle(ONSET_POOL.filter(x=>x!==o&&x.length===o.length&&x[0]===o[0]&&okC(x))); const other=shuffle(ONSET_POOL.filter(x=>x!==o&&x.length>=2&&x[0]!==o[0]&&okC(x)));
   const picks=same.slice(0,1).concat(other, same.slice(1)).filter((x,i,a)=>a.indexOf(x)===i).slice(0,n-1);
-  let g=0; while(picks.length<n-1&&g++<200){ const c=pick('bcdfghjklmnprstvwyz'.split('')); if(c!==o[0]&&!picks.includes(c)&&okC(c)) picks.push(c); }
+  let g=0; while(picks.length<n-1&&g++<200){ const c=pick(CONS.split('')); if(c!==o[0]&&!picks.includes(c)&&okC(c)) picks.push(c); }
   return shuffle([o,...picks]);
 }
 function letterPictureChoices(it,n){ const o=onsetOf(it.w); const f=o[0]; const avoid=new Set([f].concat(SAME_SOUND[f]||[])); const cands=shuffle(pool().filter(([w])=>![...NAMES[w]].some(x=>avoid.has(x[0])))); const seen=new Set(), out=[]; for(const [w,e] of cands){ if(seen.has(w[0])||clash(it.w,w)||out.some(x=>clash(x.w,w))) continue; seen.add(w[0]); out.push({w,e}); if(out.length>=n-1) break; } return shuffle([{w:it.w,e:it.e},...out]); }
 function onsetHTML(w,hideOnset){ const o=onsetOf(w); return `<div class="word small"><span class="g ${hideOnset?'blank':''}">${hideOnset?'&nbsp;'.repeat(o.length):o}</span><span class="g rest">${w.slice(o.length)}</span></div>`; }
-function buildRound(n){ const p=pool(); const missed=p.filter(([w])=>(S.miss[w]||0)>0); const rest=p.filter(([w])=>!(S.miss[w]>0)); const out=shuffle(missed).slice(0,Math.min(4,missed.length)).concat(shuffle(rest)); return shuffle(out.slice(0,n)).map(([w,e])=>({w,e})); }
+function buildRound(n,p){ const missed=p.filter(([w])=>(S.miss[w]||0)>0); const rest=p.filter(([w])=>!(S.miss[w]>0)); const out=shuffle(missed).slice(0,Math.min(4,missed.length)).concat(shuffle(rest)); return shuffle(out.slice(0,n)).map(([w,e])=>({w,e})); }
 function pictureChoices(it,n){
   const lv=S.level||0; const all=PICS.filter(([w])=>w!==it.w); let cands;
   if(lv<=1) cands=shuffle(all.filter(([w])=>w[0]!==it.w[0]));
@@ -438,7 +434,7 @@ function vowelPool(){
 function vowelChoices(w,spot){
   const lv=S.level||0; const mk=v=>w.slice(0,spot.i)+v+w.slice(spot.i+spot.len); const ok=v=>v===spot.v||!(rudeNew(mk(v),w)||rudeNew(sayMade(mk(v)),w)||soundsSame(w,mk(v)));
   if(spot.len===2){ const alike=TEAM_ALIKE[spot.v]||[]; const others=shuffle(TEAMS.filter(t=>t!==spot.v&&!alike.includes(t)&&ok(t))).slice(0,4); return shuffle([spot.v,...others]); }
-  if(lv===0){ const far={a:['i','o','u'],e:['a','o'],i:['a','o'],o:['a','i','u'],u:['a','i','o']}[spot.v].filter(ok); return shuffle([spot.v,...shuffle(far).slice(0,2)]); }
+  if(lv===0){ const far={a:['i','o','u'],e:['a','o'],i:['a','o'],o:['a','i','u'],u:['a','o']}[spot.v].filter(ok); return shuffle([spot.v,...shuffle(far).slice(0,2)]); }
   return shuffle(['a','e','i','o','u'].filter(ok));
 }
 function vowelWordHTML(w,spot,fill){ const a=w.slice(0,spot.i), b=w.slice(spot.i+spot.len); return `<div class="word small"><span class="g">${a}</span><span class="g ${fill?'':'blank'}">${fill?fill:'&nbsp;'.repeat(spot.len)}</span><span class="g">${b}</span></div>`; }
@@ -447,10 +443,10 @@ async function onVowel(b){
   if(P.busy||b.classList.contains('dim')) return; const it=P.cur, spot=P.spot, v=b.dataset.w, right=v===spot.v, tk=P.round; const s=currentSession(); const card=$('stage').querySelector('.card');
   const made=it.w.slice(0,spot.i)+v+it.w.slice(spot.i+spot.len);
   if(!right&&P.tries===0){ P.tries=1; s.vowelN++; S.miss[it.w]=(S.miss[it.w]||0)+1; b.classList.add('dim'); card.classList.add('oops'); P.busy=true; card.querySelector('.word').outerHTML=vowelWordHTML(it.w,spot,`<span style="color:var(--amber)">${v}</span>`); const said=sayMade(made); if(rudeNew(made,it.w)||rudeNew(said,it.w)) await wait(600); else await speak(said); await wait(700); if(tk!==P.round) return; card.querySelector('.word').outerHTML=vowelWordHTML(it.w,spot,null); card.classList.remove('oops'); P.busy=false; return; }
-  P.busy=true; if(P.tries===0){ s.vowelN++; s.vowelOk++; P.ok++; if(S.miss[it.w]>0) S.miss[it.w]--; }
+  P.busy=true; if(P.tries===0){ s.vowelN++; s.vowelOk++; if(S.miss[it.w]>0) S.miss[it.w]--; }
   const correct=document.querySelector(`.choice[data-w="${spot.v}"]`); document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('dim',x!==correct)); correct.classList.add('glow'); card.classList.add(right?'ok':'oops');
   card.querySelector('.word').outerHTML=vowelWordHTML(it.w,spot,spot.v);
-  if(right){ await speak(it.w); await wait(700); } else { await wait(500); if(tk!==P.round) return; await speak(it.w); await wait(2000); }
+  if(right){ await speak(it.w); await wait(1200); } else { await wait(500); if(tk!==P.round) return; await speak(it.w); await wait(2000); }
   if(tk!==P.round) return; P.i++; save(); next();
 }
 function renderHome(){
@@ -461,18 +457,19 @@ function renderHome(){
   $('home-note').textContent=done?'Reading time is finished for today.':(S.today.rounds?`${S.today.rounds} round${S.today.rounds>1?'s':''} today`:'');
   document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>{ if(S.settings.limit&&S.today.done){ show('s-alldone'); return; } start(t.dataset.act); }));
 }
-function pointerHold(el,ms,onDone,fillEl){ let t=null,start=0,raf=null; const stop=()=>{ clearTimeout(t); t=null; if(raf) cancelAnimationFrame(raf); if(fillEl) fillEl.style.height='0'; }; const tick=()=>{ if(!t) return; const p=Math.min(1,(Date.now()-start)/ms); if(fillEl) fillEl.style.height=(p*100)+'%'; raf=requestAnimationFrame(tick); }; el.addEventListener('pointerdown',e=>{ e.preventDefault(); start=Date.now(); t=setTimeout(()=>{ stop(); onDone(); },ms); tick(); }); ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,stop)); }
-pointerHold($('gate'),3000,()=>openParent(),$('gate').querySelector('.fill'));
+function pointerHold(el,ms,onDone,fillEl,onShort){ let t=null,start=0,raf=null; const stop=()=>{ clearTimeout(t); t=null; if(raf) cancelAnimationFrame(raf); if(fillEl) fillEl.style.height='0'; }; const tick=()=>{ if(!t) return; const p=Math.min(1,(Date.now()-start)/ms); if(fillEl) fillEl.style.height=(p*100)+'%'; raf=requestAnimationFrame(tick); }; el.addEventListener('pointerdown',e=>{ e.preventDefault(); start=Date.now(); t=setTimeout(()=>{ stop(); onDone(); },ms); tick(); }); el.addEventListener('pointerup',()=>{ if(t&&onShort) onShort(); stop(); }); ['pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,stop)); }
+pointerHold($('gate'),3000,()=>openParent(),$('gate').querySelector('.fill'),()=>toast('Hold for three seconds.'));
 
 // ---------- Play ----------
-const P={act:null,queue:[],i:0,ok:0,tries:0,busy:false,enter:0,cur:null,pos:0,wrongHere:0};
+const P={act:null,queue:[],i:0,tries:0,busy:false,enter:0,cur:null,pos:0,wrongHere:0};
 const ROUND_N=12;
+const LIMIT_ROUNDS=5, LIMIT_MIN=20;
 function setKite(f){ $('kite').style.left=(4+92*Math.max(0,Math.min(1,f)))+'%'; }
 function leavePlay(){ if(P.enter){ const ms=Date.now()-P.enter; S.today.ms+=ms; const s=currentSession(); s.minutes=(s.minutes||0)+ms/60000; P.enter=0; } save(); }
 $('btn-home').addEventListener('click',()=>{ P.round=(P.round||0)+1; try{ speechSynthesis.cancel(); }catch(e){} leavePlay(); renderHome(); show('s-home'); });
-function start(act){ rollDay(); P.round=(P.round||0)+1; P.act=act; P.i=0; P.ok=0; P.busy=false; P.enter=Date.now();
-  if(act==='vowel'){ const p=vowelPool(); const missed=p.filter(([w])=>(S.miss[w]||0)>0); const rest=p.filter(([w])=>!(S.miss[w]>0)); P.queue=shuffle(shuffle(missed).slice(0,4).concat(shuffle(rest)).slice(0,ROUND_N)).map(([w,e])=>({w,e})); }
-  else P.queue=buildRound(ROUND_N);
+document.addEventListener('visibilitychange',()=>{ if(!$('s-play').classList.contains('on')) return; if(document.hidden){ try{ speechSynthesis.cancel(); }catch(e){} leavePlay(); } else if(!P.enter) P.enter=Date.now(); });
+function start(act){ rollDay(); P.round=(P.round||0)+1; P.act=act; P.i=0; P.busy=false; P.enter=Date.now();
+  P.queue=buildRound(ROUND_N, act==='vowel'?vowelPool():pool());
   show('s-play'); setKite(0); $('bar').innerHTML=''; next(); }
 function next(){
   if(P.i>=P.queue.length) return endRound();
@@ -496,11 +493,11 @@ function next(){
 async function onChoice(b,right){
   if(P.busy||b.classList.contains('dim')) return; const it=P.cur, tk=P.round; const s=currentSession(); const k=P.act; const card=$('stage').querySelector('.card');
   if(!right&&P.tries===0){ P.tries=1; s[k+'N']++; S.miss[it.w]=(S.miss[it.w]||0)+1; b.classList.add('dim'); card.classList.add('oops'); await wait(350); return; }
-  P.busy=true; if(P.tries===0){ s[k+'N']++; s[k+'Ok']++; P.ok++; if(S.miss[it.w]>0) S.miss[it.w]--; }
+  P.busy=true; if(P.tries===0){ s[k+'N']++; s[k+'Ok']++; if(S.miss[it.w]>0) S.miss[it.w]--; }
   const lv0=(S.level||0)===0; const key=(k==='p2w'&&lv0)?onsetOf(it.w):it.w;
   const correct=document.querySelector(`.choice[data-w="${key}"]`); document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('dim',x!==correct)); correct.classList.add('glow'); card.classList.remove('oops'); card.classList.add(right?'ok':'oops');
   if(lv0&&k==='w2p'){ card.innerHTML=onsetHTML(it.w,false); }
-  if(right){ await speak(it.w); await wait(lv0?900:600); }
+  if(right){ await speak(it.w); await wait(lv0?1400:1100); }
   else if(lv0){ await wait(600); if(tk!==P.round) return; await speak(it.w); await wait(2000); }
   else { if(k==='p2w'){ correct.innerHTML=wordHTML(it.w).replace('class="word"','class="word" style="font-size:inherit"'); await wait(500); await showParts(correct); } else { await showParts(card); } if(tk!==P.round) return; await speak(it.w); await wait(2000); }
   if(tk!==P.round) return; P.i++; save(); next();
@@ -508,16 +505,16 @@ async function onChoice(b,right){
 async function onTile(b){
   if(P.busy||b.classList.contains('shake')) return; const it=P.cur, tk=P.round; const want=(S.level||0)===0?P.onset:it.w[P.pos]; const slots=[...document.querySelectorAll('.slot')];
   if(b.dataset.l===want){ b.classList.add('used'); b.classList.remove('hint'); slots[P.pos].textContent=want; slots[P.pos].classList.add('filled'); P.pos++; P.wrongHere=0; document.querySelectorAll('.tile-l.hint').forEach(x=>x.classList.remove('hint'));
-    if(P.pos>=P.need){ P.busy=true; const s=currentSession(); s.buildN++; if(P.tries===0){ s.buildOk++; P.ok++; if(S.miss[it.w]>0) S.miss[it.w]--; } $('stage').querySelector('.card').classList.add('ok'); for(const sl of slots){ sl.classList.add('lit'); await wait(300); sl.classList.remove('lit'); if(tk!==P.round) return; } await speak(it.w); await wait(900); if(tk!==P.round) return; P.i++; save(); next(); } }
+    if(P.pos>=P.need){ P.busy=true; const s=currentSession(); s.buildN++; if(P.tries===0){ s.buildOk++; if(S.miss[it.w]>0) S.miss[it.w]--; } $('stage').querySelector('.card').classList.add('ok'); for(const sl of slots){ sl.classList.add('lit'); await wait(300); sl.classList.remove('lit'); if(tk!==P.round) return; } await speak(it.w); await wait(1400); if(tk!==P.round) return; P.i++; save(); next(); } }
   else { P.tries++; P.wrongHere++; S.miss[it.w]=(S.miss[it.w]||0)+(P.wrongHere===1?1:0); b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),400); if(P.wrongHere>=((S.level||0)===3?3:2)){ const t=[...document.querySelectorAll('.tile-l')].find(x=>!x.classList.contains('used')&&x.dataset.l===want); if(t) t.classList.add('hint'); } }
 }
 function endRound(){
   leavePlay(); S.today.rounds++; save();
-  const over=!!S.settings.limit&&(S.today.rounds>=5||S.today.ms>=20*60*1000); if(over){ S.today.done=true; save(); }
+  const over=!!S.settings.limit&&(S.today.extra?S.today.rounds>=S.today.extra:(S.today.rounds>=LIMIT_ROUNDS||S.today.ms>=LIMIT_MIN*60000)); if(over){ S.today.done=true; save(); }
   $('end-title').textContent=over?'The kite flew all the way up.':'The kite flew high.'; $('end-text').textContent=over?'Reading time is finished for today.':''; $('btn-end-more').hidden=over; show('s-end');
 }
 $('btn-end-home').addEventListener('click',()=>{ renderHome(); show(S.settings.limit&&S.today.done?'s-alldone':'s-home'); });
-$('btn-end-more').addEventListener('click',()=>{ renderHome(); show('s-home'); });
+$('btn-end-more').addEventListener('click',()=>start(P.act));
 $('btn-alldone-home').addEventListener('click',()=>{ renderHome(); show('s-home'); });
 
 // ---------- Parent ----------
@@ -527,13 +524,13 @@ document.querySelectorAll('#s-parent .tab').forEach(t=>t.addEventListener('click
 function renderHow(){
   $('pane-how').innerHTML=`<h2>How to play</h2><div class="grid2">
   <div class="tipcard"><b>Easy is first sounds</b>At Easy the child only finds the sound a word starts with. That sound can be one letter, a digraph such as sh, ch, th, or wh, or a blend such as st, fr, or bl. Picture to word shows the picture and three versions of its name that differ only in the first sound, which is black while the rest is grey: tap the one that says the picture. Word to picture shows one sound and three pictures. Build the word shows the rest of the word in grey with the first sound missing: tap the right tile. Words starting with qu, ph, wr, kn, soft c or g, a long vowel, or letters that do not make the first sound (two, hourglass, chef, scissors) are left out so the letters always say their usual sounds. A picture a child might call by another name, such as a duck that could be "bird," is never shown with a choice that starts like the other name.</div>
-  <div class="tipcard"><b>Picture to word (Medium and Hard)</b>A picture with three words (four at Hard) that differ by one letter, such as cat, cot, cut. The single-letter difference means every letter has to be read, not just the first one. A word that sounds like the picture's name, such as dear for a deer, is never offered.</div>
-  <div class="tipcard"><b>Word to picture (Medium and Hard)</b>A word with three pictures. At Medium the pictures start with different letters. At Hard they share a first letter or an ending, so the child cannot pick from the first letter alone. Two pictures a child could call the same thing, such as a truck and a fire truck, never appear together.</div>
-  <div class="tipcard"><b>Build the word (Medium and Hard)</b>A picture and empty boxes. The child taps letter tiles in order to spell the whole word; a wrong tile shakes and after two misses the right one pulses. Spelling from sounds is the strongest practice of the three.</div>
-  <div class="tipcard"><b>Which vowel?</b>The middle sound is the hardest one for a young child to hear, so this game shows the picture and the word with only its vowel missing, c_t, and asks for the vowel. Each vowel tile carries its keyword picture: a apple, e elephant, i iguana, o octopus, u umbrella. Say those pairs together a few times so the pictures become anchors. A wrong tap makes the voice say the word that vowel would make, so tapping o for a cat plays "cot" and the difference is heard before the second try. Easy uses three-letter short-vowel words and keeps the confusable vowels i, e, and u apart. Medium adds blends and all five vowels. Hard adds silent-e words. Expert asks for vowel teams such as oa, ee, and ai, and never offers two teams that make the same sound, such as ee and ea. Words whose vowel does not make its usual sound, such as bird, ball, swan, glove, and bread, are left out, and a vowel that would make a rude word is never offered.</div>
-  <div class="tipcard"><b>Levels</b>Easy is first sounds only. Medium is whole three-letter short-vowel words. Hard adds silent e, vowel teams, digraphs, blends, and longer words, with four choices. Expert uses only longer words such as pumpkin and umbrella, offers five choices, makes every wrong word a real word, shows pictures that start with the same letters, and adds four spare tiles to Build the word with a later hint.</div>
-  <div class="tipcard"><b>What the voice does</b>After an answer the iPad says the word. It never says letter names, which get in the way of hearing sounds. Wrong answers show the word split into its parts with each lit in turn, then a pause.</div>
-  <div class="tipcard"><b>Keep it short</b>Rounds are 12 cards. The daily limit is off by default; turn it on in Settings to stop play after five rounds or twenty minutes. Missed words come back first in the next round. Read real picture books together every day; this app only covers decoding.</div>
+  <div class="tipcard"><b>Picture to word (Medium and up)</b>A picture with three words (four at Hard, five at Expert) that differ by one letter, such as cat, cot, cut. The single-letter difference means every letter has to be read, not just the first one. A word that sounds like the picture's name, such as dear for a deer, is never offered.</div>
+  <div class="tipcard"><b>Word to picture (Medium and up)</b>A word with three pictures (four at Hard, five at Expert). At Medium the pictures start with different letters. From Hard up they share a first letter or an ending, so the child cannot pick from the first letter alone. Two pictures a child could call the same thing, such as a truck and a fire truck, never appear together.</div>
+  <div class="tipcard"><b>Build the word (Medium and up)</b>A picture and empty boxes. The child taps letter tiles in order to spell the whole word; a wrong tile shakes and after two misses (three at Expert) the right one pulses. Spelling from sounds is the strongest practice of the four games.</div>
+  <div class="tipcard"><b>Which vowel?</b>The middle sound is the hardest one for a young child to hear, so this game shows the picture and the word with only its vowel missing, c_t, and asks for the vowel. Each vowel tile carries its keyword picture: a apple, e elephant, i iguana, o octopus, u umbrella. Say those pairs together a few times so the pictures become anchors. A wrong tap makes the voice say the word that vowel would make, so tapping o for a cat plays "cot" and the difference is heard before the second try. Easy uses three-letter short-vowel words, and when the answer is i, e, or u the other two are never offered. Medium adds blends and all five vowels. Hard adds silent-e words. Expert asks for vowel teams such as oa, ee, and ai, and never offers two teams that make the same sound, such as ee and ea. Words whose vowel does not make its usual sound, such as bird, ball, swan, glove, and bread, are left out, and a vowel that would make a rude word is never offered.</div>
+  <div class="tipcard"><b>Levels</b>Easy is first sounds only. Medium is whole three-letter short-vowel words. Hard adds silent e, vowel teams, digraphs, blends, and longer words, with four choices. Expert uses words of five letters or more, such as truck and pumpkin, offers five choices, shows pictures that start with the same letters, and adds four spare tiles to Build the word with a later hint. Hard and Expert use real words as wrong choices when one exists.</div>
+  <div class="tipcard"><b>What the voice does</b>After an answer the iPad says the word. It never says letter names, which get in the way of hearing sounds. A first wrong tap dims that choice for a second try. After a second wrong tap the right answer lights up, and in Picture to word and Word to picture from Medium up the word is split into its parts with each lit in turn, then a pause.</div>
+  <div class="tipcard"><b>Keep it short</b>Rounds are ${ROUND_N} cards. The daily limit is off by default; turn it on in Settings to stop play after ${LIMIT_ROUNDS} rounds or ${LIMIT_MIN} minutes. Up to four missed words come back in the next round. Read real picture books together every day; this app only covers decoding.</div>
   </div>`;
 }
 function renderProgress(){
@@ -547,19 +544,19 @@ function renderProgress(){
   $('btn-export').addEventListener('click',async()=>{ const txt=JSON.stringify(S,null,1); try{ await navigator.clipboard.writeText(txt); toast('Copied.'); }catch(e){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand('copy'); }catch(err){} toast(ok?'Copied.':'Could not copy.'); ta.remove(); } });
 }
 function renderSettings(){
-  loadVoices(); const en=voices.filter(v=>/^en/i.test(v.lang));
+  rollDay(); loadVoices(); const en=voices.filter(v=>/^en/i.test(v.lang));
   $('pane-settings').innerHTML=`<h2>Settings</h2>
   <div class="field"><label>Voice</label><select id="set-voice" style="font:inherit;font-size:16px;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);max-width:100%"><option value="">Automatic</option>${en.map(v=>`<option value="${v.name}" ${S.settings.voice===v.name?'selected':''}>${v.name} (${v.lang})</option>`).join('')}</select><button class="pbtn" id="set-test">Test: cat, hat, map</button></div>
   <div class="field"><label>Speed</label><input type="range" id="set-rate" min="0.6" max="1.1" step="0.05" value="${S.settings.rate}"><span class="note" id="set-rate-v">${S.settings.rate}</span></div>
-  <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?'On: five rounds or 20 minutes':'Off'}</button><span class="note">When on, play stops for the day after five rounds or twenty minutes.</span></div>
-  <div class="field"><button class="pbtn" id="set-more">Allow one more round today</button><span class="note">${S.settings.limit&&S.today.done?'Today is marked finished.':'Today is not finished.'}</span></div>
-  <h3>On the iPad</h3><p>Open this page in Safari, tap Share, then "Add to Home Screen." Progress stays on the device.</p>
+  <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?`On: ${LIMIT_ROUNDS} rounds or ${LIMIT_MIN} minutes`:'Off'}</button><span class="note">When on, play stops for the day after ${LIMIT_ROUNDS} rounds or ${LIMIT_MIN} minutes.</span></div>
+  ${S.settings.limit?`<div class="field">${S.today.done?'<button class="pbtn" id="set-more">Allow one more round today</button><span class="note">Today is marked finished.</span>':'<span class="note">Today is not finished.</span>'}</div>`:''}
+  <h3>On the iPad</h3><p>Open this page in Safari, tap Share, then Add to Home Screen. The icon opens full screen and keeps its own progress on this iPad, separate from Safari. Deleting the icon deletes the progress, so use Copy all data now and then.</p>
   <h3>Data</h3><div class="field"><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>`;
   $('set-voice').addEventListener('change',e=>{ S.settings.voice=e.target.value; save(); });
   $('set-test').addEventListener('click',async()=>{ await speak('cat'); await wait(300); await speak('hat'); await wait(300); await speak('map'); });
   $('set-rate').addEventListener('input',e=>{ S.settings.rate=+e.target.value; $('set-rate-v').textContent=S.settings.rate; save(); });
-  $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit) S.today.done=false; save(); renderSettings(); });
-  $('set-more').addEventListener('click',()=>{ rollDay(); S.today.done=false; S.today.rounds=Math.min(S.today.rounds,4); S.today.ms=Math.min(S.today.ms,16*60*1000); save(); toast('One more round allowed.'); renderSettings(); });
+  $('set-limit').addEventListener('click',()=>{ S.settings.limit=!S.settings.limit; if(!S.settings.limit){ S.today.done=false; S.today.extra=0; } save(); renderSettings(); });
+  if($('set-more')) $('set-more').addEventListener('click',()=>{ rollDay(); if(S.today.done){ S.today.done=false; S.today.extra=S.today.rounds+1; save(); toast('One more round allowed.'); } renderSettings(); });
   pointerHold($('set-reset'),3000,()=>{ try{ localStorage.removeItem(KEY); }catch(e){} S=JSON.parse(JSON.stringify(DEFAULT)); save(); toast('Erased.'); openParent(); });
 }
 rollDay(); renderHome(); show('s-home');

@@ -3,6 +3,7 @@
   "short_name": "Dibel",
   "description": "Make-believe words and Nonsense Word Fluency practice",
   "start_url": "./index.html",
+  "scope": "../",
   "display": "standalone",
   "display_override": [
     "fullscreen",
