@@ -787,12 +787,13 @@ function choiceRow(vals,handler,cls){
   document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>handler(b,+b.dataset.v)));
 }
 // n choices, or fewer when the range holds fewer, so 3 = 1 + __ shows two buttons.
+// Shuffled, so the right answer can be in any place.
 function options(correct,lo,hi,n){
   n=Math.min(n,hi-lo+1);
   const out=new Set([correct]); let guard=0;
   while(out.size<n&&guard++<200){ const v=correct+pick([-2,-1,1,2,3]); if(v>=lo&&v<=hi) out.add(v); }
   while(out.size<n){ const v=rnd(lo,hi); out.add(v); }
-  return [...out].sort((a,b)=>a-b);
+  return shuffle([...out]);
 }
 function dimOthers(correct){ document.querySelectorAll('.choice').forEach(b=>{ const v=+b.dataset.v; b.classList.toggle('dim',v!==correct); if(v===correct) b.classList.add('glow'); }); }
 
@@ -960,11 +961,12 @@ function renderBig(it){
     return show&&anim?end+0.5:0; };
   $('stage').innerHTML=cardHTML(`<div class="eq"><span>${it.a}</span><span class="op">${it.b<0?'−':'+'}</span><span>${Math.abs(it.b)}</span><span class="op">=</span><span class="box" id="mg-box">?</span></div><div id="mg-blocks"></div><div id="mg-open"></div>`);
   paint(null);
-  // One distractor is the answer with the carry dropped, which is the classic slip.
-  const opts=new Set([it.answer, it.answer-10, it.answer+1, it.answer-1]);
-  const arr=[...opts].filter(v=>v>0).slice(0,4).sort((x,y)=>x-y);
-  while(arr.length<4){ const v=it.answer+rnd(-3,3); if(v>0&&!arr.includes(v)) arr.push(v); arr.sort((x,y)=>x-y); }
-  choiceRow(arr,(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
+  // One distractor is the classic slip, ten off: the carry dropped when adding, or the ten not taken away.
+  // Two more sit close to the answer, on either side at random, and the four are shuffled, so neither
+  // the place nor the middle of the run gives the answer away.
+  const slip=it.b<0?it.answer+10:it.answer-10, opts=new Set([it.answer]); if(slip>0) opts.add(slip);
+  for(const d of shuffle([-2,-1,1,2])){ if(opts.size===4) break; if(it.answer+d>0) opts.add(it.answer+d); }
+  choiceRow(shuffle([...opts]),(b,v)=>{ if(P.busy) return; P.busy=true; settle(v===it.answer,it,v,paint); });
   say(`What is ${it.a} ${it.b<0?'take away':'plus'} ${Math.abs(it.b)}?`);
 }
 
