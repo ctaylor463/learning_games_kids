@@ -173,6 +173,8 @@ button:focus-visible{outline:3px solid var(--name);outline-offset:3px}
 .gate .clip{position:absolute;inset:0;border-radius:50%;overflow:hidden}
 /* Opened from the Home Screen the game is already full screen, so the button has nothing to do. */
 .standalone [data-fs-btn]{display:none}
+/* iPad full screen: Safari shows its close button over the top corners, so the top controls move down below it. */
+:root.iosfs{--sat:calc(env(safe-area-inset-top, 0px) + 50px)}
 /* Phones: four kites on Expert would push the level row past the screen edge. */
 @media (max-width:500px){ .lvl{min-width:0} .lvl .kites svg{width:18px;height:18px} }
 </style>
@@ -275,14 +277,16 @@ function updateFsButtons(){
     btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Toggle full screen'); btn.title = active ? 'Exit full screen' : 'Full screen'; btn.dataset.label = active ? 'Exit' : 'Full screen';
   });
 }
-// iPad and iPhone: Safari's full-screen mode is made for video and handles whole pages badly. The Home Screen app is full screen, so the button explains that instead.
+// iPad: the button uses Safari's own full-screen mode. iPhone Safari has no full-screen mode for whole pages, so there the button explains the Home Screen icon instead.
 const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const HOME_TIP='For full screen, tap Share, then Add to Home Screen, and open the games from that icon.';
+const canFullscreen=()=>!!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
 async function toggleFullscreen(){
   if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
     toast('Already running full screen from Home Screen.');
     return;
   }
-  if(IOS&&!isFullscreen()){ toast('For full screen, tap Share, then Add to Home Screen, and open the games from that icon.',7000); return; }
+  if(IOS&&!isFullscreen()&&!canFullscreen()){ toast(HOME_TIP,7000); return; }
   try{
     if(isFullscreen()){
       if(document.exitFullscreen) await document.exitFullscreen();
@@ -292,19 +296,20 @@ async function toggleFullscreen(){
       if(el.requestFullscreen) await el.requestFullscreen();
       else if(el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
       else {
-        toast('Full screen is not available in this browser.');
+        toast(IOS?HOME_TIP:'Full screen is not available in this browser.',IOS?7000:0);
       }
     }
   } catch(e){
-    toast('Full screen is not available in this browser.');
+    toast(IOS?HOME_TIP:'Full screen is not available in this browser.',IOS?7000:0);
   }
   updateFsButtons();
 }
 if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
   document.body.classList.add('standalone');
 }
-document.addEventListener('fullscreenchange', updateFsButtons);
-document.addEventListener('webkitfullscreenchange', updateFsButtons);
+function onFsChange(){ document.documentElement.classList.toggle('iosfs',IOS&&isFullscreen()); updateFsButtons(); }
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
 document.querySelectorAll('[data-fs-btn]').forEach(btn => {
   btn.addEventListener('click', toggleFullscreen);
 });
@@ -561,7 +566,7 @@ function renderSettings(){
   <div class="field"><label>Speed</label><input type="range" id="set-rate" min="0.6" max="1.1" step="0.05" value="${S.settings.rate}"><span class="note" id="set-rate-v">${S.settings.rate}</span></div>
   <div class="field"><label>Daily limit</label><button class="pbtn ${S.settings.limit?'on':''}" id="set-limit">${S.settings.limit?`On: ${LIMIT_ROUNDS} rounds or ${LIMIT_MIN} minutes`:'Off'}</button><span class="note">When on, play stops for the day after ${LIMIT_ROUNDS} rounds or ${LIMIT_MIN} minutes.</span></div>
   ${S.settings.limit?`<div class="field">${S.today.done?'<button class="pbtn" id="set-more">Allow one more round today</button><span class="note">Today is marked finished.</span>':'<span class="note">Today is not finished.</span>'}</div>`:''}
-  <h3>On the iPad</h3><p>Open this page in Safari, tap Share, then Add to Home Screen. The icon opens full screen and keeps its own progress on this iPad, separate from Safari. Deleting the icon deletes the progress, so use Copy all data now and then.</p>
+  <h3>On the iPad</h3><p>The Full screen button works in Safari. Safari leaves full screen whenever the page changes, such as going back to the list of games, so tap it again in each game. For full screen that stays on, open this page in Safari, tap Share, then Add to Home Screen. The icon opens full screen and keeps its own progress on this iPad, separate from Safari. Deleting the icon deletes the progress, so use Copy all data now and then.</p>
   <h3>Data</h3><div class="field"><button class="pbtn warn" id="set-reset">Hold to erase everything</button></div>`;
   $('set-voice').addEventListener('change',e=>{ S.settings.voice=e.target.value; save(); });
   $('set-test').addEventListener('click',async()=>{ await speak('cat'); await wait(300); await speak('hat'); await wait(300); await speak('map'); });

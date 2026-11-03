@@ -36,6 +36,8 @@ body{background:var(--desk);color:var(--ink);font-family:var(--f-ui);font-size:1
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
 button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 #map{position:fixed;inset:0;background:var(--desk)}
+/* iPad full screen: Safari shows its close button over the top corners, so the top controls move down below it. */
+:root.iosfs{--sat:calc(env(safe-area-inset-top, 0px) + 50px)}
 .leaflet-container{background:var(--desk);font-family:var(--f-ui)}
 
 .pin{width:26px;height:26px;position:relative}
@@ -538,10 +540,11 @@ function updateFsButtons() {
   });
 }
 
-// iPad and iPhone: Safari's full-screen mode is made for video and handles whole pages badly. The Home Screen app is full screen, so the button explains that instead.
+// iPad: the button uses Safari's own full-screen mode. iPhone Safari has no full-screen mode for whole pages, so there the button explains the Home Screen icon instead.
 const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const HOME_TIP='For full screen, tap Share, then Add to Home Screen, and open the games from that icon.';
 function toggleFullscreen() {
-  if (IOS && !isFullscreen()) { toast('For full screen, tap Share, then Add to Home Screen, and open the games from that icon.', 7000); return; }
+  if (IOS && !isFullscreen() && !(document.fullscreenEnabled || document.webkitFullscreenEnabled)) { toast(HOME_TIP, 7000); return; }
   const doc = document;
   const docEl = doc.documentElement;
   const request = docEl.requestFullscreen || docEl.webkitRequestFullscreen;
@@ -549,8 +552,8 @@ function toggleFullscreen() {
   if (!isFullscreen()) {
     if (request) {
       const p = request.call(docEl);
-      if (p && p.catch) p.catch(() => {});
-    }
+      if (p && p.catch) p.catch(() => { if (IOS) toast(HOME_TIP, 7000); });
+    } else if (IOS) toast(HOME_TIP, 7000);
   } else {
     if (exit) {
       const p = exit.call(doc);
@@ -561,10 +564,14 @@ function toggleFullscreen() {
 
 ['fullscreenchange', 'webkitfullscreenchange'].forEach(evt => {
   document.addEventListener(evt, () => {
+    document.documentElement.classList.toggle('iosfs', IOS && isFullscreen());
     updateFsButtons();
-    setTimeout(() => map.invalidateSize(), 200);
+    // The switch animates, and on iPad it can take most of a second, so the map measures itself again several times.
+    [50, 250, 600, 1000, 1600].forEach(ms => setTimeout(() => map.invalidateSize(), ms));
   });
 });
+// Safari can change the visible area without a window resize (full screen, toolbars), so the map follows that too.
+if (window.visualViewport) visualViewport.addEventListener('resize', () => map.invalidateSize());
 
 document.querySelectorAll('[data-fs-btn]').forEach(b => {
   b.addEventListener('click', toggleFullscreen);
