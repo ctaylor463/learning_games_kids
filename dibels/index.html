@@ -439,8 +439,14 @@ function parseWord(w){
   return u;
 }
 function wordHTML(w){ return `<div class="word ${w.length>=6?'long':''}">${parseWord(w).map((x,i)=>`<span class="g ${x.silent?'silent':''}" data-i="${i}">${x.t}</span>`).join('')}</div>`; }
+// How many times wider a box's contents are than the room inside it (above 1, the word spills out). A tapped box shrinks a little, so the measure undoes that.
+function spillRatio(box){ const cs=getComputedStyle(box); const room=box.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight); const r=document.createRange(); r.selectNodeContents(box); const scale=box.offsetWidth/(box.getBoundingClientRect().width||1); return r.getBoundingClientRect().width*scale/Math.max(1,room); }
+// Makes el's font smaller, if needed, so everything in box fits with a little room to spare.
+function shrinkToFit(el,box){ const k=spillRatio(box); if(k>0.96) el.style.fontSize=Math.floor(parseFloat(getComputedStyle(el).fontSize)*0.96/k)+'px'; }
+// The parts of a word spread apart when shown one at a time. If the spread-out word would not fit its box, the word gets smaller first.
+function fitSplitWord(word){ if(!word||word.classList.contains('split')) return; word.style.transition='none'; word.classList.add('split'); shrinkToFit(word,word.parentElement); word.classList.remove('split'); void word.offsetWidth; word.style.transition=''; void word.offsetWidth; }
 async function showParts(container){
-  const word=container.querySelector('.word'); if(!word) return; const gs=[...word.querySelectorAll('.g')];
+  const word=container.querySelector('.word'); if(!word) return; fitSplitWord(word); const gs=[...word.querySelectorAll('.g')];
   word.classList.add('split'); await wait(600);
   for(const g of gs){ if(g.classList.contains('silent')) continue; g.classList.add('lit'); await wait(380); g.classList.remove('lit'); }
   await wait(150); word.classList.remove('split'); await wait(500);
@@ -549,7 +555,13 @@ function next(){
   P.cur=P.queue[P.i]; P.helpedThis=false; P.busy=false; setKite(P.i/P.total);
   if(P.act==='cards'){ $('stage').innerHTML=`<div class="card">${wordHTML(P.cur)}</div>`; }
   if(P.act==='real'){ $('stage').innerHTML=`<div class="card">${wordHTML(P.cur.w)}</div><div class="choices"><button class="choice labeled" data-real="0" aria-label="Make-believe word">${icon('monster')}<span>Make-believe</span></button><button class="choice labeled" data-real="1" aria-label="Real word">${icon('book')}<span>Real</span></button></div>`; document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>onReal(b))); }
+  fitCardWord();
 }
+// A long word on a narrow screen gets smaller so it fits inside the card.
+function fitCardWord(){ if(!$('s-play').classList.contains('on')) return; const card=$('stage').querySelector('.card'), w=card&&card.querySelector(':scope > .word'); if(!w||w.classList.contains('split')) return; w.style.fontSize=''; shrinkToFit(w,card); }
+window.addEventListener('resize',()=>requestAnimationFrame(fitCardWord));
+// A font that arrives after the card is drawn changes the word width, so it is fitted again.
+if(document.fonts&&document.fonts.addEventListener) document.fonts.addEventListener('loadingdone',()=>fitCardWord());
 async function onCheck(){
   if(P.busy) return; P.busy=true; const key=P.cur, tk=P.round, helped=P.helpedThis;
   if(!helped){ markOk(key); } else { markHelp(key); const at=Math.min(P.queue.length,P.i+2+Math.floor(Math.random()*3)); if(!P.queue.slice(P.i+1).includes(key)){ P.queue.splice(at,0,key); P.total=P.queue.length; } }
