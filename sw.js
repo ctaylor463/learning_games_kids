@@ -4,7 +4,7 @@
 // Any storage failure falls back to a plain network fetch, so broken storage never blocks the site.
 // Cache names carry no version: pages refresh on every online visit, and tile, font and lib URLs never change content.
 const PAGES='lgk-pages', STATIC='lgk-static', KEEP=[PAGES,STATIC];
-const GAMES=['','reading/','dibels/','math/','map_world/','map_us/','map_europe/'];
+const GAMES=['','reading/','dibels/','math/','map_world/','map_us/','map_europe/','thanksgiving/'];
 const CORE=GAMES.flatMap(g=>[g+'index.html',g+'manifest.json',g+'icon-192.png',g+'apple-touch-icon.png']).concat(GAMES.slice(1).map(g=>g+'icon.svg'));
 const LIBS=['lib/leaflet-1.9.4.min.js'];
 // Warmed in the background when the landing page asks, so a map opened offline is not blank.
@@ -73,6 +73,6 @@ self.addEventListener('fetch',e=>{
   if(!req.url.startsWith(self.registration.scope)) return;
   // A folder link without its trailing slash: redirect as GitHub Pages does, so relative links keep working offline.
   if(req.mode==='navigate'&&!u.pathname.endsWith('/')&&!/\.[a-z0-9]+$/i.test(u.pathname)) return e.respondWith(Response.redirect(u.origin+u.pathname+'/'+u.search,301));
-  if(u.pathname.includes('/tiles/')||u.pathname.includes('/lib/')) return e.respondWith(cacheFirst(e,req));
+  if(u.pathname.includes('/tiles/')||u.pathname.includes('/lib/')||u.pathname.includes('/thanksgiving/img/')||u.pathname.includes('/thanksgiving/audio/')) return e.respondWith(cacheFirst(e,req));
   e.respondWith(networkFirst(e,req,PAGES,pageKey(u)));
 });

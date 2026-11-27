@@ -1,0 +1,2050 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Thanksgiving Explorer</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Thanksgiving">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600&display=swap">
+<style>
+/* Minimal inline Leaflet CSS (no mix-blend-mode so regional relief tiles have zero white seam) */
+.leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}
+.leaflet-container{overflow:hidden;-webkit-tap-highlight-color:transparent;background:#9DC4DC;outline-offset:1px}
+.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}
+.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}
+.leaflet-marker-icon,.leaflet-marker-shadow{display:block}
+.leaflet-container .leaflet-overlay-pane svg,.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-tile{max-width:none!important;max-height:none!important}
+.leaflet-container.leaflet-touch-zoom{touch-action:pan-x pan-y}
+.leaflet-container.leaflet-touch-drag{touch-action:none;touch-action:pinch-zoom}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{touch-action:none}
+.leaflet-tile{filter:inherit;visibility:hidden}
+.leaflet-tile-loaded{visibility:inherit}
+.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}
+.leaflet-zoom-animated{-webkit-transform-origin:0 0;transform-origin:0 0}
+.leaflet-zoom-anim .leaflet-zoom-animated{transition:transform .25s cubic-bezier(0,0,.25,1)}
+.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{transition:none}
+.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}
+.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:grab}.leaflet-dragging .leaflet-grab{cursor:grabbing}
+.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}
+.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive{pointer-events:auto}
+</style>
+<style>
+:root{
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --ground:#F4EFE4; --card:#FFFFFF; --ink:#222B35; --ink-soft:#5E6A78; --line:#DFD6C3;
+  --accent:#C85A27; --accent-soft:#FCE7DA;
+  --gold:#D49420; --gold-soft:#FBF0D1;
+  --leaf:#35814E; --leaf-soft:#D9EFE0;
+  --water:#2E7399; --water-soft:#D7EAF5;
+  --amber:#D68C24; --amber-soft:#FBEBD0;
+  --shadow:0 4px 0 rgba(34,43,53,.05), 0 8px 24px rgba(34,43,53,.09);
+  --f-ui:'Fredoka',ui-rounded,"SF Pro Rounded",'Trebuchet MS',sans-serif;
+  --f-read:'ABeeZee','Trebuchet MS','Verdana',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#161B21; --card:#212832; --ink:#EEF1F4; --ink-soft:#A5B0BD; --line:#36414F;
+    --accent:#EB7E4B; --accent-soft:#3C281F;
+    --gold:#EBB344; --gold-soft:#3A311D;
+    --leaf:#5CB879; --leaf-soft:#1E3A2A;
+    --water:#63A8CF; --water-soft:#1E3342;
+    --amber:#E8A948; --amber-soft:#3F321D;
+    --shadow:0 6px 24px rgba(0,0,0,.38);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#161B21; --card:#212832; --ink:#EEF1F4; --ink-soft:#A5B0BD; --line:#36414F;
+  --accent:#EB7E4B; --accent-soft:#3C281F;
+  --gold:#EBB344; --gold-soft:#3A311D;
+  --leaf:#5CB879; --leaf-soft:#1E3A2A;
+  --water:#63A8CF; --water-soft:#1E3342;
+  --amber:#E8A948; --amber-soft:#3F321D;
+  --shadow:0 6px 24px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--f-read);font-size:18px;
+  -webkit-user-select:none;user-select:none;
+  overscroll-behavior:none;touch-action:manipulation;
+}
+button,a.iconbtn{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation;text-decoration:none}
+button:focus-visible,a.iconbtn:focus-visible{outline:3px solid var(--water);outline-offset:3px}
+#app{height:100%;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;min-height:0}
+.screen.on{display:flex}
+
+/* Shared icon buttons & top strip */
+.strip{
+  display:flex;align-items:center;gap:12px;
+  padding:max(10px,var(--sat)) max(14px,var(--sar)) 8px max(14px,var(--sal));
+  min-height:74px;flex:none;
+}
+.iconbtn,.gate{
+  width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+  background:var(--card);box-shadow:var(--shadow);border:1.5px solid var(--line);
+  position:relative;flex:none;transition:transform .12s ease;
+}
+.iconbtn:active,.gate:active{transform:scale(.95)}
+.iconbtn svg,.gate svg{width:25px;height:25px;position:relative}
+.iconbtn.small{width:44px;height:44px}
+.iconbtn.small svg{width:22px;height:22px}
+.iconbtn.on-state{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.iconbtn[data-label],.gate[data-label]{margin-bottom:18px}
+.iconbtn[data-label]::after,.gate[data-label]::after{
+  content:attr(data-label);position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);
+  font-family:var(--f-ui);font-weight:600;font-size:12px;line-height:1;color:var(--ink-soft);white-space:nowrap;
+}
+.gate{overflow:visible}
+.gate .clip{position:absolute;inset:0;border-radius:50%;overflow:hidden}
+.gate .fill{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--gold-soft)}
+.standalone [data-fs-btn]{display:none}
+:root.iosfs{--sat:calc(env(safe-area-inset-top, 0px) + 50px)}
+
+/* Progress track */
+.track-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.track{
+  flex:1;height:34px;border-radius:17px;background:var(--card);
+  border:2px solid var(--line);position:relative;overflow:hidden;
+}
+.track-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0;
+  background:linear-gradient(90deg,var(--gold-soft),var(--accent-soft));
+  transition:width .4s ease;
+}
+.track-leaf{
+  position:absolute;left:4%;top:50%;transform:translate(-50%,-50%);
+  width:26px;height:26px;transition:left .4s ease;z-index:2;
+}
+.track-count{
+  font-family:var(--f-ui);font-weight:600;font-size:16px;color:var(--ink-soft);
+  white-space:nowrap;min-width:48px;text-align:right;font-variant-numeric:tabular-nums;
+}
+
+/* Home screen (clean 2-game layout, kid-friendly copy) */
+.home{
+  flex:1;display:flex;flex-direction:column;
+  padding:max(12px,var(--sat)) max(20px,var(--sar)) max(16px,var(--sab)) max(20px,var(--sal));
+  gap:18px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  max-width:1020px;width:100%;margin:0 auto;
+}
+.hometop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.brand{font-family:var(--f-ui);font-weight:600;font-size:clamp(26px,4.5vw,38px);line-height:1.1}
+.brand small{display:block;font-family:var(--f-read);font-weight:400;font-size:16px;color:var(--ink-soft);margin-top:4px}
+.top-actions{display:flex;gap:12px;align-items:flex-start}
+
+.game-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0;align-content:center;
+}
+@media (max-width:720px){.game-cards{grid-template-columns:1fr;align-content:start}}
+.gcard{
+  background:var(--card);border-radius:26px;box-shadow:var(--shadow);
+  border:3px solid var(--line);overflow:hidden;
+  display:flex;flex-direction:column;text-align:left;
+  transition:transform .14s ease,border-color .16s ease;
+}
+.gcard:active{transform:scale(.98)}
+@media (hover:hover){.gcard:hover{border-color:var(--accent);transform:translateY(-2px)}}
+.gcard-img{
+  width:100%;aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--line);
+}
+.gcard-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gcard-pill{
+  position:absolute;top:12px;left:12px;
+  background:rgba(24,30,38,.78);color:#fff;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  padding:5px 12px;border-radius:999px;font-family:var(--f-ui);font-size:13px;font-weight:600;
+}
+.gcard-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.gcard-body b{font-family:var(--f-ui);font-size:clamp(24px,3vw,28px);font-weight:600;line-height:1.15}
+.gcard-body span{font-size:16px;color:var(--ink-soft);line-height:1.38}
+.gcard-meta{
+  margin-top:auto;padding-top:10px;font-family:var(--f-ui);font-size:14px;color:var(--accent);font-weight:600;
+}
+.homefoot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:2px}
+.home-stats{font-size:15px;color:var(--ink-soft)}
+
+/* QUIZ PLAY SCREEN */
+.stage{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:4px max(18px,var(--sar)) 8px max(18px,var(--sal));
+  min-height:0;gap:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  width:100%;max-width:960px;margin:0 auto;
+}
+.q-hero{
+  width:100%;background:var(--card);border-radius:24px;box-shadow:var(--shadow);
+  border:4px solid var(--line);overflow:hidden;
+  display:grid;grid-template-columns:minmax(250px,370px) 1fr;align-items:stretch;
+  transition:border-color .25s;
+}
+.q-hero.ok{border-color:var(--leaf)}
+.q-hero.oops{border-color:var(--amber)}
+.q-photo{
+  position:relative;min-height:220px;overflow:hidden;background:#232A33;
+}
+.q-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.q-photo.portrait::before{
+  content:"";position:absolute;inset:-24px;background:var(--bg) center/cover;filter:blur(18px);opacity:.55;
+}
+.q-photo.portrait img{position:relative;object-fit:contain}
+.q-caption{
+  position:absolute;left:0;right:0;bottom:0;padding:18px 12px 7px;
+  background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;
+  font-size:12px;line-height:1.25;
+}
+/* Stack cleanly on portrait tablets and narrow screens */
+@media (max-width:740px), (max-width:920px) and (orientation:portrait){
+  .q-hero{grid-template-columns:1fr}
+  .q-photo{height:270px;min-height:210px}
+}
+.q-text-wrap{
+  padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:8px;position:relative;
+}
+.q-tag{
+  display:inline-flex;align-self:flex-start;font-family:var(--f-ui);font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;padding:4px 11px;border-radius:999px;
+  background:var(--gold-soft);color:var(--accent);
+}
+.q-tag.bio{background:var(--leaf-soft);color:var(--leaf)}
+.q-tag.sea{background:var(--water-soft);color:var(--water)}
+.q-question{font-size:clamp(19px,2.7vw,24px);line-height:1.32;margin:0}
+.q-fact{
+  margin-top:6px;padding:10px 14px;border-radius:14px;background:var(--leaf-soft);
+  border:2px solid var(--leaf);font-size:clamp(15px,2.1vw,17px);line-height:1.38;
+  animation:popIn .24s ease-out;
+}
+.q-fact b{font-family:var(--f-ui);color:var(--leaf)}
+
+/* Choice buttons with integrated tap-to-hear icon for emerging readers (4-6) */
+.choices{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;
+}
+@media (max-width:520px){.choices{grid-template-columns:1fr}}
+.choice-wrap{
+  display:flex;align-items:stretch;background:var(--card);border:3.5px solid var(--line);
+  border-radius:20px;box-shadow:var(--shadow);overflow:hidden;min-height:76px;
+  transition:transform .12s,border-color .18s,background .18s,opacity .18s;
+}
+.choice-wrap:active{transform:scale(.98)}
+.choice-wrap.glow{border-color:var(--leaf);background:var(--leaf-soft)}
+.choice-wrap.hint{border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.choice-wrap.speaking{border-color:var(--water);box-shadow:0 0 0 4px var(--water-soft)}
+.choice-wrap.dim{opacity:.33;pointer-events:none}
+.choice-main{
+  flex:1;padding:14px 12px 14px 16px;display:flex;align-items:center;justify-content:center;gap:10px;
+  text-align:center;font-family:var(--f-ui);font-size:clamp(17px,2.3vw,21px);font-weight:600;line-height:1.22;
+}
+.choice-main .bin-ico{width:26px;height:26px;flex:none;display:grid;place-items:center}
+.choice-say{
+  width:50px;flex:none;display:grid;place-items:center;color:var(--water);
+  border-left:1.5px solid var(--line);background:rgba(46,115,153,.06);
+}
+.choice-say:active{background:var(--water-soft)}
+.choice-say svg{width:22px;height:22px}
+
+/* Bottom bar */
+.bar{
+  display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:8px max(16px,var(--sar)) max(14px,var(--sab)) max(16px,var(--sal));
+  min-height:76px;flex:none;
+}
+.act{
+  height:56px;min-width:132px;padding:0 22px;border-radius:28px;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  font-family:var(--f-ui);font-weight:600;font-size:19px;box-shadow:var(--shadow);
+  transition:transform .12s;
+}
+.act:active{transform:scale(.96)}
+.act svg{width:23px;height:23px}
+.act.plain{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.act.go{background:var(--accent);color:#fff;min-width:180px}
+.act[disabled]{opacity:.35;pointer-events:none}
+
+/* REAL LEAFLET MAP PLAY SCREEN */
+.map-shell{
+  flex:1;position:relative;min-height:0;overflow:hidden;
+}
+#lmap{position:absolute;inset:0;width:100%;height:100%}
+.map-hud{
+  position:absolute;top:12px;left:max(12px,var(--sal));right:max(12px,var(--sar));
+  max-width:590px;z-index:900;pointer-events:auto;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:2.5px solid var(--line);border-radius:20px;padding:11px 15px;
+  box-shadow:0 8px 24px rgba(20,28,38,.22);color:#222B35;
+}
+:root[data-theme="dark"] .map-hud{background:rgba(33,40,50,.95);color:#EEF1F4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .map-hud{background:rgba(33,40,50,.95);color:#EEF1F4}}
+.map-hud.ok{border-color:var(--leaf)}
+.map-hud.oops{border-color:var(--amber)}
+.map-hud.compact{max-width:max-content;padding:8px 13px}
+.map-hud-q{font-size:clamp(16px,2.2vw,19.5px);line-height:1.3;margin:5px 0 0}
+
+/* Iconized Oregon Trail Voyage Log bar */
+.voyage-log{
+  display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:7px;padding-top:7px;
+  border-top:1.5px solid var(--line);font-family:var(--f-ui);font-size:13px;font-weight:600;
+}
+.map-hud.compact .voyage-log{margin-top:0;padding-top:0;border-top:0}
+.vlog-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:999px;background:var(--gold-soft);color:#5A3810;
+  font-variant-numeric:tabular-nums;
+}
+.vlog-chip svg{width:14px;height:14px;flex:none}
+.vlog-chip.sea{background:var(--water-soft);color:#1E4E6D}
+.vlog-chip.ok{background:var(--leaf-soft);color:#1E5B32}
+:root[data-theme="dark"] .vlog-chip{color:#FBF0D1}
+:root[data-theme="dark"] .vlog-chip.sea{color:#CBE6F5}
+:root[data-theme="dark"] .vlog-chip.ok{color:#C6EDD2}
+
+.map-tools{
+  position:absolute;top:12px;right:max(12px,var(--sar));z-index:910;
+  display:flex;gap:8px;
+}
+.map-tool-btn{
+  background:var(--card);border:2px solid var(--line);border-radius:14px;
+  padding:8px 13px;font-family:var(--f-ui);font-weight:600;font-size:14px;
+  box-shadow:var(--shadow);color:var(--ink);white-space:nowrap;
+}
+.map-tool-btn.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+@media (max-width:740px){.map-hud{top:56px}}
+
+/* Map photo postcard overlay after answering */
+.map-card{
+  position:absolute;left:max(12px,var(--sal));right:max(12px,var(--sar));bottom:12px;
+  max-width:780px;margin:0 auto;z-index:920;
+  background:var(--card);border:3px solid var(--leaf);border-radius:22px;
+  box-shadow:0 12px 32px rgba(20,28,38,.32);overflow:hidden;
+  display:grid;grid-template-columns:220px 1fr;align-items:stretch;
+  animation:popIn .25s ease-out;
+}
+@media (max-width:640px){.map-card{grid-template-columns:1fr}.map-card-img{max-height:140px}}
+.map-card-img{position:relative;min-height:145px;background:#232A33;overflow:hidden}
+.map-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.map-card-body{padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.map-card-body b{font-family:var(--f-ui);font-size:21px;color:var(--leaf)}
+.map-card-body p{margin:0;font-size:16px;line-height:1.36}
+
+/* Oregon Trail Mid-Ocean & Colony Survival Decision Card */
+.sea-event{
+  position:absolute;left:max(12px,var(--sal));right:max(12px,var(--sar));bottom:12px;
+  max-width:860px;margin:0 auto;z-index:930;
+  background:var(--card);border:3.5px solid var(--water);border-radius:24px;
+  box-shadow:0 14px 36px rgba(14,26,38,.36);overflow:hidden;
+  display:grid;grid-template-columns:230px 1fr;align-items:stretch;
+  animation:popIn .28s ease-out;
+}
+.sea-event.colony-card{border-color:var(--accent)}
+@media (max-width:700px){.sea-event{grid-template-columns:1fr}.se-img{max-height:135px}}
+.se-img{position:relative;min-height:165px;background:#1A2735;overflow:hidden}
+.se-img img{width:100%;height:100%;object-fit:cover;display:block}
+.se-badge{
+  position:absolute;top:10px;left:10px;background:rgba(20,34,48,.82);color:#FBF0D1;
+  padding:4px 10px;border-radius:999px;font-family:var(--f-ui);font-size:12px;font-weight:600;
+}
+.se-body{padding:13px 15px;display:flex;flex-direction:column;gap:7px;justify-content:center}
+.se-title{font-family:var(--f-ui);font-size:19.5px;font-weight:600;color:var(--water);margin:0}
+.sea-event.colony-card .se-title{color:var(--accent)}
+.se-desc{margin:0;font-size:15px;line-height:1.34}
+.se-opts{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.se-opt-row{
+  display:flex;align-items:stretch;border-radius:14px;overflow:hidden;
+  background:var(--ground);border:2.5px solid var(--line);
+  transition:transform .1s,border-color .16s,background .16s,opacity .16s;
+}
+.se-opt-row.glow{border-color:var(--leaf);background:var(--leaf-soft)}
+.se-opt-row.speaking{border-color:var(--water);box-shadow:0 0 0 3px var(--water-soft)}
+.se-opt-row.dim{opacity:.36;pointer-events:none}
+.se-opt-btn{
+  flex:1;text-align:left;padding:9px 12px;
+  font-family:var(--f-ui);font-size:15px;font-weight:600;line-height:1.24;
+}
+.se-opt-say{
+  width:44px;flex:none;display:grid;place-items:center;color:var(--water);
+  border-left:1.5px solid var(--line);background:rgba(46,115,153,.06);
+}
+.se-opt-say svg{width:19px;height:19px}
+.se-outcome{
+  padding:9px 12px;border-radius:13px;background:var(--leaf-soft);border:2px solid var(--leaf);
+  font-size:14.5px;line-height:1.34;animation:popIn .2s ease-out;
+}
+.se-outcome.warn{background:var(--amber-soft);border-color:var(--amber)}
+
+/* Custom Leaflet pins */
+.tg-pin{
+  width:34px;height:34px;border-radius:50%;background:#C85A27;border:3px solid #FFFFFF;
+  box-shadow:0 3px 10px rgba(0,0,0,.38);display:grid;place-items:center;
+  position:relative;transition:transform .16s ease,opacity .2s ease;
+}
+.tg-pin::after{content:'';width:9px;height:9px;border-radius:50%;background:#FFFFFF}
+.tg-pin.done{background:#35814E}
+.tg-pin.done::after{width:12px;height:12px;border-radius:0;background:none;border-right:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg) translate(-1px,-2px)}
+.tg-pin.dim{opacity:.32}
+.tg-pin.hint{background:#D49420;box-shadow:0 0 0 8px rgba(212,148,32,.42);animation:pinPulse 1s ease-in-out infinite}
+.tg-lbl{
+  position:absolute;left:50%;top:-27px;transform:translateX(-50%);
+  white-space:nowrap;background:rgba(255,255,255,.96);color:#222B35;
+  padding:2px 9px;border-radius:999px;font-family:var(--f-ui);font-size:12.5px;font-weight:600;
+  border:1.5px solid #D8CEBC;box-shadow:0 2px 6px rgba(0,0,0,.18);pointer-events:none;
+}
+.tg-lbl.below{top:auto;bottom:-27px}
+.tg-lbl.left{left:auto;right:40px;top:50%;transform:translateY(-50%)}
+.tg-lbl.right{left:40px;top:50%;transform:translateY(-50%)}
+.labels-off .tg-pin:not(.done):not(.hint) .tg-lbl{display:none}
+
+/* Animated Mayflower Sailing Ship */
+.ship-icon{
+  width:64px;height:64px;position:relative;pointer-events:none;
+  filter:drop-shadow(0 5px 8px rgba(15,28,42,.42));
+}
+.ship-bob{width:100%;height:100%;animation:shipRock 2.4s ease-in-out infinite}
+.ship-sailing .ship-bob{animation:shipSail .7s ease-in-out infinite}
+.ship-wake{
+  position:absolute;right:-10px;bottom:14px;width:24px;height:10px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,255,255,.85),rgba(255,255,255,0));
+  opacity:0;transition:opacity .3s;
+}
+.ship-sailing .ship-wake{opacity:1}
+@keyframes shipRock{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
+@keyframes shipSail{0%,100%{transform:translateY(0) rotate(-4deg) scale(1.04)}50%{transform:translateY(-4px) rotate(3deg) scale(1.07)}}
+
+@keyframes pinPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes popIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.shake{animation:shake .34s ease}
+
+/* End screen */
+.center{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;padding:24px;text-align:center;max-width:720px;margin:0 auto;width:100%;
+}
+.center h1{font-family:var(--f-ui);font-weight:600;font-size:clamp(28px,5vw,38px);margin:0}
+.center p{margin:0;color:var(--ink-soft);font-size:18px;max-width:36ch;line-height:1.4}
+.end-photo{
+  width:min(86vw,380px);aspect-ratio:16/10;border-radius:22px;overflow:hidden;
+  border:4px solid var(--gold);box-shadow:var(--shadow);
+}
+.end-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.summary-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:600px}
+.summary-chip{
+  background:var(--card);border:2px solid var(--line);border-radius:999px;
+  padding:6px 14px;font-family:var(--f-ui);font-size:15px;
+}
+
+/* Grown-ups screen */
+.parent{flex:1;display:flex;flex-direction:column;min-height:0;-webkit-user-select:text;user-select:text;max-width:920px;width:100%;margin:0 auto}
+.tabs{display:flex;gap:8px;padding:0 16px 10px;overflow-x:auto}
+.tab{font-family:var(--f-ui);font-weight:600;font-size:16px;padding:10px 18px;border-radius:999px;background:var(--card);color:var(--ink-soft);white-space:nowrap;border:1.5px solid var(--line)}
+.tab.on{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.pane{display:none;flex:1;overflow-y:auto;padding:0 18px 32px;min-height:0}
+.pane.on{display:block}
+.pane h2{font-family:var(--f-ui);font-weight:600;font-size:22px;margin:16px 0 8px}
+.pane h3{font-family:var(--f-ui);font-weight:600;font-size:14px;margin:18px 0 6px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.pane p,.pane li{font-size:16px;line-height:1.5;max-width:66ch}
+.pane table{border-collapse:collapse;width:100%;max-width:720px;font-size:15px;font-variant-numeric:tabular-nums}
+.pane th,.pane td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.pane th{font-family:var(--f-ui);font-weight:600;color:var(--ink-soft);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.pbtn{
+  font-family:var(--f-ui);font-weight:600;font-size:16px;padding:11px 18px;border-radius:14px;
+  background:var(--card);border:2px solid var(--line);box-shadow:var(--shadow);margin:4px 6px 4px 0;min-height:46px;
+}
+.pbtn.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.pbtn.warn{background:var(--amber);color:#1E1A14;border-color:var(--amber)}
+.field{display:flex;align-items:center;gap:12px;margin:10px 0;flex-wrap:wrap}
+.toast{
+  position:fixed;left:50%;bottom:92px;transform:translateX(-50%);
+  background:var(--ink);color:var(--ground);padding:12px 20px;border-radius:14px;
+  font-family:var(--f-ui);font-size:16px;opacity:0;transition:opacity .2s;pointer-events:none;
+  max-width:90vw;z-index:1200;text-align:center;
+}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion: reduce){.track-fill,.track-leaf{transition:none}.tg-pin.hint,.ship-bob{animation:none}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HOME SCREEN -->
+<section class="screen on" id="s-home">
+  <div class="home">
+    <div class="hometop">
+      <div class="brand">Thanksgiving Explorer<small>History, nature, real maps, and American traditions</small></div>
+      <div class="top-actions">
+        <a class="iconbtn" href="../" aria-label="All games" title="All games" data-label="Games"><span data-icon="grid"></span></a>
+        <button class="iconbtn" id="btn-home-voice" aria-label="Toggle voice" title="Voice" data-label="Voice"><span data-icon="voiceOn"></span></button>
+        <button class="iconbtn" id="btn-fs" data-fs-btn aria-label="Toggle full screen" title="Full screen" data-label="Full screen"><span data-icon="fullscreen"></span></button>
+      </div>
+    </div>
+
+    <div class="game-cards">
+      <button class="gcard" id="btn-start-quiz">
+        <div class="gcard-img">
+          <img src="img/roast_turkey.jpg" alt="Thanksgiving dinner table">
+          <span class="gcard-pill">32 Picture Questions</span>
+        </div>
+        <div class="gcard-body">
+          <b>Thanksgiving Quiz</b>
+          <span>Look at real photos and answer fun questions about 1621 life, foods, nature, and holidays.</span>
+          <div class="gcard-meta" id="meta-quiz">10 questions per round</div>
+        </div>
+      </button>
+
+      <button class="gcard" id="btn-start-map">
+        <div class="gcard-img">
+          <img src="img/mayflower.jpg" alt="Mayflower II replica ship in Plymouth Harbor">
+          <span class="gcard-pill">Real Map &amp; 1620 Sea Voyage</span>
+        </div>
+        <div class="gcard-body">
+          <b>Voyage &amp; US Map</b>
+          <span>Sail the Mayflower across the Atlantic, survive the first winter, and explore US harvest states.</span>
+          <div class="gcard-meta" id="meta-map">10 stops &amp; sea events per round</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="homefoot">
+      <span class="home-stats" id="home-stats"></span>
+      <button class="gate" id="gate" aria-label="Grown-ups: hold for three seconds" title="Grown-ups: hold for three seconds" data-label="Grown-ups">
+        <span class="clip"><span class="fill"></span></span>
+        <span data-icon="lock"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ PLAY SCREEN -->
+<section class="screen" id="s-quiz">
+  <div class="strip">
+    <button class="iconbtn" id="btn-quiz-home" aria-label="Home" data-label="Home"><span data-icon="home"></span></button>
+    <div class="track-wrap">
+      <div class="track"><div class="track-fill" id="q-fill"></div><div class="track-leaf" id="q-leaf"></div></div>
+      <div class="track-count" id="q-count">1 / 10</div>
+    </div>
+    <button class="iconbtn" id="btn-quiz-voice" aria-label="Toggle voice" data-label="Voice"><span data-icon="voiceOn"></span></button>
+    <button class="iconbtn" data-fs-btn aria-label="Toggle full screen" data-label="Full screen"><span data-icon="fullscreen"></span></button>
+  </div>
+  <div class="stage" id="q-stage"></div>
+  <div class="bar" id="q-bar"></div>
+</section>
+
+<!-- MAP & VOYAGE PLAY SCREEN -->
+<section class="screen" id="s-map">
+  <div class="strip">
+    <button class="iconbtn" id="btn-map-home" aria-label="Home" data-label="Home"><span data-icon="home"></span></button>
+    <div class="track-wrap">
+      <div class="track"><div class="track-fill" id="m-fill"></div><div class="track-leaf" id="m-leaf"></div></div>
+      <div class="track-count" id="m-count">1 / 10</div>
+    </div>
+    <button class="iconbtn" id="btn-map-voice" aria-label="Toggle voice" data-label="Voice"><span data-icon="voiceOn"></span></button>
+    <button class="iconbtn" data-fs-btn aria-label="Toggle full screen" data-label="Full screen"><span data-icon="fullscreen"></span></button>
+  </div>
+  <div class="map-shell" id="map-shell">
+    <div id="lmap"></div>
+    <div class="map-hud" id="map-hud">
+      <span class="q-tag" id="map-tag">Atlantic Voyage</span>
+      <div class="map-hud-q" id="map-q"></div>
+      <div class="voyage-log" id="voyage-log" hidden></div>
+    </div>
+    <div class="map-tools">
+      <button class="map-tool-btn on" id="btn-toggle-labels">Labels: On</button>
+      <button class="map-tool-btn" id="btn-reset-view">Reset view</button>
+    </div>
+
+    <!-- Real photo postcard for map stops -->
+    <div class="map-card" id="map-card" hidden>
+      <div class="map-card-img"><img id="mc-img" src="" alt=""></div>
+      <div class="map-card-body">
+        <b id="mc-title"></b>
+        <p id="mc-fact"></p>
+      </div>
+    </div>
+
+    <!-- Oregon Trail-style mid-ocean & colony survival card -->
+    <div class="sea-event" id="sea-event" hidden>
+      <div class="se-img">
+        <img id="se-img" src="" alt="">
+        <span class="se-badge" id="se-badge">Day 24 · Mid-Atlantic</span>
+      </div>
+      <div class="se-body">
+        <h3 class="se-title" id="se-title"></h3>
+        <p class="se-desc" id="se-desc"></p>
+        <div class="se-opts" id="se-opts"></div>
+        <div class="se-outcome" id="se-outcome" hidden></div>
+      </div>
+    </div>
+  </div>
+  <div class="bar" id="m-bar"></div>
+</section>
+
+<!-- END SCREEN -->
+<section class="screen" id="s-end">
+  <div class="center">
+    <div class="end-photo"><img id="end-img" src="img/roast_turkey.jpg" alt=""></div>
+    <h1 id="end-title">Round Complete</h1>
+    <p id="end-text"></p>
+    <div class="summary-chips" id="end-chips"></div>
+    <div class="bar" style="padding-bottom:0">
+      <button class="act plain" id="btn-end-home"><span data-icon="home"></span>Home</button>
+      <button class="act go" id="btn-end-more"><span data-icon="next"></span>Play again</button>
+    </div>
+  </div>
+</section>
+
+<!-- GROWN-UPS SCREEN -->
+<section class="screen" id="s-parent">
+  <div class="parent">
+    <div class="strip">
+      <button class="iconbtn small" id="btn-parent-close" aria-label="Close" data-label="Close"><span data-icon="close"></span></button>
+      <div class="brand" style="font-size:24px;flex:1">Grown-ups</div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-pane="guide">About</button>
+      <button class="tab" data-pane="progress">Progress</button>
+      <button class="tab" data-pane="settings">Settings</button>
+    </div>
+    <div class="pane on" id="pane-guide"></div>
+    <div class="pane" id="pane-progress"></div>
+    <div class="pane" id="pane-settings"></div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+</div>
+
+<script src="../lib/leaflet-1.9.4.min.js"></script>
+<script>
+// ==================== ICONS ====================
+const ICONS = {
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>',
+  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
+  voiceOn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>',
+  voiceOff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>',
+  listVoice:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h8M4 18h10"/><path d="M17 9l4 3-4 3V9Z"/></svg>',
+  fullscreen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',
+  fullscreenExit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m11 7h6m-6 0V4m0 6l7-7"/></svg>',
+  yesIco:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#D9EFE0" stroke="#35814E" stroke-width="2"/><path d="M7.5 12.5 10.5 15.5 16.5 9" stroke="#35814E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  noIco:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#FCE7DA" stroke="#C85A27" stroke-width="2"/><path d="M9 9l6 6M15 9l-6 6" stroke="#C85A27" stroke-width="2.6" stroke-linecap="round"/></svg>',
+  calMini:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5 1.5v3M11 1.5v3"/></svg>',
+  compMini:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><polygon points="8,4 10,8 8,12 6,8" fill="currentColor" stroke="none"/></svg>',
+  flagMini:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 2.5v11.5"/><path d="M3.5 3h8l-1.5 3 1.5 3h-8"/></svg>',
+  leaf:'<svg viewBox="0 0 36 36"><path d="M18 4 L15 11 L9 9 L12 16 L6 19 L14 23 L13 28 L18 25 L23 28 L22 23 L30 19 L24 16 L27 9 L21 11 Z" fill="#C85A27" stroke="#7A2D18" stroke-width="1.4" stroke-linejoin="round"/><path d="M18 14 V33" stroke="#7A2D18" stroke-width="2" stroke-linecap="round"/></svg>',
+  ship:`<svg viewBox="0 0 64 64" width="64" height="64">
+    <path d="M10 53 Q19 49 28 53 T46 53 T58 53" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity=".85"/>
+    <path d="M10 42 L54 42 L48 52 L17 52 Z" fill="#7D4920" stroke="#3D220D" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M44 37 L55 37 L54 42 L44 42 Z" fill="#9A5C2B" stroke="#3D220D" stroke-width="1.8"/>
+    <path d="M16 46 H48" stroke="#D9A76A" stroke-width="2" stroke-dasharray="4 3"/>
+    <line x1="24" y1="14" x2="24" y2="42" stroke="#3D220D" stroke-width="2.4"/>
+    <line x1="38" y1="10" x2="38" y2="42" stroke="#3D220D" stroke-width="2.6"/>
+    <path d="M14 19 Q21 25 14 36 L28 36 Q33 25 28 19 Z" fill="#FFFDF4" stroke="#B6A587" stroke-width="1.6"/>
+    <path d="M29 14 Q36 23 29 37 L45 37 Q51 23 45 14 Z" fill="#FFFDF4" stroke="#B6A587" stroke-width="1.6"/>
+    <path d="M38 10 L27 7 L38 5 Z" fill="#C85A27"/>
+    <path d="M24 14 L16 12 L24 10 Z" fill="#C85A27"/>
+  </svg>`
+};
+
+// ==================== STATE ====================
+const KEY = 'thanksgiving-explorer-v4';
+const DEFAULT = {
+  v: 4,
+  settings: { autoRead: true, sfx: true, theme: 'auto', mapLabels: true },
+  stats: { quiz: { rounds: 0, n: 0, ok: 0 }, map: { rounds: 0, n: 0, ok: 0 } },
+  seenQuiz: {},
+  seenMap: {}
+};
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) {
+      const o = JSON.parse(raw);
+      return {
+        ...DEFAULT, ...o,
+        settings: { ...DEFAULT.settings, ...(o.settings || {}) },
+        stats: {
+          quiz: { ...DEFAULT.stats.quiz, ...(o.stats?.quiz || {}) },
+          map: { ...DEFAULT.stats.map, ...(o.stats?.map || {}) }
+        },
+        seenQuiz: { ...(o.seenQuiz || {}) },
+        seenMap: { ...(o.seenMap || {}) }
+      };
+    }
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(DEFAULT));
+}
+let S = load();
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function applyTheme() {
+  if (S.settings.theme === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', S.settings.theme);
+}
+applyTheme();
+
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function toast(t, ms) { const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), ms || 2400); }
+function clearToast() { clearTimeout(toast.t); $('toast').classList.remove('on'); }
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); }
+document.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = ICONS[el.dataset.icon] || ''; });
+$('q-leaf').innerHTML = ICONS.leaf;
+$('m-leaf').innerHTML = ICONS.leaf;
+
+// ==================== FULL SCREEN ====================
+const IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const HOME_TIP = 'For full screen, tap Share, then Add to Home Screen, and open the games from that icon.';
+const isFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+const canFullscreen = () => !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+function updateFsButtons() {
+  const active = isFullscreen(), k = active ? 'fullscreenExit' : 'fullscreen';
+  document.querySelectorAll('[data-fs-btn]').forEach(btn => {
+    const s = btn.querySelector('[data-icon]');
+    if (s) { s.dataset.icon = k; s.innerHTML = ICONS[k]; }
+    btn.dataset.label = active ? 'Exit' : 'Full screen';
+  });
+}
+async function toggleFullscreen() {
+  if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) { toast('Already running full screen from Home Screen.'); return; }
+  if (IOS && !isFullscreen() && !canFullscreen()) { toast(HOME_TIP, 6500); return; }
+  try {
+    if (isFullscreen()) { if (document.exitFullscreen) await document.exitFullscreen(); else if (document.webkitExitFullscreen) await document.webkitExitFullscreen(); }
+    else { const el = document.documentElement; if (el.requestFullscreen) await el.requestFullscreen(); else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen(); else toast(IOS ? HOME_TIP : 'Full screen not available.', IOS ? 6500 : 2400); }
+  } catch (e) { toast(IOS ? HOME_TIP : 'Full screen not available.', IOS ? 6500 : 2400); }
+  updateFsButtons();
+}
+if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) document.body.classList.add('standalone');
+function onFsChange() { document.documentElement.classList.toggle('iosfs', IOS && isFullscreen()); updateFsButtons(); }
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
+document.querySelectorAll('[data-fs-btn]').forEach(b => b.addEventListener('click', toggleFullscreen));
+
+// ==================== REALISTIC NEURAL VOICE + OPTION READER + CHIMES ====================
+let audioCtx = null;
+function ensureAudio() {
+  if (!S.settings.sfx) return null;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  } catch (e) { return null; }
+}
+function tone(freq, dur, delay, type, vol) {
+  const ctx = ensureAudio(); if (!ctx) return;
+  try {
+    const t0 = ctx.currentTime + (delay || 0);
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = type || 'triangle';
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol || 0.12, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(t0); osc.stop(t0 + dur + 0.02);
+  } catch (e) {}
+}
+const sfxOk = () => { tone(523.25, 0.15, 0, 'triangle', 0.13); tone(659.25, 0.22, 0.09, 'triangle', 0.13); };
+const sfxOops = () => { tone(240, 0.15, 0, 'sine', 0.1); tone(196, 0.17, 0.08, 'sine', 0.09); };
+const sfxPop = () => tone(440, 0.08, 0, 'triangle', 0.09);
+const sfxSail = () => { tone(330, 0.18, 0, 'sine', 0.08); tone(392, 0.22, 0.12, 'sine', 0.08); tone(494, 0.25, 0.24, 'sine', 0.08); };
+const sfxFanfare = () => [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, 0.28, i * 0.1, 'triangle', 0.13));
+
+const voicePlayer = new Audio();
+voicePlayer.preload = 'auto';
+let speechSeq = 0;
+let primed = false;
+function primeAudio() {
+  if (primed) return;
+  primed = true;
+  ensureAudio();
+  try {
+    voicePlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+    voicePlayer.play().then(() => voicePlayer.pause()).catch(() => {});
+  } catch (e) {}
+}
+['pointerdown', 'touchend', 'click'].forEach(ev => document.addEventListener(ev, primeAudio, { capture: true, passive: true }));
+
+function clearSpeakingHighlight() {
+  document.querySelectorAll('.speaking').forEach(x => x.classList.remove('speaking'));
+}
+
+function stopVoice() {
+  speechSeq++;
+  clearSpeakingHighlight();
+  try { voicePlayer.pause(); voicePlayer.currentTime = 0; } catch (e) {}
+  try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+}
+
+function speakTextPromise(text) {
+  return new Promise(res => {
+    if (!('speechSynthesis' in window) || !text) return res();
+    let done = false;
+    const fin = () => { if (!done) { done = true; res(); } };
+    try {
+      const vs = speechSynthesis.getVoices() || [];
+      const en = vs.filter(v => /^en[-_]US/i.test(v.lang));
+      const best = en.find(v => /Ava|Zoe|Emma|Andrew|Samantha|Allison|Premium|Enhanced|Natural/i.test(v.name)) || en[0] || vs[0];
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = 0.92;
+      if (best) u.voice = best;
+      u.onend = fin; u.onerror = fin;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+      setTimeout(fin, 1800 + text.length * 85);
+    } catch (e) { fin(); }
+  });
+}
+
+function playVoice(clipId, fallbackText, force) {
+  if (!force && !S.settings.autoRead) return;
+  const mySeq = ++speechSeq;
+  clearSpeakingHighlight();
+  try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+  if (!clipId) { speakTextPromise(fallbackText); return; }
+  voicePlayer.onended = null;
+  voicePlayer.onerror = () => { if (mySeq === speechSeq) speakTextPromise(fallbackText); };
+  voicePlayer.src = `audio/${clipId}.mp3`;
+  const p = voicePlayer.play();
+  if (p && p.catch) p.catch(() => { if (mySeq === speechSeq && force) speakTextPromise(fallbackText); });
+}
+
+// Reads a list of visible choice elements sequentially while highlighting each button (great for 4-6 year olds!)
+async function readChoicesSequentially(rowSelector, textGetter) {
+  const mySeq = ++speechSeq;
+  try { voicePlayer.pause(); } catch (e) {}
+  const rows = [...document.querySelectorAll(rowSelector)].filter(r => !r.classList.contains('dim'));
+  for (const r of rows) {
+    if (mySeq !== speechSeq) break;
+    clearSpeakingHighlight();
+    r.classList.add('speaking');
+    await speakTextPromise(textGetter(r));
+    if (mySeq !== speechSeq) break;
+    await new Promise(res => setTimeout(res, 180));
+  }
+  clearSpeakingHighlight();
+}
+
+function updateVoiceButtons() {
+  const on = !!S.settings.autoRead;
+  ['btn-home-voice', 'btn-quiz-voice', 'btn-map-voice'].forEach(id => {
+    const b = $(id); if (!b) return;
+    b.classList.toggle('on-state', on);
+    b.dataset.label = on ? 'Voice on' : 'Voice off';
+    const sp = b.querySelector('[data-icon]');
+    if (sp) sp.innerHTML = on ? ICONS.voiceOn : ICONS.voiceOff;
+  });
+}
+function toggleVoice() {
+  S.settings.autoRead = !S.settings.autoRead;
+  save(); updateVoiceButtons();
+  if (!S.settings.autoRead) stopVoice();
+  toast(S.settings.autoRead ? 'Voice read-aloud is on.' : 'Voice read-aloud is off.');
+}
+['btn-home-voice', 'btn-quiz-voice', 'btn-map-voice'].forEach(id => $(id).addEventListener('click', toggleVoice));
+
+// ==================== QUIZ BANK (32 BALANCED REAL-PHOTO QUESTIONS WITH SHORT CHIPS) ====================
+const QUIZ_ITEMS = [
+  // Biogeography & Climate (4)
+  {
+    id: 'latitude', chip: 'Gulf Stream Climate', tag: 'Biogeography · Climate & Latitude', tagCls: 'bio', img: 'img/plymouth_uk.jpg', cap: 'Mild coastal harbor of Plymouth, England (50°N)',
+    q: 'Plymouth, Massachusetts is actually much farther south than England — at the same latitude as sunny Rome, Italy. Why were Massachusetts winters so much colder and snowier?',
+    opts: ['Warm Gulf Stream heats England, Arctic winds chill New England', 'High mountain peaks freeze the Massachusetts ocean coast', 'England sits much closer to the equator than New England', 'Cold icebergs circle Plymouth Harbor all summer and winter'],
+    answer: 'Warm Gulf Stream heats England, Arctic winds chill New England',
+    fact: 'The warm Gulf Stream ocean current keeps England mild, while icy winter winds sweep across North America into New England. The Pilgrims were shocked by the cold.'
+  },
+  {
+    id: 'glaciers', chip: 'Glacial Cape Cod', tag: 'Biogeography · Ice Age Landforms', tagCls: 'bio', img: 'img/cape_cod.jpg', cap: 'Sandy glacial dunes of Cape Cod, Massachusetts',
+    q: 'What giant force of nature carved Cape Cod\'s hooked sandy peninsula and the acidic bogs where Massachusetts cranberries grow?',
+    opts: ['Ice Age glaciers 15,000 years ago', 'Ancient New England volcanoes', 'Deep ocean earthquakes', 'Growing Atlantic coral reefs'],
+    answer: 'Ice Age glaciers 15,000 years ago',
+    fact: 'Massive Ice Age glaciers scraped across New England over 15,000 years ago, leaving behind Cape Cod\'s sandy hook and wet kettle-hole bogs perfect for cranberries.'
+  },
+  {
+    id: 'exchange', chip: 'Native Foods', tag: 'Biogeography · Native Species', tagCls: 'bio', img: 'img/wild_turkey.jpg', cap: 'Wild turkey, a bird native to North America',
+    q: 'Which pair of classic Thanksgiving foods are native to the Americas, rather than brought over from Europe?',
+    opts: ['Turkeys & pumpkins', 'Wheat bread & butter', 'Apples & honeybees', 'Oranges & cinnamon'],
+    answer: 'Turkeys & pumpkins',
+    fact: 'Turkeys, corn, pumpkins, cranberries, pecans, and sweet potatoes are all native to the Americas, while wheat for pie crust and dairy cows for butter came from Europe.'
+  },
+  {
+    id: 'foliage', chip: 'Autumn Leaves', tag: 'Biogeography · Forest Ecology', tagCls: 'bio', img: 'img/autumn_forest.jpg', cap: 'Temperate deciduous autumn forest in New England',
+    q: 'Why do New England\'s sugar maple forests turn bright red and gold right before Thanksgiving?',
+    opts: ['Shorter days fade green chlorophyll', 'Frost freezes red juice on leaves', 'Roots pull red clay from the ground', 'Ocean salt sprays over the hills'],
+    answer: 'Shorter days fade green chlorophyll',
+    fact: 'Shorter autumn days signal deciduous trees to stop making green chlorophyll, revealing hidden yellow, orange, and crimson pigments before the leaves drop for winter.'
+  },
+
+  // History & Mayflower (6)
+  {
+    id: 'mayflower', chip: 'The Mayflower', tag: 'History · 1620 Voyage', img: 'img/mayflower.jpg', cap: 'Mayflower II replica ship in Plymouth Harbor',
+    q: 'What was the name of the famous wooden ship that carried 102 passengers from England to Massachusetts in 1620?',
+    opts: ['The Mayflower', 'The Santa Maria', 'The Endeavour', 'The Discovery'], answer: 'The Mayflower',
+    fact: 'The Mayflower carried families, craftspeople, and sailors across the Atlantic Ocean in the autumn of 1620.'
+  },
+  {
+    id: 'crossing', chip: '66 Days at Sea', tag: 'History · Atlantic Crossing', img: 'img/atlantic_storm.jpg', cap: 'North Atlantic ocean swells during a stormy crossing',
+    q: 'How long did the stormy voyage across the Atlantic Ocean take on the Mayflower?',
+    opts: ['66 days (over 2 months)', '14 days (2 quick weeks)', '6 full months at sea', '10 days with fair winds'], answer: '66 days (over 2 months)',
+    fact: 'The crossing took 66 stormy days, more than two months, inside a wooden ship about the length of three school buses.'
+  },
+  {
+    id: 'compact', chip: 'Mayflower Compact', tag: 'History · Self-Government', img: 'img/compact.jpg', cap: 'Painting: Signing the Mayflower Compact (J.L.G. Ferris)',
+    q: 'Before stepping ashore at Cape Cod, passengers signed an agreement to make fair laws together. What was it called?',
+    opts: ['The Mayflower Compact', 'The Plymouth Charter', 'The Bill of Rights', 'The Atlantic Treaty'], answer: 'The Mayflower Compact',
+    fact: 'Forty-one men signed the Mayflower Compact aboard ship in November 1620, creating an early model of self-government.'
+  },
+  {
+    id: 'plymouth', chip: 'Plymouth, MA', tag: 'Geography · Plymouth Colony', img: 'img/plymouth_rock.jpg', cap: 'Plymouth Rock, inscribed with 1620',
+    q: 'In which US state did the Pilgrims build Plymouth Colony in December 1620?',
+    opts: ['Massachusetts', 'Pennsylvania', 'North Carolina', 'Connecticut'], answer: 'Massachusetts',
+    fact: 'The settlers built Plymouth Colony along a sheltered bay on the coast of Massachusetts.'
+  },
+  {
+    id: 'feast', chip: '3-Day Feast', tag: 'History · Autumn 1621', img: 'img/feast_painting.jpg', cap: 'Classic painting of the 1621 harvest gathering',
+    q: 'How many days did the 1621 harvest celebration in Plymouth last?',
+    opts: ['Three whole days', 'Just one evening', 'Two full weeks', 'One entire month'], answer: 'Three whole days',
+    fact: 'The 1621 autumn harvest celebration lasted three whole days, with cooking, outdoor games, music, and shared meals between the colonists and their Wampanoag guests.'
+  },
+  {
+    id: 'clothes', chip: 'Pilgrim Clothes', tag: 'History · True or False', img: 'img/pilgrim_statue.jpg', portrait: true, cap: 'Pilgrim statue in Plymouth, Massachusetts',
+    q: 'True or False: Pilgrims only wore plain black outfits with giant silver buckles on their hats.',
+    opts: ['False', 'True'], answer: 'False', binary: true,
+    fact: 'False. Early colonists wore colorful wool in red, green, brown, and blue. Giant silver hat buckles were imagined by painters centuries later.'
+  },
+
+  // Early Colony Life (4)
+  {
+    id: 'houses', chip: '1621 Cottages', tag: 'Colony Life · Building Houses', img: 'img/colony_houses.jpg', cap: 'Reconstructed 1620s timber-and-thatch cottages at Plimoth',
+    q: 'With no glass shops or brick factories in 1621, what did the Plymouth colonists use for roofs and windows on their first timber cottages?',
+    opts: ['Marsh reeds & oiled paper', 'Slate tiles & leaded glass', 'Clay tiles & iron screens', 'Stone slabs & painted wood'],
+    answer: 'Marsh reeds & oiled paper',
+    fact: 'They bundled local marsh reeds into thick thatched roofs and covered window openings with oiled paper and wooden shutters.'
+  },
+  {
+    id: 'scurvy', chip: 'Scurvy & Vitamin C', tag: 'Colony Life · First Winter & Health', img: 'img/winter_snow.jpg', cap: '1860 painting of a snowy New England winter landscape',
+    q: 'Why did so many Mayflower passengers suffer from scurvy during the freezing first winter of 1620–1621?',
+    opts: ['Months without fresh fruit or Vitamin C', 'Eating too much roasted corn and deer', 'Drinking cold melted winter snow', 'Sleeping outdoors beside warm fires'],
+    answer: 'Months without fresh fruit or Vitamin C',
+    fact: 'Scurvy is caused by a lack of Vitamin C. After more than two months at sea eating salted meat and dry biscuits with almost no fresh fruits or greens, many colonists became dangerously weak.'
+  },
+  {
+    id: 'plows', chip: 'Hand-Hoed Farms', tag: 'Colony Life · Early Farms', tagCls: 'bio', img: 'img/colony_farm.jpg', cap: 'Reconstructed 1620s village gardens and fences at Plimoth',
+    q: 'True or False: The Pilgrims brought horses, dairy cows, and iron plows on the Mayflower to farm in 1621.',
+    opts: ['False', 'True'], answer: 'False', binary: true,
+    fact: 'False. Only dogs, goats, pigs, and chickens came at first. There were no cows, oxen, or plows in Plymouth in 1621, so settlers had to dig and weed every corn mound by hand with iron hoes.'
+  },
+  {
+    id: 'roads', chip: 'Leyden Street', tag: 'Colony Life · Roads & Travel', img: 'img/leyden_street.jpg', cap: 'Leyden Street, Plymouth\'s first lane from the harbor',
+    q: 'What was the name of Plymouth\'s very first dirt street, laid out uphill from the harbor past the first cottages?',
+    opts: ['Leyden Street', 'King\'s Highway', 'Harbor Turnpike', 'Plymouth Road'],
+    answer: 'Leyden Street',
+    fact: 'Leyden Street was Plymouth\'s first lane, named after the Dutch city where the Pilgrims had lived. Beyond town, people relied on coastal boats and narrow forest footpaths.'
+  },
+
+  // Food & Harvest (6)
+  {
+    id: 'pie', chip: 'No Pumpkin Pie', tag: 'Food · 1621 vs Today', img: 'img/pumpkin_pie.jpg', cap: 'Modern Thanksgiving pumpkin pie',
+    q: 'Was pumpkin pie on the table at the 1621 harvest feast?',
+    opts: ['No — modern dish only', 'Yes — eaten in 1621'], answer: 'No — modern dish only', binary: true,
+    fact: 'No. The colonists had no baking ovens, wheat flour, butter, or sugar yet. Instead, they roasted pumpkin pieces right in the fire.'
+  },
+  {
+    id: 'potatoes', chip: 'No Mashed Potatoes', tag: 'Food · 1621 vs Today', img: 'img/mashed_potatoes.jpg', cap: 'Bowl of Thanksgiving mashed potatoes',
+    q: 'Were mashed potatoes served at the 1621 harvest feast in Plymouth?',
+    opts: ['No — modern dish only', 'Yes — eaten in 1621'], answer: 'No — modern dish only', binary: true,
+    fact: 'No. Potatoes originally came from South America and had not yet reached New England farms in 1621.'
+  },
+  {
+    id: 'seafood', chip: '1621 Seafood Feast', tag: 'Food & Marine Ecology', tagCls: 'bio', img: 'img/lobster_clams.jpg', cap: 'Cold-water New England lobster, clams, and corn',
+    q: 'Which of these foods was actually eaten at the 1621 harvest feast in Plymouth?',
+    opts: ['Lobster, clams & venison', 'Mashed potatoes & gravy', 'Sweet potato marshmallows', 'Apple & pumpkin pie'], answer: 'Lobster, clams & venison',
+    fact: 'Plymouth sat right on the ocean, so lobster, clams, mussels, wild duck, goose, corn porridge, and five deer brought by Wampanoag hunters were on the menu.'
+  },
+  {
+    id: 'cranberry', chip: 'Cranberry Bogs', tag: 'Biogeography · Wetland Farming', tagCls: 'bio', img: 'img/cranberry_bog.jpg', cap: 'Flooded cranberry bog harvest in Kingston, Massachusetts',
+    q: 'How do farmers harvest cranberries in Massachusetts and Wisconsin every autumn?',
+    opts: ['Flood bogs so berries float', 'Pick them from tall trees', 'Dig them out like potatoes', 'Shake them off tall bushes'], answer: 'Flood bogs so berries float',
+    fact: 'Farmers flood the sandy cranberry bogs with water. Because ripe cranberries have tiny air pockets inside, they float to the top to be scooped up.'
+  },
+  {
+    id: 'turkey', chip: 'Ben Franklin\'s Turkey', tag: 'Nature & History · Wild Turkey', img: 'img/wild_turkey.jpg', cap: 'Wild turkey strutting in nature',
+    q: 'Which American Founding Father praised the wild turkey as a clever, brave, truly American bird?',
+    opts: ['Benjamin Franklin', 'Paul Revere', 'John Hancock', 'Alexander Hamilton'], answer: 'Benjamin Franklin',
+    fact: 'In a famous letter to his daughter, Benjamin Franklin admired the wild turkey and joked that it was a more respectable bird than the bald eagle.'
+  },
+  {
+    id: 'corn', chip: 'Three Sisters Crops', tag: 'Agroecology · Companion Planting', tagCls: 'bio', img: 'img/flint_corn.jpg', cap: 'Colorful heirloom flint corn cobs',
+    q: 'Why did early New England farmers plant corn, beans, and squash together in the same dirt mound?',
+    opts: ['The three plants help each other', 'To shelter seeds from winter snow', 'So every vegetable ripened faster', 'To keep birds off the tall stalks'], answer: 'The three plants help each other',
+    fact: 'Tall corn stalks gave bean vines a sturdy pole to climb, beans added nutrients to the soil, and broad squash leaves shaded the ground from weeds.'
+  },
+
+  // People & National Holiday (6)
+  {
+    id: 'washington', chip: 'Washington (1789)', tag: 'People · 1789 Proclamation', img: 'img/washington.jpg', portrait: true, cap: 'Portrait of George Washington by Gilbert Stuart',
+    q: 'Which president declared the very first national Day of Thanksgiving under the US Constitution in 1789?',
+    opts: ['George Washington', 'Thomas Jefferson', 'Theodore Roosevelt', 'John Adams'], answer: 'George Washington',
+    fact: 'President George Washington proclaimed Thursday, November 26, 1789, as a national day of public thanksgiving for the young United States.'
+  },
+  {
+    id: 'hale', chip: 'Sarah Josepha Hale', tag: 'People · Holiday Champion', img: 'img/hale.jpg', portrait: true, cap: 'Portrait of writer and editor Sarah Josepha Hale',
+    q: 'Who wrote letters to five presidents for 36 years asking for a national Thanksgiving holiday, and also wrote "Mary Had a Little Lamb"?',
+    opts: ['Sarah Josepha Hale', 'Betsy Ross', 'Clara Barton', 'Louisa May Alcott'], answer: 'Sarah Josepha Hale',
+    fact: 'Magazine editor Sarah Josepha Hale kept writing letters for 36 years until President Abraham Lincoln finally agreed in 1863.'
+  },
+  {
+    id: 'lincoln', chip: 'Lincoln (1863)', tag: 'People · 1863 National Holiday', img: 'img/lincoln.jpg', portrait: true, cap: '1863 photograph of President Abraham Lincoln',
+    q: 'Which US president made Thanksgiving an annual national holiday in 1863 during the Civil War?',
+    opts: ['Abraham Lincoln', 'George Washington', 'Ulysses S. Grant', 'Andrew Jackson'], answer: 'Abraham Lincoln',
+    fact: 'President Abraham Lincoln proclaimed a national Thanksgiving holiday in October 1863, hoping a shared day of gratitude would help bring the country together.'
+  },
+  {
+    id: 'bradford', chip: 'William Bradford', tag: 'People · Plymouth Governor', img: 'img/ship_deck.jpg', cap: 'Wooden deck and rigging of a historic tall ship',
+    q: 'Who served as governor of Plymouth Colony for over 30 years and wrote the history book "Of Plymouth Plantation"?',
+    opts: ['William Bradford', 'Captain John Smith', 'Miles Standish', 'John Winthrop'], answer: 'William Bradford',
+    fact: 'Governor William Bradford kept a detailed handwritten journal that tells historians much of what we know about the Mayflower and Plymouth.'
+  },
+  {
+    id: 'squanto', chip: 'Squanto & Massasoit', tag: 'People · 1621 Alliance', img: 'img/plimoth_village.jpg', cap: 'Reconstructed historic home at Plimoth Patuxet',
+    q: 'Who spoke English before the Mayflower arrived and helped teach the colonists local farming and how to catch eels?',
+    opts: ['Tisquantum (Squanto)', 'William Penn', 'Daniel Boone', 'Lewis and Clark'], answer: 'Tisquantum (Squanto)',
+    fact: 'Tisquantum, often called Squanto, acted as translator and farming teacher, while Wampanoag leader Massasoit made a lasting peace treaty with Plymouth.'
+  },
+  {
+    id: 'fdr', chip: '4th Thursday (1941)', tag: 'History · Calendar Date (1941)', img: 'img/fdr.jpg', portrait: true, cap: 'President Franklin D. Roosevelt',
+    q: 'Which day of the year is US Thanksgiving always celebrated on today?',
+    opts: ['4th Thursday of November', '1st Thursday of November', 'Last Monday of November', 'Last Sunday of October'], answer: '4th Thursday of November',
+    fact: 'In 1941, Congress and President Franklin D. Roosevelt set US Thanksgiving on the fourth Thursday of November so every state celebrated on the same day.'
+  },
+
+  // American Traditions (6)
+  {
+    id: 'parade', chip: 'Macy\'s Parade', tag: 'Traditions · Parades', img: 'img/macys_parade.jpg', cap: 'Macy\'s Thanksgiving Day Parade in New York City',
+    q: 'Which American city has hosted the famous Macy\'s Thanksgiving Day Parade with giant balloons since 1924?',
+    opts: ['New York City', 'Chicago', 'Philadelphia', 'Boston'], answer: 'New York City',
+    fact: 'Every Thanksgiving morning, millions watch giant character balloons float down the streets of New York City in the Macy\'s Parade.'
+  },
+  {
+    id: 'pardon', chip: 'Turkey Pardon', tag: 'Traditions · Turkey Pardon', img: 'img/turkey_pardon.jpg', cap: 'National Thanksgiving Turkey Presentation at the White House',
+    q: 'Every November, where does the US President officially "pardon" a turkey so it can live safely on a farm?',
+    opts: ['The White House', 'Plymouth Rock', 'Independence Hall', 'Mount Vernon'], answer: 'The White House',
+    fact: 'Every year at the White House in Washington, D.C., the president pardons two Thanksgiving turkeys in a lighthearted ceremony.'
+  },
+  {
+    id: 'football', chip: 'Thanksgiving Football', tag: 'Traditions · Sports', img: 'img/football.jpg', cap: 'Ford Field in Detroit, home of Thanksgiving football',
+    q: 'Which two pro football teams have hosted Thanksgiving Day games almost every year for decades?',
+    opts: ['Detroit Lions & Dallas Cowboys', 'Green Bay Packers & Chicago Bears', 'New England Patriots & NY Giants', 'Pittsburgh Steelers & Eagles'], answer: 'Detroit Lions & Dallas Cowboys',
+    fact: 'The Detroit Lions have hosted a Thanksgiving football game since 1934, and the Dallas Cowboys joined the tradition in 1966.'
+  },
+  {
+    id: 'canada', chip: 'Canadian Thanksgiving', tag: 'Biogeography · Earlier Harvest', tagCls: 'bio', img: 'img/canada_autumn.jpg', cap: 'Red maple leaf in autumn',
+    q: 'Which neighboring country also celebrates Thanksgiving, but holds it in October instead of November?',
+    opts: ['Canada', 'Mexico', 'Iceland', 'Ireland'], answer: 'Canada',
+    fact: 'Canada celebrates Thanksgiving on the second Monday in October, because autumn harvests happen earlier farther north.'
+  },
+  {
+    id: 'wishbone', chip: 'The Wishbone', tag: 'Traditions · Family Fun', img: 'img/roast_turkey.jpg', cap: 'Traditional Thanksgiving dinner table',
+    q: 'After Thanksgiving dinner, what playful tradition uses a dried Y-shaped bone from the turkey?',
+    opts: ['Pulling it to make a wish', 'Using it as a soup spoon', 'Hanging it on the chimney', 'Planting it in the garden'], answer: 'Pulling it to make a wish',
+    fact: 'Two people each pull one side of the wishbone. Tradition says whoever holds the bigger piece gets to make a secret wish.'
+  },
+  {
+    id: 'gratitude', chip: 'Giving Thanks', tag: 'Traditions · Giving Thanks', img: 'img/pecan_pie.jpg', cap: 'Warm holiday pecan pie ready to share',
+    q: 'Besides sharing a big meal and watching parades, what is the main idea behind Thanksgiving?',
+    opts: ['Appreciating family and giving thanks', 'Celebrating the start of spring planting', 'Marking Independence Day in summer', 'Exchanging holiday winter presents'], answer: 'Appreciating family and giving thanks',
+    fact: 'Thanksgiving is a day to slow down with family and friends, appreciate the harvest and the people in our lives, and give thanks.'
+  }
+];
+
+// ==================== REAL MAP & OREGON-TRAIL VOYAGE DATA ====================
+const MAP_LOCATIONS = {
+  leiden: {
+    id: 'leiden', region: 'atlantic', name: 'Leiden, Netherlands', lat: 52.16, lon: 4.49, img: 'img/leiden.jpg', lbl: 'above',
+    day: 'Before 1620', miles: 0, status: 'Living in Holland',
+    q: 'Before sailing to America, the Pilgrims lived for 11 years in this historic canal city in Europe. Tap the Netherlands.',
+    fact: 'The Pilgrims lived in Leiden, Netherlands for religious freedom before deciding to build a new community across the ocean.',
+    factClip: 'mf_leiden', nudge: 'Look in mainland Europe, just east across the North Sea from England.'
+  },
+  plymouth_uk: {
+    id: 'plymouth_uk', region: 'atlantic', name: 'Plymouth, England', lat: 50.37, lon: -4.14, img: 'img/plymouth_uk.jpg', lbl: 'below',
+    day: 'Day 1 · Sept 1620', miles: 0, status: '102 aboard',
+    q: 'In September 1620, the Mayflower set sail from this harbor city in England. Tap Plymouth, England on the map.',
+    fact: 'Plymouth, England was the Mayflower\'s final departure port before crossing the Atlantic Ocean. Today you can visit the famous Mayflower Steps there.',
+    factClip: 'mf_plymouth_uk', nudge: 'Look across the Atlantic Ocean on the southern coast of Britain.'
+  },
+  capecod: {
+    id: 'capecod', region: 'massbay', name: 'Cape Cod', lat: 42.052, lon: -70.184, img: 'img/cape_cod.jpg', lbl: 'right',
+    day: 'Day 66 · Nov 1620', miles: 3000, status: 'Landfall',
+    q: 'Winter winds pushed the Mayflower north to this hooked sandy peninsula, where passengers signed the Mayflower Compact. Tap Cape Cod.',
+    fact: 'Carved by Ice Age glaciers, Cape Cod\'s hooked sandy peninsula was where the Mayflower first anchored in November 1620 and signed the Mayflower Compact.',
+    factClip: 'mf_capecod_bio', nudge: 'Look on the east side of the bay for the curved hook of land sticking into the ocean.'
+  },
+  plymouth_ma: {
+    id: 'plymouth_ma', region: 'massbay', name: 'Plymouth, MA', lat: 41.958, lon: -70.667, img: 'img/mayflower.jpg', lbl: 'left',
+    day: 'Dec 1620 · Plymouth', miles: 3025, status: 'Safe Harbor',
+    q: 'After exploring Cape Cod, the Pilgrims sailed across the bay and built their village here in Massachusetts. Tap Plymouth, Massachusetts.',
+    fact: 'Across Cape Cod Bay from the tip of Cape Cod, Plymouth\'s sheltered harbor offered fresh streams, herring-filled rivers, and rich ocean shellfish.',
+    factClip: 'mf_plymouth_ma_bio', nudge: 'Look directly west across Cape Cod Bay on the mainland shore.'
+  },
+  virginia: {
+    id: 'virginia', region: 'atlantic', name: 'Virginia', lat: 37.21, lon: -76.78, img: 'img/virginia_coast.jpg', lbl: 'below',
+    day: 'Original Goal', miles: 3025, status: '400 mi south',
+    q: 'The Mayflower passengers actually had a permit to settle much farther south along the East Coast. Tap Virginia.',
+    fact: 'Strong autumn storms and shallow shoals kept the Mayflower from reaching milder Virginia, so the settlers stayed in snowy Massachusetts instead.',
+    factClip: 'mf_virginia', nudge: 'Look farther south down the East Coast of the United States.'
+  },
+  nyc: {
+    id: 'nyc', region: 'us', name: 'New York City', lat: 40.76, lon: -73.98, img: 'img/macys_parade.jpg', lbl: 'right',
+    q: 'Giant character balloons float past skyscrapers every Thanksgiving morning in the Macy\'s Parade here. Tap New York City.',
+    fact: 'New York City has hosted the Macy\'s Thanksgiving Day Parade since 1924, marching down Manhattan to Herald Square.',
+    factClip: 'mf_nyc', nudge: 'Look on the Northeast Atlantic coast, southwest of Massachusetts.'
+  },
+  dc: {
+    id: 'dc', region: 'us', name: 'Washington, D.C.', lat: 38.90, lon: -77.04, img: 'img/white_house.jpg', lbl: 'left',
+    q: 'Lincoln declared Thanksgiving a national holiday here, and presidents pardon a turkey at the White House every fall. Tap Washington, D.C.',
+    fact: 'Washington, D.C. is the capital of the United States, where the White House Thanksgiving turkey pardon takes place each November.',
+    factClip: 'mf_dc', nudge: 'Look on the Mid-Atlantic coast between Maryland and Virginia.'
+  },
+  mass: {
+    id: 'mass', region: 'us', name: 'Massachusetts', lat: 42.30, lon: -71.35, img: 'img/cranberry_bog.jpg', lbl: 'right',
+    q: 'Flooded bogs turn bright red every autumn in this New England state, one of America\'s top cranberry growers. Tap Massachusetts.',
+    fact: 'Acidic, sandy glacial bogs help Massachusetts grow millions of pounds of native cranberries every year — right near Plymouth.',
+    factClip: 'mf_mass', nudge: 'Look in southern New England along the Atlantic coast.'
+  },
+  illinois: {
+    id: 'illinois', region: 'us', name: 'Illinois', lat: 40.35, lon: -89.35, img: 'img/pumpkin_farm.jpg', lbl: 'above',
+    q: 'This Midwest state grows more pumpkins than any other state in the United States. Tap Illinois.',
+    fact: 'Deep, fertile Midwest prairie soils left by ancient glaciers make Illinois America\'s top pumpkin state, growing over 80% of US canned pumpkin.',
+    factClip: 'mf_illinois_bio', nudge: 'Look in the Midwest, just south of Lake Michigan.'
+  },
+  minnesota: {
+    id: 'minnesota', region: 'us', name: 'Minnesota', lat: 45.80, lon: -94.20, img: 'img/wild_turkey.jpg', lbl: 'above',
+    q: 'This northern Midwest state raises more turkeys than any other state in America. Tap Minnesota.',
+    fact: 'Minnesota raises around 40 million turkeys every year, supported by the grain-rich soils of the northern plains.',
+    factClip: 'mf_minnesota', nudge: 'Look far north in the upper Midwest, bordering Canada and Lake Superior.'
+  },
+  nc: {
+    id: 'nc', region: 'us', name: 'North Carolina', lat: 35.60, lon: -79.20, img: 'img/sweet_potatoes.jpg', lbl: 'right',
+    q: 'Warm sandy soil helps this East Coast state grow more than half of all US sweet potatoes. Tap North Carolina.',
+    fact: 'Warm, sandy coastal-plain soils and a long sunny growing season allow North Carolina to grow more than half of all US sweet potatoes.',
+    factClip: 'mf_nc_bio', nudge: 'Look on the Southeast Atlantic coast, south of Virginia.'
+  },
+  detroit: {
+    id: 'detroit', region: 'us', name: 'Detroit, Michigan', lat: 42.33, lon: -83.05, img: 'img/football.jpg', lbl: 'above',
+    q: 'Since 1934, football fans have watched the Lions play a Thanksgiving game in this Michigan city. Tap Detroit.',
+    fact: 'Detroit, Michigan started the pro Thanksgiving football tradition in 1934 to bring fans out to the stadium on the holiday.',
+    factClip: 'mf_detroit', nudge: 'Look in the Great Lakes region, in southeastern Michigan.'
+  },
+  vermont: {
+    id: 'vermont', region: 'us', name: 'Vermont', lat: 44.26, lon: -72.58, img: 'img/vermont_maple.jpg', lbl: 'above',
+    q: 'This northern New England state makes nearly half of all American maple syrup from sugar maple trees. Tap Vermont.',
+    fact: 'Vermont produces millions of gallons of golden maple syrup when freezing nights and sunny late-winter days make the sugar maple sap flow.',
+    factClip: 'mf_vermont', nudge: 'Look in northern New England, directly north of Massachusetts.'
+  },
+  georgia: {
+    id: 'georgia', region: 'us', name: 'Georgia', lat: 32.70, lon: -83.40, img: 'img/pecan_pie.jpg', lbl: 'below',
+    q: 'This sunny southern state is famous for growing buttery pecans used in holiday pecan pie. Tap Georgia.',
+    fact: 'Georgia\'s warm, humid Deep South climate makes it a top grower of pecans, the only major tree nut native to North America.',
+    factClip: 'mf_georgia', nudge: 'Look in the Deep South, just north of Florida.'
+  }
+};
+
+// Balanced-length Oregon Trail Mid-Atlantic Events with real historical wrong-choice consequences!
+const SEA_EVENTS = [
+  {
+    id: 'ev_beam', kind: 'event', region: 'atlantic',
+    lat: 47.9, lon: -23.0, day: 'Day 24 of 66', miles: 1050, status: 'Beam Cracked',
+    title: 'North Atlantic Gale — Cracked Main Beam',
+    badge: 'Day 24 · Mid-Atlantic Storm',
+    img: 'img/atlantic_storm.jpg',
+    q: 'A fierce North Atlantic gale slams the Mayflower and cracks a giant wooden support beam. Captain Jones thinks they may have to turn back to England. What should the passengers do?',
+    opts: [
+      { id: 'screw', text: 'Brace the beam using a giant iron jackscrew from cargo' },
+      { id: 'turn', text: 'Turn the damaged ship around and sail back to England', why: 'Captain Jones thought about turning back, which would have wasted the whole voyage, until the crew spotted a better fix in the cargo hold.', whyClip: 'why_beam_turn' },
+      { id: 'caulk', text: 'Wrap the cracked oak beam tightly with rope and pine tar', why: 'Rope and pine tar could seal small leaks, but they were not strong enough to hold up a snapped oak deck beam in crashing waves.', whyClip: 'why_beam_caulk' }
+    ],
+    answer: 'screw',
+    outcome: 'History says they saved the ship! The passengers pulled a giant iron jackscrew from their cargo hold and bolted the cracked main beam tightly back into place so the Mayflower could keep sailing west.',
+    fixedStatus: 'Beam Braced Safely',
+    qClip: 'ev_beam_q', fClip: 'ev_beam_f'
+  },
+  {
+    id: 'ev_current', kind: 'event', region: 'atlantic',
+    lat: 45.2, lon: -42.5, day: 'Day 38 of 66', miles: 1850, status: 'Fierce Headwinds',
+    title: 'Ocean Currents & Right Whales',
+    badge: 'Day 38 · Oceanography & Wildlife',
+    img: 'img/right_whale.jpg',
+    q: 'Halfway across the ocean, North Atlantic right whales breach beside the ship, yet the Mayflower crawls slowly against fierce headwinds. Why is sailing west across the North Atlantic so tough in autumn?',
+    opts: [
+      { id: 'wind', text: 'Westerly winds and the Gulf Stream push against the ship' },
+      { id: 'calm', text: 'Autumn leaves the middle of the Atlantic with zero wind', why: 'The North Atlantic in autumn was the opposite of calm. Fierce headwinds battered the sails week after week.', whyClip: 'why_cur_calm' },
+      { id: 'ice', text: 'Drifting Arctic icebergs block the sea lanes in October', why: 'Spring icebergs drift near Newfoundland, but autumn storms and winds were the real barrier slowing the Mayflower down.', whyClip: 'why_cur_ice' }
+    ],
+    answer: 'wind',
+    outcome: 'Prevailing westerly winds and the warm Gulf Stream current both push from west to east across the North Atlantic. Sailing to America took 66 stormy days, while the Mayflower\'s return trip to England took only 31 days.',
+    fixedStatus: 'Tacking Westward',
+    qClip: 'ev_current_q', fClip: 'ev_current_f'
+  },
+  {
+    id: 'ev_rations', kind: 'event', region: 'atlantic',
+    lat: 43.3, lon: -58.0, day: 'Day 52 of 66', miles: 2500, status: '103 Aboard (+Oceanus)',
+    title: 'Sea Rations & A Baby Born at Sea',
+    badge: 'Day 52 · Near the Grand Banks',
+    img: 'img/ship_deck.jpg',
+    q: 'Fresh water barrels have gone stale, storm waves soak the deck, and a baby boy named Oceanus Hopkins is born aboard ship. What food kept the 102 passengers alive without refrigerators?',
+    opts: [
+      { id: 'salted', text: 'Salted meat, hardtack biscuits, dried peas, and small beer' },
+      { id: 'fish', text: 'Fresh codfish caught off the deck during storms each day', why: 'Fishing from a rolling wooden ship in autumn gales was far too dangerous and unreliable to feed 102 passengers every day.', whyClip: 'why_rat_fish' },
+      { id: 'fresh', text: 'Fresh baked loaves, milk, and leafy greens stored below deck', why: 'Without refrigerators, fresh bread, milk, and greens spoiled within the first two weeks at sea.', whyClip: 'why_rat_fresh' }
+    ],
+    answer: 'salted',
+    outcome: 'Without refrigeration, passengers survived on salted beef and pork, hardtack biscuits, dried peas, cheese, and weak "small beer," which stayed safer to drink than stale barrel water.',
+    fixedStatus: 'Land Approaching',
+    qClip: 'ev_rations_q', fClip: 'ev_rations_f'
+  }
+];
+
+// Balanced-length First-Year Plymouth Colony Survival Events with real consequences!
+const COLONY_EVENTS = [
+  {
+    id: 'col_winter', kind: 'colony', region: 'massbay',
+    lat: 41.958, lon: -70.667, day: 'Jan 1621 · Winter', miles: 3025, status: 'Sickness & Cold',
+    title: 'The Brutal First Winter & Scurvy',
+    badge: 'Jan 1621 · Plymouth Survival',
+    img: 'img/winter_snow.jpg',
+    q: 'Freezing snow falls before houses are finished, and half the settlers grow sick with scurvy and winter fever after months without fresh food. How does the small settlement survive?',
+    opts: [
+      { id: 'care', text: 'Keep a fire burning, shelter sick on ship, and dig shellfish' },
+      { id: 'march', text: 'March south through winter forests toward milder Virginia', why: 'Virginia was over 400 miles away through deep snow and dense forest, with no roads and dozens of sick passengers.', whyClip: 'why_win_march' },
+      { id: 'tents', text: 'Pitch canvas sailing tents on the frozen beach until spring', why: 'Thin cloth tents could not keep out freezing New England snowstorms and icy ocean winds.', whyClip: 'why_win_tents' }
+    ],
+    answer: 'care',
+    outcome: 'That brutal first winter took nearly half of the 102 passengers. Scurvy came from lacking Vitamin C at sea. A tiny group of healthy colonists kept the Common House fire lit, sheltered people aboard the Mayflower, and cooked broth and shellfish until spring arrived.',
+    fixedStatus: 'Survived to Spring',
+    qClip: 'col_winter_q', fClip: 'col_winter_f'
+  },
+  {
+    id: 'col_houses', kind: 'colony', region: 'massbay',
+    lat: 41.958, lon: -70.667, day: 'Winter 1621 · Building', miles: 3025, status: 'Need Shelter',
+    title: 'Building Plymouth\'s First Houses',
+    badge: 'Winter 1621 · Timber & Thatch',
+    img: 'img/colony_houses.jpg',
+    q: 'There are no brick factories, glass shops, or hardware stores in Plymouth. Using local New England oak trees, clay, and marsh reeds, how do the colonists build their first houses?',
+    opts: [
+      { id: 'thatch', text: 'Oak frames, mud-straw walls, reed roofs, and oiled paper' },
+      { id: 'brick', text: 'Fire red bricks and glass panes using coastal beach sand', why: 'Plymouth had no brick kilns, glass factories, or supply towns nearby, so colonists had to build with local woods and marsh reeds.', whyClip: 'why_hou_brick' },
+      { id: 'stone', text: 'Stack heavy granite boulders and slate slabs into stone walls', why: 'Cutting and mortaring heavy granite walls took too much time and tools in freezing winter weather.', whyClip: 'why_hou_stone' }
+    ],
+    answer: 'thatch',
+    outcome: 'Colonists split oak logs into timber frames and clapboards, packed mud and straw into the walls, bundled dried marsh reeds into thick thatched roofs, and used oiled paper or wooden shutters instead of glass windows.',
+    fixedStatus: '7 Cottages Built',
+    qClip: 'col_houses_q', fClip: 'col_houses_f'
+  },
+  {
+    id: 'col_farm', kind: 'colony', region: 'massbay',
+    lat: 41.958, lon: -70.667, day: 'Spring 1621 · Planting', miles: 3025, status: 'Sandy Soil',
+    title: 'Farming Without Plows or Oxen',
+    badge: 'Spring 1621 · Early Farms',
+    img: 'img/colony_farm.jpg',
+    q: 'You have no horses, cows, or plows yet, and your English wheat seeds are struggling in Plymouth\'s sandy, rocky glacial soil. How do you grow enough food to survive the next winter?',
+    opts: [
+      { id: 'mounds', text: 'Hoe soil mounds with herring, corn, beans, and squash' },
+      { id: 'wheat', text: 'Broadcast more English wheat seed across cleared pastures', why: 'English wheat and barley struggled in Plymouth\'s sandy, acidic glacial soil and did not produce enough grain to survive winter.', whyClip: 'why_far_wheat' },
+      { id: 'barley', text: 'Dig long flat furrows by hand for English barley and oats', why: 'Without oxen or plows, turning rocky forest soil for European grain fields alone could not feed the colony.', whyClip: 'why_far_barley' }
+    ],
+    answer: 'mounds',
+    outcome: 'Without plows or oxen, colonists hoed 20 acres by hand. Following Wampanoag farming wisdom, they buried migrating spring herring in raised soil mounds and planted hardy native flint corn, beans, and squash.',
+    fixedStatus: '20 Acres Planted',
+    qClip: 'col_farm_q', fClip: 'col_farm_f'
+  },
+  {
+    id: 'col_roads', kind: 'colony', region: 'massbay',
+    lat: 41.958, lon: -70.667, day: 'Summer 1621 · Travel', miles: 3025, status: 'No Paved Roads',
+    title: 'Roads, Footpaths & Coastal Boats',
+    badge: 'Summer 1621 · Getting Around',
+    img: 'img/leyden_street.jpg',
+    q: 'There are no paved highways, bridges, or wagons anywhere in New England. How do people move heavy supplies and travel between coastal villages?',
+    opts: [
+      { id: 'boats', text: 'Sail coastal shallops and walk Leyden Street and forest paths' },
+      { id: 'wagons', text: 'Haul wooden supply wagons overland down wide cleared roads', why: 'Plymouth had no horses, oxen, or wide cleared roads for heavy wheeled wagons in 1621.', whyClip: 'why_roa_wagons' },
+      { id: 'bridges', text: 'Build stone bridges across bays and rivers to link villages', why: 'Building stone bridges across wide coastal rivers was far beyond the tools and size of the tiny 1621 settlement.', whyClip: 'why_roa_bridges' }
+    ],
+    answer: 'boats',
+    outcome: 'Plymouth laid out one packed-dirt lane, Leyden Street, uphill from the harbor. For longer trips, people traveled mainly by small sailing boats called shallops along bays and rivers, or walked narrow worn forest trails.',
+    fixedStatus: 'Coastal Trade Open',
+    qClip: 'col_roads_q', fClip: 'col_roads_f'
+  }
+];
+
+const US_LOC_LIST = Object.values(MAP_LOCATIONS).filter(x => x.region === 'us');
+
+// ==================== HOME SCREEN ====================
+function renderHome() {
+  updateVoiceButtons();
+  const qSeen = Object.keys(S.seenQuiz).length;
+  const mSeen = Object.keys(S.seenMap).length;
+  const mTotal = Object.keys(MAP_LOCATIONS).length + SEA_EVENTS.length + COLONY_EVENTS.length;
+  $('meta-quiz').textContent = `10 questions per round · ${qSeen} of ${QUIZ_ITEMS.length} explored`;
+  $('meta-map').textContent = `10 stops & sea events · ${mSeen} of ${mTotal} explored`;
+  const totalR = (S.stats.quiz.rounds || 0) + (S.stats.map.rounds || 0);
+  $('home-stats').textContent = totalR ? `${totalR} round${totalR === 1 ? '' : 's'} played` : 'Tap a game to begin.';
+}
+
+$('btn-start-quiz').addEventListener('click', () => { sfxPop(); startQuiz(); });
+$('btn-start-map').addEventListener('click', () => { sfxPop(); startMapGame(); });
+
+function pointerHold(el, ms, onDone, fillEl, onShort) {
+  let t = null, startT = 0, raf = null;
+  const stop = () => { clearTimeout(t); t = null; if (raf) cancelAnimationFrame(raf); if (fillEl) fillEl.style.height = '0'; };
+  const tick = () => { if (!t) return; const p = Math.min(1, (Date.now() - startT) / ms); if (fillEl) fillEl.style.height = (p * 100) + '%'; raf = requestAnimationFrame(tick); };
+  el.addEventListener('pointerdown', e => { e.preventDefault(); startT = Date.now(); t = setTimeout(() => { stop(); onDone(); }, ms); tick(); });
+  el.addEventListener('pointerup', () => { if (t && onShort) onShort(); stop(); });
+  ['pointerleave', 'pointercancel'].forEach(ev => el.addEventListener(ev, stop));
+}
+pointerHold($('gate'), 3000, () => openParent(), $('gate').querySelector('.fill'), () => toast('Hold for three seconds.'));
+
+// ==================== GAME 1: THANKSGIVING QUIZ ====================
+const Q = { items: [], i: 0, tries: 0, busy: false, ok: 0, chips: [], curClip: '', curText: '' };
+
+function pickFresh(pool, seenObj, count) {
+  const sorted = shuffle(pool).sort((a, b) => (seenObj[a.id] || 0) - (seenObj[b.id] || 0));
+  return shuffle(sorted.slice(0, count));
+}
+
+function setTrack(prefix, idx, total) {
+  const f = total > 0 ? idx / total : 0;
+  $(prefix + '-fill').style.width = (f * 100) + '%';
+  $(prefix + '-leaf').style.left = (4 + 92 * Math.min(1, f)) + '%';
+  $(prefix + '-count').textContent = `${Math.min(idx + 1, total)} / ${total}`;
+}
+
+function startQuiz() {
+  stopVoice(); clearToast();
+  Q.items = pickFresh(QUIZ_ITEMS, S.seenQuiz, 10);
+  Q.i = 0; Q.ok = 0; Q.chips = [];
+  show('s-quiz');
+  renderQuizStep();
+}
+
+function renderQuizBar(showNext) {
+  $('q-bar').innerHTML =
+    `<button class="act plain" id="q-hear">${ICONS.voiceOn}Hear it</button>` +
+    (!showNext ? `<button class="act plain" id="q-read-opts">${ICONS.listVoice}Read choices</button>` : '') +
+    (showNext ? `<button class="act go" id="q-next">${Q.i === Q.items.length - 1 ? 'Finish' : 'Next'}${ICONS.next}</button>` : '');
+  $('q-hear').addEventListener('click', () => { sfxPop(); playVoice(Q.curClip, Q.curText, true); });
+  if ($('q-read-opts')) {
+    $('q-read-opts').addEventListener('click', () => {
+      sfxPop();
+      readChoicesSequentially('#q-choices .choice-wrap', r => r.dataset.v);
+    });
+  }
+  if (showNext) {
+    $('q-next').addEventListener('click', () => {
+      sfxPop(); stopVoice(); clearToast();
+      Q.i++;
+      if (Q.i >= Q.items.length) finishRound('quiz', Q.ok, Q.items.length, Q.chips, 'img/roast_turkey.jpg');
+      else renderQuizStep();
+    });
+  }
+}
+
+function binIconFor(opt) {
+  if (/^(True|Yes)/i.test(opt)) return `<span class="bin-ico">${ICONS.yesIco}</span>`;
+  if (/^(False|No)/i.test(opt)) return `<span class="bin-ico">${ICONS.noIco}</span>`;
+  return '';
+}
+
+function renderQuizStep() {
+  const item = Q.items[Q.i];
+  Q.tries = 0; Q.busy = false;
+  Q.curClip = 'q_' + item.id; Q.curText = item.q;
+  setTrack('q', Q.i, Q.items.length);
+  const opts = item.opts.length === 2 ? item.opts.slice() : shuffle(item.opts);
+
+  $('q-stage').innerHTML = `
+    <div class="q-hero" id="q-hero">
+      <div class="q-photo ${item.portrait ? 'portrait' : ''}" ${item.portrait ? `style="--bg:url('${item.img}')"` : ''}>
+        <img src="${item.img}" alt="${item.cap}">
+        <div class="q-caption">${item.cap}</div>
+      </div>
+      <div class="q-text-wrap">
+        <span class="q-tag ${item.tagCls || ''}">${item.tag}</span>
+        <p class="q-question">${item.q}</p>
+        <div id="q-fact-slot"></div>
+      </div>
+    </div>
+    <div class="choices" id="q-choices">
+      ${opts.map(o => `<div class="choice-wrap" data-v="${o.replace(/"/g, '&quot;')}">
+        <button class="choice-main">${item.binary ? binIconFor(o) : ''}<span>${o}</span></button>
+        <button class="choice-say" aria-label="Read choice aloud" title="Hear this choice">${ICONS.voiceOn}</button>
+      </div>`).join('')}
+    </div>
+  `;
+  renderQuizBar(false);
+  playVoice(Q.curClip, Q.curText, false);
+
+  document.querySelectorAll('#q-choices .choice-wrap').forEach(wrap => {
+    // Tap speaker icon on right of any option to hear just that option (ideal for 4-6 year old pre-readers)
+    wrap.querySelector('.choice-say').addEventListener('click', e => {
+      e.stopPropagation();
+      if (wrap.classList.contains('dim')) return;
+      stopVoice();
+      sfxPop();
+      wrap.classList.add('speaking');
+      speakTextPromise(wrap.dataset.v).then(() => wrap.classList.remove('speaking'));
+    });
+
+    wrap.querySelector('.choice-main').addEventListener('click', () => {
+      if (Q.busy || wrap.classList.contains('dim')) return;
+      if (wrap.dataset.v === item.answer) {
+        Q.busy = true;
+        clearToast();
+        stopVoice();
+        sfxOk();
+        S.stats.quiz.n++;
+        if (Q.tries === 0) { S.stats.quiz.ok++; Q.ok++; }
+        S.seenQuiz[item.id] = Date.now();
+        save();
+        wrap.classList.remove('hint');
+        wrap.classList.add('glow');
+        document.querySelectorAll('#q-choices .choice-wrap').forEach(x => { if (x !== wrap) x.classList.add('dim'); });
+        $('q-hero').classList.remove('oops');
+        $('q-hero').classList.add('ok');
+        $('q-fact-slot').innerHTML = `<div class="q-fact"><b>${item.answer}:</b> ${item.fact}</div>`;
+        Q.chips.push(item.chip || item.answer);
+        Q.curClip = 'f_' + item.id; Q.curText = item.fact;
+        renderQuizBar(true);
+        playVoice(Q.curClip, Q.curText, false);
+      } else {
+        Q.tries++;
+        sfxOops();
+        wrap.classList.add('dim', 'shake');
+        setTimeout(() => wrap.classList.remove('shake'), 360);
+        $('q-hero').classList.add('oops');
+        if (Q.tries >= 1 && opts.length > 2) {
+          toast('Try another answer.');
+          if (Q.tries >= 2) {
+            const rightWrap = [...document.querySelectorAll('#q-choices .choice-wrap')].find(x => x.dataset.v === item.answer);
+            if (rightWrap) rightWrap.classList.add('hint');
+          }
+        } else {
+          const rightWrap = [...document.querySelectorAll('#q-choices .choice-wrap')].find(x => x.dataset.v === item.answer);
+          if (rightWrap) rightWrap.classList.add('hint');
+        }
+      }
+    });
+  });
+}
+
+$('btn-quiz-home').addEventListener('click', () => { stopVoice(); clearToast(); renderHome(); show('s-home'); });
+
+// ==================== GAME 2: REAL LEAFLET MAP & ANIMATED 1620 VOYAGE ====================
+let lmap = null, mapPinsLayer = null, mapRouteLayer = null, mapTrailLayer = null, shipMarker = null;
+let worldBordersLayer = null, usBordersLayer = null, bordersLoaded = false;
+let sailRaf = 0;
+
+const ATLANTIC_BOUNDS = [[33, -80], [56, 8]];
+const MASS_BAY_BOUNDS = [[41.32, -71.55], [42.58, -69.50]];
+const US_BOUNDS = [[24, -104], [49, -66]];
+
+const FULL_ROUTE = [
+  [52.16, 4.49], [50.37, -4.14], [49.4, -13.0], [47.9, -23.0], [46.6, -33.0],
+  [45.2, -42.5], [44.2, -50.5], [43.3, -58.0], [42.5, -65.0], [42.052, -70.184], [41.958, -70.667]
+];
+
+const M = {
+  steps: [], i: 0, tries: 0, busy: false, ok: 0, chips: [],
+  curClip: '', curText: '', viewKey: 'atlantic', pinMap: {},
+  shipLatLng: [48.6, -7.8], runToken: 0, padBottom: 34
+};
+
+function applyMapLabelsUI() {
+  const on = S.settings.mapLabels !== false;
+  $('map-shell').classList.toggle('labels-off', !on);
+  const b = $('btn-toggle-labels');
+  b.classList.toggle('on', on);
+  b.textContent = on ? 'Labels: On' : 'Labels: Off';
+}
+$('btn-toggle-labels').addEventListener('click', () => {
+  S.settings.mapLabels = !(S.settings.mapLabels !== false);
+  save(); sfxPop(); applyMapLabelsUI();
+});
+applyMapLabelsUI();
+
+function initLeafletMap() {
+  if (lmap) return;
+  lmap = L.map('lmap', {
+    crs: L.CRS.EPSG4326,
+    zoomControl: false,
+    attributionControl: false,
+    minZoom: 2,
+    maxZoom: 8,
+    zoomSnap: 0.25,
+    maxBounds: [[-10, -165], [75, 45]],
+    maxBoundsViscosity: 0.85
+  });
+  L.tileLayer('../map_world/tiles/{z}/{x}/{y}.jpg', {
+    tileSize: 256, minZoom: 0, maxNativeZoom: 6, maxZoom: 8, noWrap: true, bounds: [[-90, -180], [90, 180]], keepBuffer: 4
+  }).addTo(lmap);
+  L.tileLayer('../map_us/tiles/{z}/{x}/{y}.jpg', {
+    tileSize: 256, minZoom: 5, maxNativeZoom: 8, maxZoom: 8, noWrap: true, bounds: [[21.796875, -127.265625], [51.328125, -64.6875]], keepBuffer: 4
+  }).addTo(lmap);
+
+  if (!bordersLoaded) {
+    bordersLoaded = true;
+    fetch('../map_world/countries_hi.json').then(r => r.ok ? r.json() : null).then(gj => {
+      if (gj) {
+        // Filter out US so US coastlines never draw double borders with states_hi.json
+        const nonUS = { type: 'FeatureCollection', features: gj.features.filter(f => f.properties.name !== 'United States of America') };
+        worldBordersLayer = L.geoJSON(nonUS, { style: { color: '#3E5366', weight: 1.0, opacity: 0.5, fill: false }, interactive: false });
+        updateBordersForView();
+      }
+    }).catch(() => {});
+    fetch('../map_us/states_hi.json').then(r => r.ok ? r.json() : null).then(gj => {
+      if (gj) {
+        usBordersLayer = L.geoJSON(gj, { style: { color: '#4B3A26', weight: 1.1, opacity: 0.62, fill: false }, interactive: false });
+        updateBordersForView();
+      }
+    }).catch(() => {});
+  }
+
+  mapRouteLayer = L.layerGroup().addTo(lmap);
+  mapTrailLayer = L.layerGroup().addTo(lmap);
+  mapPinsLayer = L.layerGroup().addTo(lmap);
+
+  L.polyline(FULL_ROUTE.slice(1), { color: '#FFFFFF', weight: 4.5, dashArray: '8 8', opacity: 0.55, interactive: false }).addTo(mapRouteLayer);
+  L.polyline(FULL_ROUTE.slice(1), { color: '#C85A27', weight: 2.5, dashArray: '8 8', opacity: 0.85, interactive: false }).addTo(mapRouteLayer);
+
+  const shipIcon = L.divIcon({
+    className: '',
+    html: `<div class="ship-icon" id="ship-el"><div class="ship-wake"></div><div class="ship-bob">${ICONS.ship}</div></div>`,
+    iconSize: [64, 64],
+    iconAnchor: [32, 42]
+  });
+  shipMarker = L.marker([48.6, -7.8], { icon: shipIcon, zIndexOffset: 500, interactive: false }).addTo(mapRouteLayer);
+}
+
+// Hide coarse vector outlines in high-res massbay close-up so relief coastlines stay razor-clean
+function updateBordersForView() {
+  if (!lmap) return;
+  const showVec = M.viewKey !== 'massbay';
+  if (worldBordersLayer) {
+    if (showVec && !lmap.hasLayer(worldBordersLayer)) worldBordersLayer.addTo(lmap);
+    else if (!showVec && lmap.hasLayer(worldBordersLayer)) lmap.removeLayer(worldBordersLayer);
+  }
+  if (usBordersLayer) {
+    if (showVec && !lmap.hasLayer(usBordersLayer)) usBordersLayer.addTo(lmap);
+    else if (!showVec && lmap.hasLayer(usBordersLayer)) lmap.removeLayer(usBordersLayer);
+  }
+}
+
+function fitRegion(viewKey, animate, extraBottom) {
+  if (!lmap) return;
+  const b = viewKey === 'atlantic' ? ATLANTIC_BOUNDS : (viewKey === 'massbay' ? MASS_BAY_BOUNDS : US_BOUNDS);
+  const padB = extraBottom || M.padBottom || 34;
+  const padT = extraBottom ? 78 : 125;
+  lmap.fitBounds(b, { paddingTopLeft: [24, padT], paddingBottomRight: [24, padB], animate: !!animate, duration: 0.55 });
+}
+$('btn-reset-view').addEventListener('click', () => { sfxPop(); fitRegion(M.viewKey, true); });
+
+function cancelSail() {
+  if (sailRaf) { cancelAnimationFrame(sailRaf); sailRaf = 0; }
+  const el = $('ship-el');
+  if (el) el.classList.remove('ship-sailing');
+}
+
+// Redraws the continuous golden sailed trail smoothly from Plymouth UK up to the current ship point (zero broken gaps!)
+function redrawContinuousTrail(curLatLng) {
+  if (!mapTrailLayer) return;
+  mapTrailLayer.clearLayers();
+  const lon = curLatLng[1];
+  const pts = [FULL_ROUTE[1]];
+  for (let i = 2; i < FULL_ROUTE.length; i++) {
+    if (FULL_ROUTE[i][1] >= lon) pts.push(FULL_ROUTE[i]);
+  }
+  pts.push(curLatLng);
+  if (pts.length >= 2) {
+    L.polyline(pts, { color: '#F5C242', weight: 4, opacity: 0.92, interactive: false }).addTo(mapTrailLayer);
+  }
+}
+
+function animateShipTo(targetLatLng, durationMs, onDone) {
+  cancelSail();
+  if (!shipMarker) { if (onDone) onDone(); return; }
+  const start = M.shipLatLng.slice();
+  const [lat0, lon0] = start;
+  const [lat1, lon1] = targetLatLng;
+  if (Math.hypot(lat1 - lat0, lon1 - lon0) < 0.25 || durationMs <= 0) {
+    M.shipLatLng = [lat1, lon1];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+    if (onDone) onDone();
+    return;
+  }
+  const tk = M.runToken;
+  const el = $('ship-el');
+  if (el) el.classList.add('ship-sailing');
+  sfxSail();
+
+  const pts = [start];
+  const minLon = Math.min(lon0, lon1), maxLon = Math.max(lon0, lon1);
+  FULL_ROUTE.forEach(p => { if (p[1] < maxLon - 0.5 && p[1] > minLon + 0.5) pts.push(p); });
+  if (lon1 < lon0) pts.sort((a, b) => b[1] - a[1]);
+  else pts.sort((a, b) => a[1] - b[1]);
+  pts.push([lat1, lon1]);
+
+  const segs = [0];
+  let totalL = 0;
+  for (let i = 1; i < pts.length; i++) {
+    totalL += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+    segs.push(totalL);
+  }
+  const tStart = performance.now();
+
+  function frame(now) {
+    if (tk !== M.runToken) { cancelSail(); return; }
+    const u = Math.min(1, (now - tStart) / durationMs);
+    const eased = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+    const d = eased * totalL;
+    let segIdx = 1;
+    while (segIdx < segs.length - 1 && segs[segIdx] < d) segIdx++;
+    const s0 = segs[segIdx - 1], s1 = segs[segIdx];
+    const f = s1 > s0 ? (d - s0) / (s1 - s0) : 1;
+    M.shipLatLng = [pts[segIdx - 1][0] + (pts[segIdx][0] - pts[segIdx - 1][0]) * f, pts[segIdx - 1][1] + (pts[segIdx][1] - pts[segIdx - 1][1]) * f];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+    if (u < 1) sailRaf = requestAnimationFrame(frame);
+    else { sailRaf = 0; if (el) el.classList.remove('ship-sailing'); if (onDone) onDone(); }
+  }
+  sailRaf = requestAnimationFrame(frame);
+}
+
+function updateVoyageLog(day, miles, status, isGood) {
+  const vl = $('voyage-log');
+  if (!day) { vl.hidden = true; return; }
+  vl.hidden = false;
+  vl.innerHTML =
+    `<span class="vlog-chip">${ICONS.calMini}${day}</span>` +
+    `<span class="vlog-chip sea">${ICONS.compMini}${miles.toLocaleString()} mi</span>` +
+    `<span class="vlog-chip ${isGood ? 'ok' : ''}">${ICONS.flagMini}${status}</span>`;
+}
+
+function startMapGame() {
+  stopVoice(); clearToast(); cancelSail();
+  M.runToken++;
+  // Rotate Europe start between Plymouth England and Leiden Netherlands so all 21 locations/events are reachable!
+  const euroStart = (S.seenMap.plymouth_uk || 0) > (S.seenMap.leiden || 0) ? MAP_LOCATIONS.leiden : MAP_LOCATIONS.plymouth_uk;
+  const events = shuffle(SEA_EVENTS).slice(0, 2).sort((a, b) => a.miles - b.miles);
+  const colonyEv = pickFresh(COLONY_EVENTS, S.seenMap, 1)[0];
+  const usStops = pickFresh(US_LOC_LIST, S.seenMap, 3).map(loc => ({ kind: 'pin', loc }));
+
+  M.steps = [
+    { kind: 'pin', loc: euroStart },
+    ...events,
+    { kind: 'pin', loc: MAP_LOCATIONS.capecod },
+    { kind: 'pin', loc: MAP_LOCATIONS.plymouth_ma },
+    colonyEv,
+    { kind: 'pin', loc: MAP_LOCATIONS.virginia },
+    ...usStops
+  ];
+  M.i = 0; M.ok = 0; M.chips = [];
+  // Park Mayflower cleanly offshore southwest of England so the Plymouth UK pin is 100% visible!
+  M.shipLatLng = [48.6, -7.8];
+
+  show('s-map');
+  initLeafletMap();
+  mapTrailLayer.clearLayers();
+  shipMarker.setLatLng(M.shipLatLng);
+  setTimeout(() => { lmap.invalidateSize(); renderMapStep(); }, 60);
+}
+
+function renderMapBar(showNext, nextText, canReadOpts) {
+  $('m-bar').innerHTML =
+    `<button class="act plain" id="m-hear">${ICONS.voiceOn}Hear it</button>` +
+    (canReadOpts && !showNext ? `<button class="act plain" id="m-read-opts">${ICONS.listVoice}Read choices</button>` : '') +
+    (showNext ? `<button class="act go" id="m-next">${nextText || (M.i === M.steps.length - 1 ? 'Finish' : 'Continue')}${ICONS.next}</button>` : '');
+  $('m-hear').addEventListener('click', () => { sfxPop(); playVoice(M.curClip, M.curText, true); });
+  if ($('m-read-opts')) {
+    $('m-read-opts').addEventListener('click', () => {
+      sfxPop();
+      readChoicesSequentially('#se-opts .se-opt-row', r => r.querySelector('.se-opt-btn').textContent);
+    });
+  }
+  if (showNext) {
+    $('m-next').addEventListener('click', () => {
+      sfxPop(); stopVoice(); clearToast(); cancelSail();
+      M.i++;
+      if (M.i >= M.steps.length) finishRound('map', M.ok, M.steps.length, M.chips, 'img/mayflower.jpg');
+      else renderMapStep();
+    });
+  }
+}
+
+function renderMapStep() {
+  const step = M.steps[M.i];
+  M.tries = 0; M.busy = false; M.padBottom = 34;
+  setTrack('m', M.i, M.steps.length);
+  $('map-hud').classList.remove('ok', 'oops', 'compact');
+  $('map-tag').hidden = false;
+  $('map-q').hidden = false;
+  $('map-card').hidden = true;
+  $('sea-event').hidden = true;
+  $('sea-event').classList.remove('colony-card');
+
+  const onVoyage = step.kind === 'event' || step.kind === 'colony' || step.loc.region === 'atlantic' || step.loc.region === 'massbay';
+  if (onVoyage) {
+    if (!lmap.hasLayer(mapRouteLayer)) mapRouteLayer.addTo(lmap);
+    if (!lmap.hasLayer(mapTrailLayer)) mapTrailLayer.addTo(lmap);
+  } else {
+    if (lmap.hasLayer(mapRouteLayer)) lmap.removeLayer(mapRouteLayer);
+    if (lmap.hasLayer(mapTrailLayer)) lmap.removeLayer(mapTrailLayer);
+  }
+
+  // ---- OREGON TRAIL MID-ATLANTIC SAILING EVENT ----
+  if (step.kind === 'event') {
+    M.viewKey = 'atlantic';
+    M.padBottom = 310;
+    updateBordersForView();
+    fitRegion('atlantic', false, M.padBottom);
+    mapPinsLayer.clearLayers();
+    M.pinMap = {};
+
+    $('map-tag').className = 'q-tag sea';
+    $('map-tag').textContent = '1620 Atlantic Crossing · Ship\'s Log';
+    $('map-q').textContent = 'The Mayflower is sailing west across the North Atlantic...';
+    updateVoyageLog(step.day, step.miles, 'Sailing west', false);
+    renderMapBar(false);
+
+    animateShipTo([step.lat, step.lon], 1300, () => {
+      // Collapse top HUD to compact Voyage Log chips so it never duplicates the Sea Event card title!
+      $('map-hud').classList.add('compact');
+      $('map-tag').hidden = true;
+      $('map-q').hidden = true;
+      updateVoyageLog(step.day, step.miles, step.status, false);
+      openSeaEvent(step, 'Sail On');
+    });
+    return;
+  }
+
+  // ---- FIRST-YEAR PLYMOUTH COLONY SURVIVAL EVENT ----
+  if (step.kind === 'colony') {
+    M.viewKey = 'massbay';
+    M.padBottom = 310;
+    updateBordersForView();
+    fitRegion('massbay', false, M.padBottom);
+    renderPinsForView(MAP_LOCATIONS.plymouth_ma);
+    M.shipLatLng = [42.02, -70.48];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+
+    $('map-hud').classList.add('compact');
+    $('map-tag').hidden = true;
+    $('map-q').hidden = true;
+    $('sea-event').classList.add('colony-card');
+    updateVoyageLog(step.day, step.miles, step.status, false);
+    openSeaEvent(step, 'Continue Journey');
+    return;
+  }
+
+  // ---- PIN LOCATION STEP ----
+  const loc = step.loc;
+  M.viewKey = loc.region;
+  M.curClip = 'mq_' + loc.id;
+  M.curText = loc.q;
+  updateBordersForView();
+
+  $('map-tag').className = 'q-tag ' + (loc.region === 'us' ? 'bio' : '');
+  $('map-tag').textContent = loc.region === 'massbay'
+    ? 'Massachusetts Bay (Close-Up Real Map)'
+    : (loc.region === 'atlantic' ? '1620 Mayflower Voyage (Real Map)' : 'US Thanksgiving Geography & Biogeography');
+  $('map-q').textContent = loc.q;
+  updateVoyageLog(loc.day || '', loc.miles || 0, loc.status || '', loc.id === 'capecod' || loc.id === 'plymouth_ma');
+
+  fitRegion(M.viewKey, false);
+  renderPinsForView(loc);
+
+  // Position ship offshore in open water so pins and labels remain 100% unobstructed!
+  if (loc.id === 'capecod') {
+    M.shipLatLng = [42.20, -69.52];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+    animateShipTo([42.18, -69.92], 950);
+  } else if (loc.id === 'plymouth_ma') {
+    M.shipLatLng = [42.14, -70.10];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+    animateShipTo([42.02, -70.48], 850);
+  } else if (loc.id === 'virginia') {
+    M.shipLatLng = [42.02, -70.48];
+    shipMarker.setLatLng(M.shipLatLng);
+    redrawContinuousTrail(M.shipLatLng);
+  }
+
+  renderMapBar(false);
+  playVoice(M.curClip, M.curText, false);
+}
+
+function openSeaEvent(ev, nextLbl) {
+  M.curClip = ev.qClip; M.curText = ev.q;
+  $('se-img').src = ev.img;
+  $('se-img').alt = ev.title;
+  $('se-badge').textContent = ev.badge;
+  $('se-title').textContent = ev.title;
+  $('se-desc').textContent = ev.q;
+  const outEl = $('se-outcome');
+  outEl.hidden = true;
+  outEl.classList.remove('warn');
+
+  const opts = shuffle(ev.opts);
+  $('se-opts').innerHTML = opts.map(o => `<div class="se-opt-row" data-oid="${o.id}">
+    <button class="se-opt-btn">${o.text}</button>
+    <button class="se-opt-say" aria-label="Read choice aloud" title="Hear this choice">${ICONS.voiceOn}</button>
+  </div>`).join('');
+  $('sea-event').hidden = false;
+  renderMapBar(false, null, true);
+  playVoice(ev.qClip, ev.q, false);
+
+  document.querySelectorAll('#se-opts .se-opt-row').forEach(row => {
+    const optObj = ev.opts.find(x => x.id === row.dataset.oid);
+    row.querySelector('.se-opt-say').addEventListener('click', e => {
+      e.stopPropagation();
+      if (row.classList.contains('dim')) return;
+      stopVoice(); sfxPop();
+      row.classList.add('speaking');
+      speakTextPromise(optObj.text).then(() => row.classList.remove('speaking'));
+    });
+
+    row.querySelector('.se-opt-btn').addEventListener('click', () => {
+      if (M.busy || row.classList.contains('dim')) return;
+      if (row.dataset.oid === ev.answer) {
+        M.busy = true;
+        clearToast(); stopVoice();
+        sfxOk();
+        S.stats.map.n++;
+        if (M.tries === 0) { S.stats.map.ok++; M.ok++; }
+        S.seenMap[ev.id] = Date.now();
+        save();
+        row.classList.add('glow');
+        document.querySelectorAll('#se-opts .se-opt-row').forEach(x => { if (x !== row) x.classList.add('dim'); });
+        $('map-hud').classList.add('ok');
+        updateVoyageLog(ev.day, ev.miles, ev.fixedStatus, true);
+        outEl.classList.remove('warn');
+        outEl.innerHTML = `<b>What happened:</b> ${ev.outcome}`;
+        outEl.hidden = false;
+        M.chips.push(ev.title.split(' — ')[0]);
+        M.curClip = ev.fClip; M.curText = ev.outcome;
+        renderMapBar(true, nextLbl || 'Sail On', false);
+        playVoice(ev.fClip, ev.outcome, false);
+      } else {
+        // Real Oregon Trail consequence inline (never covers option buttons!)
+        M.tries++;
+        sfxOops();
+        row.classList.add('dim', 'shake');
+        setTimeout(() => row.classList.remove('shake'), 360);
+        outEl.classList.add('warn');
+        outEl.innerHTML = `<b>Why that wouldn't work:</b> ${optObj.why} Try another plan.`;
+        outEl.hidden = false;
+        playVoice(optObj.whyClip, optObj.why, false);
+      }
+    });
+  });
+}
+
+function renderPinsForView(activeLoc) {
+  mapPinsLayer.clearLayers();
+  M.pinMap = {};
+  const doneIds = new Set(M.steps.slice(0, M.i).filter(s => s.kind === 'pin').map(s => s.loc.id));
+
+  let pinsToShow = [];
+  if (activeLoc.region === 'atlantic') {
+    pinsToShow = [MAP_LOCATIONS.leiden, MAP_LOCATIONS.plymouth_uk, MAP_LOCATIONS.virginia];
+  } else if (activeLoc.region === 'massbay') {
+    pinsToShow = [MAP_LOCATIONS.plymouth_ma, MAP_LOCATIONS.capecod];
+  } else {
+    pinsToShow = US_LOC_LIST;
+  }
+
+  pinsToShow.forEach(p => {
+    const isDone = doneIds.has(p.id);
+    const lblCls = p.lbl && p.lbl !== 'above' ? p.lbl : '';
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="tg-pin ${isDone ? 'done' : ''}" data-pid="${p.id}"><span class="tg-lbl ${lblCls}">${p.name}</span></div>`,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    });
+    const marker = L.marker([p.lat, p.lon], { icon }).addTo(mapPinsLayer);
+    M.pinMap[p.id] = marker;
+    marker.on('click', () => onPinTap(p, marker));
+  });
+}
+
+function onPinTap(p, marker) {
+  if (M.busy) return;
+  const step = M.steps[M.i];
+  if (!step || step.kind !== 'pin') return;
+  const item = step.loc;
+  const el = marker.getElement()?.querySelector('.tg-pin');
+  if (!el || el.classList.contains('dim') || el.classList.contains('done')) return;
+
+  if (p.id === item.id) {
+    M.busy = true;
+    clearToast(); stopVoice();
+    sfxOk();
+    S.stats.map.n++;
+    if (M.tries === 0) { S.stats.map.ok++; M.ok++; }
+    S.seenMap[item.id] = Date.now();
+    save();
+    el.classList.remove('hint');
+    el.classList.add('done');
+    $('map-hud').classList.remove('oops');
+    $('map-hud').classList.add('ok');
+
+    const latOffset = item.region === 'massbay' ? 0.28 : 2.0;
+    lmap.panTo([item.lat - latOffset, item.lon], { animate: true, duration: 0.45 });
+
+    $('mc-img').src = item.img;
+    $('mc-img').alt = item.name;
+    $('mc-title').textContent = item.name;
+    $('mc-fact').textContent = item.fact;
+    $('map-card').hidden = false;
+
+    M.chips.push(item.name);
+    M.curClip = item.factClip; M.curText = item.fact;
+    const nextLbl = (item.id === 'plymouth_uk' || item.id === 'leiden') ? 'Set Sail' : (M.i === M.steps.length - 1 ? 'Finish' : 'Next Stop');
+    renderMapBar(true, nextLbl, false);
+    playVoice(M.curClip, M.curText, false);
+  } else {
+    M.tries++;
+    sfxOops();
+    el.classList.add('dim');
+    $('map-hud').classList.add('oops');
+    toast(item.nudge, 3200);
+    if (S.settings.autoRead) speakTextPromise(item.nudge);
+    if (M.tries >= 1) {
+      const rightEl = M.pinMap[item.id]?.getElement()?.querySelector('.tg-pin');
+      if (rightEl) rightEl.classList.add('hint');
+    }
+  }
+}
+
+$('btn-map-home').addEventListener('click', () => { stopVoice(); clearToast(); cancelSail(); M.runToken++; renderHome(); show('s-home'); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopVoice(); });
+
+// ==================== END SCREEN ====================
+let lastGame = 'quiz';
+function finishRound(kind, ok, total, chips, img) {
+  lastGame = kind;
+  S.stats[kind].rounds++;
+  save();
+  stopVoice(); cancelSail();
+  sfxFanfare();
+  $('end-img').src = img;
+  const title = kind === 'quiz' ? 'Thanksgiving Quiz Complete' : 'Voyage & Map Complete';
+  const summary = `You got ${ok} out of ${total} right on the first try.`;
+  $('end-title').textContent = title;
+  $('end-text').textContent = summary;
+  $('end-chips').innerHTML = chips.slice(0, 10).map(c => `<span class="summary-chip">${c}</span>`).join('');
+  show('s-end');
+  if (S.settings.autoRead) setTimeout(() => speakTextPromise(title + '. ' + summary), 450);
+}
+$('btn-end-home').addEventListener('click', () => { stopVoice(); renderHome(); show('s-home'); });
+$('btn-end-more').addEventListener('click', () => { stopVoice(); sfxPop(); if (lastGame === 'quiz') startQuiz(); else startMapGame(); });
+
+// ==================== GROWN-UPS PANEL ====================
+function openParent() {
+  stopVoice(); clearToast();
+  renderGuide(); renderProgress(); renderSettings();
+  show('s-parent');
+}
+$('btn-parent-close').addEventListener('click', () => { renderHome(); show('s-home'); });
+document.querySelectorAll('#s-parent .tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('#s-parent .tab').forEach(x => x.classList.toggle('on', x === t));
+  document.querySelectorAll('#s-parent .pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + t.dataset.pane));
+}));
+
+function renderGuide() {
+  $('pane-guide').innerHTML = `
+    <h2>About Thanksgiving Explorer</h2>
+    <p>Designed for kids ages 4–8 on iPad, this app blends American history with biogeography, real photographs, classic historical art, real physical relief maps, and pre-recorded neural voice narration.</p>
+    <h3>Two Games</h3>
+    <ul>
+      <li><b>Thanksgiving Quiz</b> (32 questions, 10 per round): Covers the 1620 Mayflower voyage, 1621 houses, winter and scurvy, hand-hoed farms, Leyden Street, 1621 vs modern foods, biogeography (latitude and the Gulf Stream, glacial Cape Cod and cranberry bogs, native American vs Old World species, autumn deciduous foliage), US presidents and Sarah Josepha Hale, and modern traditions like the Macy's Parade, Turkey Pardon, and football.</li>
+      <li><b>Voyage &amp; US Map</b> (10 stops &amp; survival events per round): Sails an animated Mayflower across a real Leaflet Atlantic map with Oregon Trail-style mid-ocean decisions (cracked main beam, westerly winds and right whales, sea rations and baby Oceanus), zooms into high-resolution Massachusetts Bay to separate Cape Cod and Plymouth, plays a First Year in Plymouth survival challenge (first winter, timber-and-thatch houses, farming sandy glacial soil without plows, or roads and coastal boats), compares Virginia, and explores US Thanksgiving landmarks and agricultural biogeography.</li>
+    </ul>
+    <h3>Audio Support for Emerging Readers</h3>
+    <p>Questions, facts, and event consequences use pre-recorded neural narration. Younger kids can also tap the speaker button on any individual answer choice, or tap <b>Read choices</b> to hear every option highlighted in turn. Older kids can toggle <b>Labels: Off</b> on the map for an extra geography challenge.</p>
+    <h3>Photo &amp; Map Credits</h3>
+    <p>Photographs and classic paintings are public-domain or Creative Commons works sourced from Wikimedia Commons and stored locally for offline iPad play.</p>
+  `;
+}
+
+function renderProgress() {
+  const pct = (ok, n) => n ? Math.round((100 * ok) / n) + '% of ' + n : '—';
+  const mapTotal = Object.keys(MAP_LOCATIONS).length + SEA_EVENTS.length + COLONY_EVENTS.length;
+  $('pane-progress').innerHTML = `
+    <h2>Progress</h2>
+    <table>
+      <tr><th>Game</th><th>Rounds</th><th>First-Try Accuracy</th><th>Explored</th></tr>
+      <tr><td>Thanksgiving Quiz</td><td>${S.stats.quiz.rounds}</td><td>${pct(S.stats.quiz.ok, S.stats.quiz.n)}</td><td>${Object.keys(S.seenQuiz).length} / ${QUIZ_ITEMS.length}</td></tr>
+      <tr><td>Voyage &amp; US Map</td><td>${S.stats.map.rounds}</td><td>${pct(S.stats.map.ok, S.stats.map.n)}</td><td>${Object.keys(S.seenMap).length} / ${mapTotal}</td></tr>
+    </table>
+  `;
+}
+
+function renderSettings() {
+  $('pane-settings').innerHTML = `
+    <h2>Settings</h2>
+    <div class="field">
+      <label>Voice narration</label>
+      <button class="pbtn ${S.settings.autoRead ? 'on' : ''}" id="set-autoread">${S.settings.autoRead ? 'Auto-read On' : 'Tap Hear it Only'}</button>
+      <button class="pbtn" id="set-test">Test voice</button>
+    </div>
+    <div class="field">
+      <label>Map pin labels</label>
+      <button class="pbtn ${S.settings.mapLabels !== false ? 'on' : ''}" id="set-labels">${S.settings.mapLabels !== false ? 'Labels Shown' : 'Hidden Until Found'}</button>
+    </div>
+    <div class="field">
+      <label>Sound effects</label>
+      <button class="pbtn ${S.settings.sfx ? 'on' : ''}" id="set-sfx">${S.settings.sfx ? 'Chimes On' : 'Muted'}</button>
+    </div>
+    <div class="field">
+      <label>Theme</label>
+      ${['auto', 'light', 'dark'].map(t => `<button class="pbtn ${S.settings.theme === t ? 'on' : ''}" data-th="${t}">${t[0].toUpperCase() + t.slice(1)}</button>`).join('')}
+    </div>
+    <h3>On the iPad</h3>
+    <p>For full screen without Safari toolbars, tap Share, then Add to Home Screen, and open Learning Games from that icon.</p>
+    <h3>Data</h3>
+    <div class="field"><button class="pbtn warn" id="set-reset">Hold to erase progress</button></div>
+  `;
+  $('set-autoread').addEventListener('click', () => { S.settings.autoRead = !S.settings.autoRead; save(); updateVoiceButtons(); renderSettings(); });
+  $('set-labels').addEventListener('click', () => { S.settings.mapLabels = !(S.settings.mapLabels !== false); save(); applyMapLabelsUI(); renderSettings(); });
+  $('set-test').addEventListener('click', () => playVoice('ev_beam_q', SEA_EVENTS[0].q, true));
+  $('set-sfx').addEventListener('click', () => { S.settings.sfx = !S.settings.sfx; save(); renderSettings(); });
+  document.querySelectorAll('[data-th]').forEach(b => b.addEventListener('click', () => { S.settings.theme = b.dataset.th; applyTheme(); save(); renderSettings(); }));
+  pointerHold($('set-reset'), 3000, () => {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    S = JSON.parse(JSON.stringify(DEFAULT)); save(); applyTheme(); applyMapLabelsUI(); toast('Progress erased.'); openParent();
+  }, null, () => toast('Hold for three seconds to erase.'));
+}
+
+renderHome();
+show('s-home');
+</script>
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(()=>{});</script>
+</body>
+</html>
