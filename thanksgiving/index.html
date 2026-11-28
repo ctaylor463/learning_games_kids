@@ -234,6 +234,8 @@ button:focus-visible,a.iconbtn:focus-visible{outline:3px solid var(--water);outl
 .choices{
   display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;
 }
+.choices.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:740px){.choices.three{grid-template-columns:1fr}}
 @media (max-width:520px){.choices{grid-template-columns:1fr}}
 .choice-wrap{
   display:flex;align-items:stretch;background:var(--card);border:3.5px solid var(--line);
@@ -385,26 +387,26 @@ button:focus-visible,a.iconbtn:focus-visible{outline:3px solid var(--water);outl
 }
 .se-outcome.warn{background:var(--amber-soft);border-color:var(--amber)}
 
-/* Custom Leaflet pins */
+/* Custom Leaflet pins (large touch targets for younger kids) */
 .tg-pin{
-  width:34px;height:34px;border-radius:50%;background:#C85A27;border:3px solid #FFFFFF;
+  width:42px;height:42px;border-radius:50%;background:#C85A27;border:3.5px solid #FFFFFF;
   box-shadow:0 3px 10px rgba(0,0,0,.38);display:grid;place-items:center;
   position:relative;transition:transform .16s ease,opacity .2s ease;
 }
-.tg-pin::after{content:'';width:9px;height:9px;border-radius:50%;background:#FFFFFF}
+.tg-pin::after{content:'';width:11px;height:11px;border-radius:50%;background:#FFFFFF}
 .tg-pin.done{background:#35814E}
-.tg-pin.done::after{width:12px;height:12px;border-radius:0;background:none;border-right:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg) translate(-1px,-2px)}
+.tg-pin.done::after{width:14px;height:14px;border-radius:0;background:none;border-right:3.5px solid #fff;border-bottom:3.5px solid #fff;transform:rotate(45deg) translate(-1px,-2px)}
 .tg-pin.dim{opacity:.32}
-.tg-pin.hint{background:#D49420;box-shadow:0 0 0 8px rgba(212,148,32,.42);animation:pinPulse 1s ease-in-out infinite}
+.tg-pin.hint{background:#D49420;box-shadow:0 0 0 10px rgba(212,148,32,.45);animation:pinPulse 1s ease-in-out infinite}
 .tg-lbl{
-  position:absolute;left:50%;top:-27px;transform:translateX(-50%);
-  white-space:nowrap;background:rgba(255,255,255,.96);color:#222B35;
-  padding:2px 9px;border-radius:999px;font-family:var(--f-ui);font-size:12.5px;font-weight:600;
+  position:absolute;left:50%;top:-31px;transform:translateX(-50%);
+  white-space:nowrap;background:rgba(255,255,255,.97);color:#222B35;
+  padding:3px 11px;border-radius:999px;font-family:var(--f-ui);font-size:14.5px;font-weight:600;
   border:1.5px solid #D8CEBC;box-shadow:0 2px 6px rgba(0,0,0,.18);pointer-events:none;
 }
-.tg-lbl.below{top:auto;bottom:-27px}
-.tg-lbl.left{left:auto;right:40px;top:50%;transform:translateY(-50%)}
-.tg-lbl.right{left:40px;top:50%;transform:translateY(-50%)}
+.tg-lbl.below{top:auto;bottom:-31px}
+.tg-lbl.left{left:auto;right:48px;top:50%;transform:translateY(-50%)}
+.tg-lbl.right{left:48px;top:50%;transform:translateY(-50%)}
 .labels-off .tg-pin:not(.done):not(.hint) .tg-lbl{display:none}
 
 /* Animated Mayflower Sailing Ship */
@@ -499,8 +501,8 @@ button:focus-visible,a.iconbtn:focus-visible{outline:3px solid var(--water);outl
         </div>
         <div class="gcard-body">
           <b>Thanksgiving Quiz</b>
-          <span>Look at real photos and answer fun questions about 1621 life, foods, nature, and holidays.</span>
-          <div class="gcard-meta" id="meta-quiz">10 questions per round</div>
+          <span>Look at real photos and answer fun questions about ships, food, nature, and holidays.</span>
+          <div class="gcard-meta" id="meta-quiz">8 questions per round</div>
         </div>
       </button>
 
@@ -511,8 +513,8 @@ button:focus-visible,a.iconbtn:focus-visible{outline:3px solid var(--water);outl
         </div>
         <div class="gcard-body">
           <b>Voyage &amp; US Map</b>
-          <span>Sail the Mayflower across the Atlantic, survive the first winter, and explore US harvest states.</span>
-          <div class="gcard-meta" id="meta-map">10 stops &amp; sea events per round</div>
+          <span>Sail the Mayflower across the ocean, build Plymouth town, and visit US harvest states.</span>
+          <div class="gcard-meta" id="meta-map">8 stops &amp; sea events per round</div>
         </div>
       </button>
     </div>
@@ -664,7 +666,7 @@ const ICONS = {
 const KEY = 'thanksgiving-explorer-v4';
 const DEFAULT = {
   v: 4,
-  settings: { autoRead: true, sfx: true, theme: 'auto', mapLabels: true },
+  settings: { autoRead: true, sfx: true, theme: 'auto', mapLabels: true, speed: 'gentle' },
   stats: { quiz: { rounds: 0, n: 0, ok: 0 }, map: { rounds: 0, n: 0, ok: 0 } },
   seenQuiz: {},
   seenMap: {}
@@ -763,10 +765,15 @@ const sfxPop = () => tone(440, 0.08, 0, 'triangle', 0.09);
 const sfxSail = () => { tone(330, 0.18, 0, 'sine', 0.08); tone(392, 0.22, 0.12, 'sine', 0.08); tone(494, 0.25, 0.24, 'sine', 0.08); };
 const sfxFanfare = () => [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, 0.28, i * 0.1, 'triangle', 0.13));
 
+const AUDIO_VER = '2';
 const voicePlayer = new Audio();
 voicePlayer.preload = 'auto';
 let speechSeq = 0;
+let curUtterance = null;
 let primed = false;
+function getAudioRate() {
+  return S.settings.speed === 'slower' ? 0.90 : (S.settings.speed === 'normal' ? 1.12 : 1.0);
+}
 function primeAudio() {
   if (primed) return;
   primed = true;
@@ -785,7 +792,7 @@ function clearSpeakingHighlight() {
 function stopVoice() {
   speechSeq++;
   clearSpeakingHighlight();
-  try { voicePlayer.pause(); voicePlayer.currentTime = 0; } catch (e) {}
+  try { voicePlayer.onended = null; voicePlayer.onerror = null; voicePlayer.pause(); voicePlayer.currentTime = 0; } catch (e) {}
   try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
 }
 
@@ -795,17 +802,40 @@ function speakTextPromise(text) {
     let done = false;
     const fin = () => { if (!done) { done = true; res(); } };
     try {
-      const vs = speechSynthesis.getVoices() || [];
-      const en = vs.filter(v => /^en[-_]US/i.test(v.lang));
-      const best = en.find(v => /Ava|Zoe|Emma|Andrew|Samantha|Allison|Premium|Enhanced|Natural/i.test(v.name)) || en[0] || vs[0];
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US'; u.rate = 0.92;
-      if (best) u.voice = best;
+      curUtterance = u;
+      u.lang = 'en-US';
+      u.rate = S.settings.speed === 'slower' ? 0.72 : (S.settings.speed === 'normal' ? 0.90 : 0.78);
       u.onend = fin; u.onerror = fin;
-      speechSynthesis.cancel();
+      if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+      speechSynthesis.resume();
       speechSynthesis.speak(u);
-      setTimeout(fin, 1800 + text.length * 85);
+      setTimeout(fin, 2200 + text.length * 105);
     } catch (e) { fin(); }
+  });
+}
+
+function playClipPromise(clipId, fallbackText, expectedSeq) {
+  return new Promise(res => {
+    if (!clipId) { speakTextPromise(fallbackText).then(res); return; }
+    let done = false;
+    const fin = () => { if (!done) { done = true; res(); } };
+    voicePlayer.onended = fin;
+    voicePlayer.onerror = () => {
+      if (expectedSeq === speechSeq) speakTextPromise(fallbackText).then(fin);
+      else fin();
+    };
+    voicePlayer.src = `audio/${clipId}.mp3?v=${AUDIO_VER}`;
+    try {
+      voicePlayer.preservesPitch = true;
+      voicePlayer.webkitPreservesPitch = true;
+      voicePlayer.playbackRate = getAudioRate();
+    } catch (e) {}
+    const p = voicePlayer.play();
+    if (p && p.catch) p.catch(() => {
+      if (expectedSeq === speechSeq) speakTextPromise(fallbackText).then(fin);
+      else fin();
+    });
   });
 }
 
@@ -813,17 +843,22 @@ function playVoice(clipId, fallbackText, force) {
   if (!force && !S.settings.autoRead) return;
   const mySeq = ++speechSeq;
   clearSpeakingHighlight();
-  try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+  try { if ('speechSynthesis' in window && (speechSynthesis.speaking || speechSynthesis.pending)) speechSynthesis.cancel(); } catch (e) {}
   if (!clipId) { speakTextPromise(fallbackText); return; }
   voicePlayer.onended = null;
   voicePlayer.onerror = () => { if (mySeq === speechSeq) speakTextPromise(fallbackText); };
-  voicePlayer.src = `audio/${clipId}.mp3`;
+  voicePlayer.src = `audio/${clipId}.mp3?v=${AUDIO_VER}`;
+  try {
+    voicePlayer.preservesPitch = true;
+    voicePlayer.webkitPreservesPitch = true;
+    voicePlayer.playbackRate = getAudioRate();
+  } catch (e) {}
   const p = voicePlayer.play();
   if (p && p.catch) p.catch(() => { if (mySeq === speechSeq && force) speakTextPromise(fallbackText); });
 }
 
-// Reads a list of visible choice elements sequentially while highlighting each button (great for 4-6 year olds!)
-async function readChoicesSequentially(rowSelector, textGetter) {
+// Reads visible choice buttons sequentially in the same warm slow neural voice while highlighting each button
+async function readChoicesSequentially(rowSelector, clipGetter, textGetter) {
   const mySeq = ++speechSeq;
   try { voicePlayer.pause(); } catch (e) {}
   const rows = [...document.querySelectorAll(rowSelector)].filter(r => !r.classList.contains('dim'));
@@ -831,9 +866,9 @@ async function readChoicesSequentially(rowSelector, textGetter) {
     if (mySeq !== speechSeq) break;
     clearSpeakingHighlight();
     r.classList.add('speaking');
-    await speakTextPromise(textGetter(r));
+    await playClipPromise(clipGetter(r), textGetter(r), mySeq);
     if (mySeq !== speechSeq) break;
-    await new Promise(res => setTimeout(res, 180));
+    await new Promise(res => setTimeout(res, 260));
   }
   clearSpeakingHighlight();
 }
@@ -856,217 +891,217 @@ function toggleVoice() {
 }
 ['btn-home-voice', 'btn-quiz-voice', 'btn-map-voice'].forEach(id => $(id).addEventListener('click', toggleVoice));
 
-// ==================== QUIZ BANK (32 BALANCED REAL-PHOTO QUESTIONS WITH SHORT CHIPS) ====================
+// ==================== QUIZ BANK (32 KID-FRIENDLY REAL-PHOTO QUESTIONS, 3 CHOICES MAX) ====================
 const QUIZ_ITEMS = [
   // Biogeography & Climate (4)
   {
-    id: 'latitude', chip: 'Gulf Stream Climate', tag: 'Biogeography · Climate & Latitude', tagCls: 'bio', img: 'img/plymouth_uk.jpg', cap: 'Mild coastal harbor of Plymouth, England (50°N)',
-    q: 'Plymouth, Massachusetts is actually much farther south than England — at the same latitude as sunny Rome, Italy. Why were Massachusetts winters so much colder and snowier?',
-    opts: ['Warm Gulf Stream heats England, Arctic winds chill New England', 'High mountain peaks freeze the Massachusetts ocean coast', 'England sits much closer to the equator than New England', 'Cold icebergs circle Plymouth Harbor all summer and winter'],
-    answer: 'Warm Gulf Stream heats England, Arctic winds chill New England',
-    fact: 'The warm Gulf Stream ocean current keeps England mild, while icy winter winds sweep across North America into New England. The Pilgrims were shocked by the cold.'
+    id: 'latitude', chip: 'Cold Winters', tag: 'Nature · Weather', tagCls: 'bio', img: 'img/plymouth_uk.jpg', cap: 'Mild coastal harbor of Plymouth, England',
+    q: 'England and Massachusetts are both by the ocean. Why are Massachusetts winters much colder and snowier?',
+    opts: ['Icy winter winds blow in', 'Giant penguins live there', 'The sun never shines'],
+    answer: 'Icy winter winds blow in',
+    fact: 'Warm ocean water keeps England mild. Icy winter winds make New England cold and snowy.'
   },
   {
-    id: 'glaciers', chip: 'Glacial Cape Cod', tag: 'Biogeography · Ice Age Landforms', tagCls: 'bio', img: 'img/cape_cod.jpg', cap: 'Sandy glacial dunes of Cape Cod, Massachusetts',
-    q: 'What giant force of nature carved Cape Cod\'s hooked sandy peninsula and the acidic bogs where Massachusetts cranberries grow?',
-    opts: ['Ice Age glaciers 15,000 years ago', 'Ancient New England volcanoes', 'Deep ocean earthquakes', 'Growing Atlantic coral reefs'],
-    answer: 'Ice Age glaciers 15,000 years ago',
-    fact: 'Massive Ice Age glaciers scraped across New England over 15,000 years ago, leaving behind Cape Cod\'s sandy hook and wet kettle-hole bogs perfect for cranberries.'
+    id: 'glaciers', chip: 'Ice Age Cape Cod', tag: 'Nature · Ice Age', tagCls: 'bio', img: 'img/cape_cod.jpg', cap: 'Sandy beaches of Cape Cod, Massachusetts',
+    q: 'Long ago, what giant sheets of ice pushed up the sandy hook of Cape Cod?',
+    opts: ['Giant Ice Age glaciers', 'Big ocean volcanoes', 'Giant digging whales'],
+    answer: 'Giant Ice Age glaciers',
+    fact: 'Huge Ice Age glaciers slid over New England long ago. They left sandy beaches and wet bogs for cranberries.'
   },
   {
-    id: 'exchange', chip: 'Native Foods', tag: 'Biogeography · Native Species', tagCls: 'bio', img: 'img/wild_turkey.jpg', cap: 'Wild turkey, a bird native to North America',
-    q: 'Which pair of classic Thanksgiving foods are native to the Americas, rather than brought over from Europe?',
-    opts: ['Turkeys & pumpkins', 'Wheat bread & butter', 'Apples & honeybees', 'Oranges & cinnamon'],
-    answer: 'Turkeys & pumpkins',
-    fact: 'Turkeys, corn, pumpkins, cranberries, pecans, and sweet potatoes are all native to the Americas, while wheat for pie crust and dairy cows for butter came from Europe.'
+    id: 'exchange', chip: 'Native Foods', tag: 'Nature · Native Foods', tagCls: 'bio', img: 'img/wild_turkey.jpg', cap: 'Wild turkey, a bird native to North America',
+    q: 'Which two Thanksgiving foods grew wild in America before settlers arrived?',
+    opts: ['Turkeys and pumpkins', 'Apples and butter', 'Oranges and cookies'],
+    answer: 'Turkeys and pumpkins',
+    fact: 'Turkeys, pumpkins, corn, and cranberries all came from America. Cows, wheat, and apples came from Europe.'
   },
   {
-    id: 'foliage', chip: 'Autumn Leaves', tag: 'Biogeography · Forest Ecology', tagCls: 'bio', img: 'img/autumn_forest.jpg', cap: 'Temperate deciduous autumn forest in New England',
-    q: 'Why do New England\'s sugar maple forests turn bright red and gold right before Thanksgiving?',
-    opts: ['Shorter days fade green chlorophyll', 'Frost freezes red juice on leaves', 'Roots pull red clay from the ground', 'Ocean salt sprays over the hills'],
-    answer: 'Shorter days fade green chlorophyll',
-    fact: 'Shorter autumn days signal deciduous trees to stop making green chlorophyll, revealing hidden yellow, orange, and crimson pigments before the leaves drop for winter.'
+    id: 'foliage', chip: 'Autumn Leaves', tag: 'Nature · Fall Colors', tagCls: 'bio', img: 'img/autumn_forest.jpg', cap: 'Red and gold fall trees in New England',
+    q: 'Why do maple tree leaves turn bright red and yellow every fall?',
+    opts: ['The days get shorter', 'Painters color the trees', 'Rain turns leaves red'],
+    answer: 'The days get shorter',
+    fact: 'Shorter fall days tell trees to stop making green color. That lets the hidden red, orange, and yellow shine through.'
   },
 
   // History & Mayflower (6)
   {
-    id: 'mayflower', chip: 'The Mayflower', tag: 'History · 1620 Voyage', img: 'img/mayflower.jpg', cap: 'Mayflower II replica ship in Plymouth Harbor',
-    q: 'What was the name of the famous wooden ship that carried 102 passengers from England to Massachusetts in 1620?',
-    opts: ['The Mayflower', 'The Santa Maria', 'The Endeavour', 'The Discovery'], answer: 'The Mayflower',
-    fact: 'The Mayflower carried families, craftspeople, and sailors across the Atlantic Ocean in the autumn of 1620.'
+    id: 'mayflower', chip: 'The Mayflower', tag: 'History · 1620 Ship', img: 'img/mayflower.jpg', cap: 'Mayflower II replica ship in Plymouth Harbor',
+    q: 'What was the name of the big wooden ship that sailed to America in 1620?',
+    opts: ['The Mayflower', 'The Titanic', 'The Santa Maria'], answer: 'The Mayflower',
+    fact: 'The Mayflower carried 102 people across the big Atlantic Ocean in 1620.'
   },
   {
-    id: 'crossing', chip: '66 Days at Sea', tag: 'History · Atlantic Crossing', img: 'img/atlantic_storm.jpg', cap: 'North Atlantic ocean swells during a stormy crossing',
-    q: 'How long did the stormy voyage across the Atlantic Ocean take on the Mayflower?',
-    opts: ['66 days (over 2 months)', '14 days (2 quick weeks)', '6 full months at sea', '10 days with fair winds'], answer: '66 days (over 2 months)',
-    fact: 'The crossing took 66 stormy days, more than two months, inside a wooden ship about the length of three school buses.'
+    id: 'crossing', chip: '66 Days at Sea', tag: 'History · Ocean Trip', img: 'img/atlantic_storm.jpg', cap: 'Big waves on the North Atlantic Ocean',
+    q: 'How long did it take the Mayflower to sail across the ocean?',
+    opts: ['About two months', 'Just one day', 'A whole year'], answer: 'About two months',
+    fact: 'The stormy ocean trip took 66 days — more than two whole months on a wooden ship.'
   },
   {
-    id: 'compact', chip: 'Mayflower Compact', tag: 'History · Self-Government', img: 'img/compact.jpg', cap: 'Painting: Signing the Mayflower Compact (J.L.G. Ferris)',
-    q: 'Before stepping ashore at Cape Cod, passengers signed an agreement to make fair laws together. What was it called?',
-    opts: ['The Mayflower Compact', 'The Plymouth Charter', 'The Bill of Rights', 'The Atlantic Treaty'], answer: 'The Mayflower Compact',
-    fact: 'Forty-one men signed the Mayflower Compact aboard ship in November 1620, creating an early model of self-government.'
+    id: 'compact', chip: 'Mayflower Compact', tag: 'History · Fair Rules', img: 'img/compact.jpg', cap: 'Painting: Signing the Mayflower Compact',
+    q: 'Before getting off the ship, the passengers signed a paper promising to make fair rules. What was it called?',
+    opts: ['The Mayflower Compact', 'The Thanksgiving Menu', 'The Ocean Map'], answer: 'The Mayflower Compact',
+    fact: 'The Mayflower Compact was an agreement to work together and follow fair rules in their new town.'
   },
   {
-    id: 'plymouth', chip: 'Plymouth, MA', tag: 'Geography · Plymouth Colony', img: 'img/plymouth_rock.jpg', cap: 'Plymouth Rock, inscribed with 1620',
-    q: 'In which US state did the Pilgrims build Plymouth Colony in December 1620?',
-    opts: ['Massachusetts', 'Pennsylvania', 'North Carolina', 'Connecticut'], answer: 'Massachusetts',
-    fact: 'The settlers built Plymouth Colony along a sheltered bay on the coast of Massachusetts.'
+    id: 'plymouth', chip: 'Plymouth, MA', tag: 'Map · Plymouth Town', img: 'img/plymouth_rock.jpg', cap: 'Plymouth Rock with the year 1620',
+    q: 'Which state did the Pilgrims build Plymouth town in?',
+    opts: ['Massachusetts', 'California', 'Florida'], answer: 'Massachusetts',
+    fact: 'They built Plymouth right by the ocean in Massachusetts.'
   },
   {
-    id: 'feast', chip: '3-Day Feast', tag: 'History · Autumn 1621', img: 'img/feast_painting.jpg', cap: 'Classic painting of the 1621 harvest gathering',
-    q: 'How many days did the 1621 harvest celebration in Plymouth last?',
-    opts: ['Three whole days', 'Just one evening', 'Two full weeks', 'One entire month'], answer: 'Three whole days',
-    fact: 'The 1621 autumn harvest celebration lasted three whole days, with cooking, outdoor games, music, and shared meals between the colonists and their Wampanoag guests.'
+    id: 'feast', chip: '3-Day Feast', tag: 'History · 1621 Feast', img: 'img/feast_painting.jpg', cap: 'Painting of the 1621 harvest gathering',
+    q: 'How many days did the big 1621 harvest party in Plymouth last?',
+    opts: ['Three whole days', 'Just one hour', 'One whole month'], answer: 'Three whole days',
+    fact: 'The harvest party lasted three whole days, with cooking, games, music, and neighbors sharing food.'
   },
   {
     id: 'clothes', chip: 'Pilgrim Clothes', tag: 'History · True or False', img: 'img/pilgrim_statue.jpg', portrait: true, cap: 'Pilgrim statue in Plymouth, Massachusetts',
-    q: 'True or False: Pilgrims only wore plain black outfits with giant silver buckles on their hats.',
+    q: 'True or False: Pilgrims only wore plain black clothes with giant buckles on their hats.',
     opts: ['False', 'True'], answer: 'False', binary: true,
-    fact: 'False. Early colonists wore colorful wool in red, green, brown, and blue. Giant silver hat buckles were imagined by painters centuries later.'
+    fact: 'False. They wore bright wool in red, green, brown, and blue. Artists made up the giant hat buckles much later.'
   },
 
   // Early Colony Life (4)
   {
-    id: 'houses', chip: '1621 Cottages', tag: 'Colony Life · Building Houses', img: 'img/colony_houses.jpg', cap: 'Reconstructed 1620s timber-and-thatch cottages at Plimoth',
-    q: 'With no glass shops or brick factories in 1621, what did the Plymouth colonists use for roofs and windows on their first timber cottages?',
-    opts: ['Marsh reeds & oiled paper', 'Slate tiles & leaded glass', 'Clay tiles & iron screens', 'Stone slabs & painted wood'],
-    answer: 'Marsh reeds & oiled paper',
-    fact: 'They bundled local marsh reeds into thick thatched roofs and covered window openings with oiled paper and wooden shutters.'
+    id: 'houses', chip: '1621 Cottages', tag: 'Colony Life · Houses', img: 'img/colony_houses.jpg', cap: 'Wooden cottages with reed roofs at Plimoth',
+    q: 'There were no stores or glass shops in Plymouth. What did settlers use for roofs on their first little houses?',
+    opts: ['Bundles of marsh grass', 'Shiny metal sheets', 'Plastic rain covers'],
+    answer: 'Bundles of marsh grass',
+    fact: 'They tied dried marsh reeds into thick roofs and used oiled paper or wooden shutters over the windows.'
   },
   {
-    id: 'scurvy', chip: 'Scurvy & Vitamin C', tag: 'Colony Life · First Winter & Health', img: 'img/winter_snow.jpg', cap: '1860 painting of a snowy New England winter landscape',
-    q: 'Why did so many Mayflower passengers suffer from scurvy during the freezing first winter of 1620–1621?',
-    opts: ['Months without fresh fruit or Vitamin C', 'Eating too much roasted corn and deer', 'Drinking cold melted winter snow', 'Sleeping outdoors beside warm fires'],
-    answer: 'Months without fresh fruit or Vitamin C',
-    fact: 'Scurvy is caused by a lack of Vitamin C. After more than two months at sea eating salted meat and dry biscuits with almost no fresh fruits or greens, many colonists became dangerously weak.'
+    id: 'scurvy', chip: 'Winter & Health', tag: 'Colony Life · Winter', img: 'img/winter_snow.jpg', cap: 'Snowy New England winter painting',
+    q: 'Many people got very sick on the ship and during the first cold winter. What healthy food were they missing?',
+    opts: ['Fresh fruits and veggies', 'Ice cream and cake', 'Hot dogs and chips'],
+    answer: 'Fresh fruits and veggies',
+    fact: 'Without fresh fruits and veggies for months, people missed Vitamin C and got a sickness called scurvy.'
   },
   {
-    id: 'plows', chip: 'Hand-Hoed Farms', tag: 'Colony Life · Early Farms', tagCls: 'bio', img: 'img/colony_farm.jpg', cap: 'Reconstructed 1620s village gardens and fences at Plimoth',
-    q: 'True or False: The Pilgrims brought horses, dairy cows, and iron plows on the Mayflower to farm in 1621.',
+    id: 'plows', chip: 'Digging by Hand', tag: 'Colony Life · Farms', tagCls: 'bio', img: 'img/colony_farm.jpg', cap: 'Early Plymouth gardens and wooden fences',
+    q: 'True or False: The Pilgrims brought horses and cows on the Mayflower to pull plows.',
     opts: ['False', 'True'], answer: 'False', binary: true,
-    fact: 'False. Only dogs, goats, pigs, and chickens came at first. There were no cows, oxen, or plows in Plymouth in 1621, so settlers had to dig and weed every corn mound by hand with iron hoes.'
+    fact: 'False. They had no cows, horses, or plows at first, so they dug every single row of dirt by hand.'
   },
   {
-    id: 'roads', chip: 'Leyden Street', tag: 'Colony Life · Roads & Travel', img: 'img/leyden_street.jpg', cap: 'Leyden Street, Plymouth\'s first lane from the harbor',
-    q: 'What was the name of Plymouth\'s very first dirt street, laid out uphill from the harbor past the first cottages?',
-    opts: ['Leyden Street', 'King\'s Highway', 'Harbor Turnpike', 'Plymouth Road'],
-    answer: 'Leyden Street',
-    fact: 'Leyden Street was Plymouth\'s first lane, named after the Dutch city where the Pilgrims had lived. Beyond town, people relied on coastal boats and narrow forest footpaths.'
+    id: 'roads', chip: 'Roads & Boats', tag: 'Colony Life · Travel', img: 'img/leyden_street.jpg', cap: 'Leyden Street, Plymouth\'s first lane',
+    q: 'There were no paved roads or cars in Plymouth. How did people travel to nearby towns?',
+    opts: ['Small boats and forest paths', 'Trains on iron tracks', 'Big horse wagons'],
+    answer: 'Small boats and forest paths',
+    fact: 'Plymouth had one dirt lane called Leyden Street. To go farther, people sailed small boats or walked forest paths.'
   },
 
   // Food & Harvest (6)
   {
-    id: 'pie', chip: 'No Pumpkin Pie', tag: 'Food · 1621 vs Today', img: 'img/pumpkin_pie.jpg', cap: 'Modern Thanksgiving pumpkin pie',
-    q: 'Was pumpkin pie on the table at the 1621 harvest feast?',
-    opts: ['No — modern dish only', 'Yes — eaten in 1621'], answer: 'No — modern dish only', binary: true,
-    fact: 'No. The colonists had no baking ovens, wheat flour, butter, or sugar yet. Instead, they roasted pumpkin pieces right in the fire.'
+    id: 'pie', chip: 'No Pumpkin Pie', tag: 'Food · 1621 vs Today', img: 'img/pumpkin_pie.jpg', cap: 'Thanksgiving pumpkin pie',
+    q: 'Did people eat pumpkin pie at the 1621 harvest feast?',
+    opts: ['No — today only', 'Yes — in 1621'], answer: 'No — today only', binary: true,
+    fact: 'No. They had no baking ovens, butter, or sugar yet. They roasted pumpkin pieces right in the fire.'
   },
   {
-    id: 'potatoes', chip: 'No Mashed Potatoes', tag: 'Food · 1621 vs Today', img: 'img/mashed_potatoes.jpg', cap: 'Bowl of Thanksgiving mashed potatoes',
-    q: 'Were mashed potatoes served at the 1621 harvest feast in Plymouth?',
-    opts: ['No — modern dish only', 'Yes — eaten in 1621'], answer: 'No — modern dish only', binary: true,
-    fact: 'No. Potatoes originally came from South America and had not yet reached New England farms in 1621.'
+    id: 'potatoes', chip: 'No Mashed Potatoes', tag: 'Food · 1621 vs Today', img: 'img/mashed_potatoes.jpg', cap: 'Bowl of mashed potatoes',
+    q: 'Were mashed potatoes served at the 1621 harvest feast?',
+    opts: ['No — today only', 'Yes — in 1621'], answer: 'No — today only', binary: true,
+    fact: 'No. Potatoes had not come to New England farms yet in 1621.'
   },
   {
-    id: 'seafood', chip: '1621 Seafood Feast', tag: 'Food & Marine Ecology', tagCls: 'bio', img: 'img/lobster_clams.jpg', cap: 'Cold-water New England lobster, clams, and corn',
-    q: 'Which of these foods was actually eaten at the 1621 harvest feast in Plymouth?',
-    opts: ['Lobster, clams & venison', 'Mashed potatoes & gravy', 'Sweet potato marshmallows', 'Apple & pumpkin pie'], answer: 'Lobster, clams & venison',
-    fact: 'Plymouth sat right on the ocean, so lobster, clams, mussels, wild duck, goose, corn porridge, and five deer brought by Wampanoag hunters were on the menu.'
+    id: 'seafood', chip: '1621 Seafood', tag: 'Food · Ocean Feast', tagCls: 'bio', img: 'img/lobster_clams.jpg', cap: 'New England lobster, clams, and corn',
+    q: 'Plymouth was right by the ocean. Which of these foods was at the 1621 feast?',
+    opts: ['Lobster, clams, and deer', 'Mashed potatoes and gravy', 'Pumpkin pie and ice cream'], answer: 'Lobster, clams, and deer',
+    fact: 'Because Plymouth sat right on the sea, they ate lobster, clams, ducks, corn porridge, and five deer.'
   },
   {
-    id: 'cranberry', chip: 'Cranberry Bogs', tag: 'Biogeography · Wetland Farming', tagCls: 'bio', img: 'img/cranberry_bog.jpg', cap: 'Flooded cranberry bog harvest in Kingston, Massachusetts',
-    q: 'How do farmers harvest cranberries in Massachusetts and Wisconsin every autumn?',
-    opts: ['Flood bogs so berries float', 'Pick them from tall trees', 'Dig them out like potatoes', 'Shake them off tall bushes'], answer: 'Flood bogs so berries float',
-    fact: 'Farmers flood the sandy cranberry bogs with water. Because ripe cranberries have tiny air pockets inside, they float to the top to be scooped up.'
+    id: 'cranberry', chip: 'Floating Cranberries', tag: 'Nature · Cranberries', tagCls: 'bio', img: 'img/cranberry_bog.jpg', cap: 'Flooded cranberry harvest in Massachusetts',
+    q: 'How do farmers pick cranberries in the fall?',
+    opts: ['Flood fields so berries float', 'Climb tall trees to pick them', 'Dig them up like carrots'], answer: 'Flood fields so berries float',
+    fact: 'Ripe cranberries have tiny air pockets inside. When farmers flood the bogs, the berries float right to the top.'
   },
   {
-    id: 'turkey', chip: 'Ben Franklin\'s Turkey', tag: 'Nature & History · Wild Turkey', img: 'img/wild_turkey.jpg', cap: 'Wild turkey strutting in nature',
-    q: 'Which American Founding Father praised the wild turkey as a clever, brave, truly American bird?',
-    opts: ['Benjamin Franklin', 'Paul Revere', 'John Hancock', 'Alexander Hamilton'], answer: 'Benjamin Franklin',
-    fact: 'In a famous letter to his daughter, Benjamin Franklin admired the wild turkey and joked that it was a more respectable bird than the bald eagle.'
+    id: 'turkey', chip: 'Ben Franklin\'s Turkey', tag: 'Nature · Wild Turkey', img: 'img/wild_turkey.jpg', cap: 'Wild turkey strutting outside',
+    q: 'Which famous American loved the wild turkey and called it a brave, clever bird?',
+    opts: ['Benjamin Franklin', 'Johnny Appleseed', 'Paul Bunyan'], answer: 'Benjamin Franklin',
+    fact: 'Benjamin Franklin admired wild turkeys so much that he joked they were even nicer than bald eagles.'
   },
   {
-    id: 'corn', chip: 'Three Sisters Crops', tag: 'Agroecology · Companion Planting', tagCls: 'bio', img: 'img/flint_corn.jpg', cap: 'Colorful heirloom flint corn cobs',
-    q: 'Why did early New England farmers plant corn, beans, and squash together in the same dirt mound?',
-    opts: ['The three plants help each other', 'To shelter seeds from winter snow', 'So every vegetable ripened faster', 'To keep birds off the tall stalks'], answer: 'The three plants help each other',
-    fact: 'Tall corn stalks gave bean vines a sturdy pole to climb, beans added nutrients to the soil, and broad squash leaves shaded the ground from weeds.'
+    id: 'corn', chip: 'Three Sisters', tag: 'Nature · Garden Helpers', tagCls: 'bio', img: 'img/flint_corn.jpg', cap: 'Colorful heirloom flint corn',
+    q: 'Why did farmers plant corn, beans, and squash together in the same hill of dirt?',
+    opts: ['The three plants help each other', 'They ran out of room', 'To hide them from snow'], answer: 'The three plants help each other',
+    fact: 'Beans climb the tall corn stalks, beans feed the dirt, and big squash leaves shade the ground from weeds.'
   },
 
   // People & National Holiday (6)
   {
-    id: 'washington', chip: 'Washington (1789)', tag: 'People · 1789 Proclamation', img: 'img/washington.jpg', portrait: true, cap: 'Portrait of George Washington by Gilbert Stuart',
-    q: 'Which president declared the very first national Day of Thanksgiving under the US Constitution in 1789?',
-    opts: ['George Washington', 'Thomas Jefferson', 'Theodore Roosevelt', 'John Adams'], answer: 'George Washington',
-    fact: 'President George Washington proclaimed Thursday, November 26, 1789, as a national day of public thanksgiving for the young United States.'
+    id: 'washington', chip: 'George Washington', tag: 'People · First President', img: 'img/washington.jpg', portrait: true, cap: 'Portrait of George Washington',
+    q: 'Who was the very first US president to ask Americans to celebrate a national Thanksgiving?',
+    opts: ['George Washington', 'Abraham Lincoln', 'Benjamin Franklin'], answer: 'George Washington',
+    fact: 'President George Washington asked the whole young country to celebrate Thanksgiving in 1789.'
   },
   {
-    id: 'hale', chip: 'Sarah Josepha Hale', tag: 'People · Holiday Champion', img: 'img/hale.jpg', portrait: true, cap: 'Portrait of writer and editor Sarah Josepha Hale',
-    q: 'Who wrote letters to five presidents for 36 years asking for a national Thanksgiving holiday, and also wrote "Mary Had a Little Lamb"?',
-    opts: ['Sarah Josepha Hale', 'Betsy Ross', 'Clara Barton', 'Louisa May Alcott'], answer: 'Sarah Josepha Hale',
-    fact: 'Magazine editor Sarah Josepha Hale kept writing letters for 36 years until President Abraham Lincoln finally agreed in 1863.'
+    id: 'hale', chip: 'Sarah Josepha Hale', tag: 'People · Holiday Helper', img: 'img/hale.jpg', portrait: true, cap: 'Portrait of writer Sarah Josepha Hale',
+    q: 'Sarah Josepha Hale wrote letters for 36 years to make Thanksgiving a national holiday. What famous kid\'s song did she also write?',
+    opts: ['Mary Had a Little Lamb', 'Twinkle, Twinkle, Little Star', 'Old MacDonald'], answer: 'Mary Had a Little Lamb',
+    fact: 'Writer Sarah Josepha Hale wrote Mary Had a Little Lamb, and she never gave up until Thanksgiving became a national holiday.'
   },
   {
-    id: 'lincoln', chip: 'Lincoln (1863)', tag: 'People · 1863 National Holiday', img: 'img/lincoln.jpg', portrait: true, cap: '1863 photograph of President Abraham Lincoln',
-    q: 'Which US president made Thanksgiving an annual national holiday in 1863 during the Civil War?',
-    opts: ['Abraham Lincoln', 'George Washington', 'Ulysses S. Grant', 'Andrew Jackson'], answer: 'Abraham Lincoln',
-    fact: 'President Abraham Lincoln proclaimed a national Thanksgiving holiday in October 1863, hoping a shared day of gratitude would help bring the country together.'
+    id: 'lincoln', chip: 'Abraham Lincoln', tag: 'People · 1863 Holiday', img: 'img/lincoln.jpg', portrait: true, cap: 'Photograph of President Abraham Lincoln',
+    q: 'Which tall president in a stovepipe hat made Thanksgiving a yearly national holiday in 1863?',
+    opts: ['Abraham Lincoln', 'George Washington', 'Thomas Jefferson'], answer: 'Abraham Lincoln',
+    fact: 'President Abraham Lincoln made Thanksgiving an official yearly holiday in 1863 to help bring the country together.'
   },
   {
-    id: 'bradford', chip: 'William Bradford', tag: 'People · Plymouth Governor', img: 'img/ship_deck.jpg', cap: 'Wooden deck and rigging of a historic tall ship',
-    q: 'Who served as governor of Plymouth Colony for over 30 years and wrote the history book "Of Plymouth Plantation"?',
-    opts: ['William Bradford', 'Captain John Smith', 'Miles Standish', 'John Winthrop'], answer: 'William Bradford',
-    fact: 'Governor William Bradford kept a detailed handwritten journal that tells historians much of what we know about the Mayflower and Plymouth.'
+    id: 'bradford', chip: 'Bradford\'s Book', tag: 'People · Storykeeper', img: 'img/ship_deck.jpg', cap: 'Wooden deck of a historic sailing ship',
+    q: 'How do we know so much about the Mayflower trip and life in Plymouth?',
+    opts: ['Governor Bradford wrote a book', 'They took camera photos', 'They sent email letters'], answer: 'Governor Bradford wrote a book',
+    fact: 'Plymouth\'s governor, William Bradford, wrote a big handwritten journal telling the story of the voyage and town.'
   },
   {
-    id: 'squanto', chip: 'Squanto & Massasoit', tag: 'People · 1621 Alliance', img: 'img/plimoth_village.jpg', cap: 'Reconstructed historic home at Plimoth Patuxet',
-    q: 'Who spoke English before the Mayflower arrived and helped teach the colonists local farming and how to catch eels?',
-    opts: ['Tisquantum (Squanto)', 'William Penn', 'Daniel Boone', 'Lewis and Clark'], answer: 'Tisquantum (Squanto)',
-    fact: 'Tisquantum, often called Squanto, acted as translator and farming teacher, while Wampanoag leader Massasoit made a lasting peace treaty with Plymouth.'
+    id: 'squanto', chip: 'Squanto', tag: 'People · Teacher & Guide', img: 'img/plimoth_village.jpg', cap: 'Historic village at Plimoth Patuxet',
+    q: 'Who spoke English and taught the new settlers how to catch eels and plant corn in sandy dirt?',
+    opts: ['Squanto', 'George Washington', 'Captain Cook'], answer: 'Squanto',
+    fact: 'Tisquantum, called Squanto, helped translate and teach local farming, and leader Massasoit made a peace treaty with Plymouth.'
   },
   {
-    id: 'fdr', chip: '4th Thursday (1941)', tag: 'History · Calendar Date (1941)', img: 'img/fdr.jpg', portrait: true, cap: 'President Franklin D. Roosevelt',
-    q: 'Which day of the year is US Thanksgiving always celebrated on today?',
-    opts: ['4th Thursday of November', '1st Thursday of November', 'Last Monday of November', 'Last Sunday of October'], answer: '4th Thursday of November',
-    fact: 'In 1941, Congress and President Franklin D. Roosevelt set US Thanksgiving on the fourth Thursday of November so every state celebrated on the same day.'
+    id: 'fdr', chip: 'Thursday Holiday', tag: 'Calendar · November', img: 'img/fdr.jpg', portrait: true, cap: 'President Franklin D. Roosevelt',
+    q: 'Which day of the week is Thanksgiving always on in the United States?',
+    opts: ['Thursday', 'Saturday', 'Monday'], answer: 'Thursday',
+    fact: 'In 1941, President Roosevelt set Thanksgiving on the fourth Thursday of November every year.'
   },
 
   // American Traditions (6)
   {
     id: 'parade', chip: 'Macy\'s Parade', tag: 'Traditions · Parades', img: 'img/macys_parade.jpg', cap: 'Macy\'s Thanksgiving Day Parade in New York City',
-    q: 'Which American city has hosted the famous Macy\'s Thanksgiving Day Parade with giant balloons since 1924?',
-    opts: ['New York City', 'Chicago', 'Philadelphia', 'Boston'], answer: 'New York City',
-    fact: 'Every Thanksgiving morning, millions watch giant character balloons float down the streets of New York City in the Macy\'s Parade.'
+    q: 'Which big city has the famous Thanksgiving parade with giant floating balloons?',
+    opts: ['New York City', 'Miami', 'Los Angeles'], answer: 'New York City',
+    fact: 'Every Thanksgiving morning, giant character balloons float down the streets of New York City in the Macy\'s Parade.'
   },
   {
-    id: 'pardon', chip: 'Turkey Pardon', tag: 'Traditions · Turkey Pardon', img: 'img/turkey_pardon.jpg?v=2', cap: 'National Thanksgiving Turkey on the White House portico',
-    q: 'Every November, where does the US President officially "pardon" a turkey so it can live safely on a farm?',
-    opts: ['The White House', 'Plymouth Rock', 'Independence Hall', 'Mount Vernon'], answer: 'The White House',
-    fact: 'Every year at the White House in Washington, D.C., the president pardons two Thanksgiving turkeys in a lighthearted ceremony.'
+    id: 'pardon', chip: 'Turkey Pardon', tag: 'Traditions · White House', img: 'img/turkey_pardon.jpg?v=2', cap: 'Thanksgiving Turkey at the White House',
+    q: 'Where does the US President let a lucky turkey go free to live safely on a farm every November?',
+    opts: ['The White House', 'A shopping mall', 'A baseball stadium'], answer: 'The White House',
+    fact: 'Every November at the White House, the president pardons two Thanksgiving turkeys in a fun ceremony.'
   },
   {
-    id: 'football', chip: 'Thanksgiving Football', tag: 'Traditions · Sports', img: 'img/football.jpg', cap: 'Ford Field in Detroit, home of Thanksgiving football',
-    q: 'Which two pro football teams have hosted Thanksgiving Day games almost every year for decades?',
-    opts: ['Detroit Lions & Dallas Cowboys', 'Green Bay Packers & Chicago Bears', 'New England Patriots & NY Giants', 'Pittsburgh Steelers & Eagles'], answer: 'Detroit Lions & Dallas Cowboys',
-    fact: 'The Detroit Lions have hosted a Thanksgiving football game since 1934, and the Dallas Cowboys joined the tradition in 1966.'
+    id: 'football', chip: 'Football', tag: 'Traditions · Sports', img: 'img/football.jpg', cap: 'Football stadium in Detroit',
+    q: 'Which sport do millions of families watch on TV every Thanksgiving afternoon?',
+    opts: ['Football', 'Ice skating', 'Swimming'], answer: 'Football',
+    fact: 'Thanksgiving football is an old tradition. The Detroit Lions have played on Thanksgiving since 1934.'
   },
   {
-    id: 'canada', chip: 'Canadian Thanksgiving', tag: 'Biogeography · Earlier Harvest', tagCls: 'bio', img: 'img/canada_autumn.jpg', cap: 'Red maple leaf in autumn',
-    q: 'Which neighboring country also celebrates Thanksgiving, but holds it in October instead of November?',
-    opts: ['Canada', 'Mexico', 'Iceland', 'Ireland'], answer: 'Canada',
-    fact: 'Canada celebrates Thanksgiving on the second Monday in October, because autumn harvests happen earlier farther north.'
+    id: 'canada', chip: 'Canada in October', tag: 'Nature · Northern Fall', tagCls: 'bio', img: 'img/canada_autumn.jpg', cap: 'Red maple leaf in fall',
+    q: 'Which country right next door to us celebrates Thanksgiving earlier, in October?',
+    opts: ['Canada', 'Mexico', 'Australia'], answer: 'Canada',
+    fact: 'Canada celebrates Thanksgiving in October because fall comes earlier farther north.'
   },
   {
-    id: 'wishbone', chip: 'The Wishbone', tag: 'Traditions · Family Fun', img: 'img/roast_turkey.jpg', cap: 'Traditional Thanksgiving dinner table',
-    q: 'After Thanksgiving dinner, what playful tradition uses a dried Y-shaped bone from the turkey?',
-    opts: ['Pulling it to make a wish', 'Using it as a soup spoon', 'Hanging it on the chimney', 'Planting it in the garden'], answer: 'Pulling it to make a wish',
-    fact: 'Two people each pull one side of the wishbone. Tradition says whoever holds the bigger piece gets to make a secret wish.'
+    id: 'wishbone', chip: 'The Wishbone', tag: 'Traditions · Family Fun', img: 'img/roast_turkey.jpg', cap: 'Thanksgiving dinner table',
+    q: 'What fun game do two people play with a dried Y-shaped turkey bone after dinner?',
+    opts: ['Pull it to make a wish', 'Use it as a spoon', 'Paint it like a tree'], answer: 'Pull it to make a wish',
+    fact: 'Two people each pull one side of the wishbone. Whoever gets the bigger piece gets to make a wish.'
   },
   {
-    id: 'gratitude', chip: 'Giving Thanks', tag: 'Traditions · Giving Thanks', img: 'img/pecan_pie.jpg', cap: 'Warm holiday pecan pie ready to share',
-    q: 'Besides sharing a big meal and watching parades, what is the main idea behind Thanksgiving?',
-    opts: ['Appreciating family and giving thanks', 'Celebrating the start of spring planting', 'Marking Independence Day in summer', 'Exchanging holiday winter presents'], answer: 'Appreciating family and giving thanks',
-    fact: 'Thanksgiving is a day to slow down with family and friends, appreciate the harvest and the people in our lives, and give thanks.'
+    id: 'gratitude', chip: 'Giving Thanks', tag: 'Traditions · Thankful', img: 'img/pecan_pie.jpg', cap: 'Warm holiday pecan pie ready to share',
+    q: 'What is the most important idea of Thanksgiving Day?',
+    opts: ['Being thankful with family', 'Opening winter presents', 'Watching summer fireworks'], answer: 'Being thankful with family',
+    fact: 'Thanksgiving is a special day to slow down, enjoy family and friends, and say thank you for good things.'
   }
 ];
 
@@ -1074,218 +1109,217 @@ const QUIZ_ITEMS = [
 const MAP_LOCATIONS = {
   leiden: {
     id: 'leiden', region: 'atlantic', name: 'Leiden, Netherlands', lat: 52.16, lon: 4.49, img: 'img/leiden.jpg', lbl: 'above',
-    day: 'Before 1620', miles: 0, status: 'Living in Holland',
-    q: 'Before sailing to America, the Pilgrims lived for 11 years in this historic canal city in Europe. Tap the Netherlands.',
-    fact: 'The Pilgrims lived in Leiden, Netherlands for religious freedom before deciding to build a new community across the ocean.',
-    factClip: 'mf_leiden', nudge: 'Look in mainland Europe, just east across the North Sea from England.'
+    day: 'Before 1620', miles: 0, status: 'In Europe',
+    q: 'Before sailing to America, the Pilgrims lived by canals in Europe. Tap Leiden, Netherlands.',
+    fact: 'The Pilgrims lived in Leiden, Netherlands for 11 years before sailing across the ocean.',
+    factClip: 'mf_leiden', nudge: 'Look in Europe, just east of England.'
   },
   plymouth_uk: {
     id: 'plymouth_uk', region: 'atlantic', name: 'Plymouth, England', lat: 50.37, lon: -4.14, img: 'img/plymouth_uk.jpg', lbl: 'below',
     day: 'Day 1 · Sept 1620', miles: 0, status: '102 aboard',
-    q: 'In September 1620, the Mayflower set sail from this harbor city in England. Tap Plymouth, England on the map.',
-    fact: 'Plymouth, England was the Mayflower\'s final departure port before crossing the Atlantic Ocean. Today you can visit the famous Mayflower Steps there.',
-    factClip: 'mf_plymouth_uk', nudge: 'Look across the Atlantic Ocean on the southern coast of Britain.'
+    q: 'The Mayflower started its big ocean trip from England. Tap Plymouth, England.',
+    fact: 'Plymouth, England was the harbor where the Mayflower set sail across the Atlantic Ocean.',
+    factClip: 'mf_plymouth_uk', nudge: 'Look on the right side of the ocean, in England.'
   },
   capecod: {
     id: 'capecod', region: 'massbay', name: 'Cape Cod', lat: 42.052, lon: -70.184, img: 'img/cape_cod.jpg', lbl: 'right',
-    day: 'Day 66 · Nov 1620', miles: 3000, status: 'Landfall',
-    q: 'Winter winds pushed the Mayflower north to this hooked sandy peninsula, where passengers signed the Mayflower Compact. Tap Cape Cod.',
-    fact: 'Carved by Ice Age glaciers, Cape Cod\'s hooked sandy peninsula was where the Mayflower first anchored in November 1620 and signed the Mayflower Compact.',
-    factClip: 'mf_capecod_bio', nudge: 'Look on the east side of the bay for the curved hook of land sticking into the ocean.'
+    day: 'Day 66 · Nov 1620', miles: 3000, status: 'Land!',
+    q: 'Strong winds pushed the ship to this curved, sandy hook of land. Tap Cape Cod.',
+    fact: 'Ice Age glaciers made Cape Cod\'s sandy hook. The Mayflower stopped here first and signed the Mayflower Compact.',
+    factClip: 'mf_capecod_bio', nudge: 'Look on the right side of the bay for the curved hook of land.'
   },
   plymouth_ma: {
     id: 'plymouth_ma', region: 'massbay', name: 'Plymouth, MA', lat: 41.958, lon: -70.667, img: 'img/mayflower.jpg', lbl: 'left',
     day: 'Dec 1620 · Plymouth', miles: 3025, status: 'Safe Harbor',
-    q: 'After exploring Cape Cod, the Pilgrims sailed across the bay and built their village here in Massachusetts. Tap Plymouth, Massachusetts.',
-    fact: 'Across Cape Cod Bay from the tip of Cape Cod, Plymouth\'s sheltered harbor offered fresh streams, herring-filled rivers, and rich ocean shellfish.',
-    factClip: 'mf_plymouth_ma_bio', nudge: 'Look directly west across Cape Cod Bay on the mainland shore.'
+    q: 'Next, the Pilgrims sailed across the bay to build their new town. Tap Plymouth, MA.',
+    fact: 'Across the bay from Cape Cod, Plymouth had a calm harbor, fresh water streams, and clams on the beach.',
+    factClip: 'mf_plymouth_ma_bio', nudge: 'Look across the water to the left side of the bay.'
   },
   virginia: {
-    id: 'virginia', region: 'atlantic', name: 'Virginia', lat: 37.21, lon: -76.78, img: 'img/virginia_coast.jpg', lbl: 'below',
-    day: 'Original Goal', miles: 3025, status: '400 mi south',
-    q: 'The Mayflower passengers actually had a permit to settle much farther south along the East Coast. Tap Virginia.',
-    fact: 'Strong autumn storms and shallow shoals kept the Mayflower from reaching milder Virginia, so the settlers stayed in snowy Massachusetts instead.',
-    factClip: 'mf_virginia', nudge: 'Look farther south down the East Coast of the United States.'
+    id: 'virginia', region: 'us', name: 'Virginia', lat: 37.21, lon: -76.78, img: 'img/virginia_coast.jpg', lbl: 'below',
+    q: 'The Mayflower was supposed to sail much farther south to warmer weather. Tap Virginia.',
+    fact: 'Big fall storms stopped the Mayflower from reaching warm Virginia, so the settlers stayed in snowy Massachusetts.',
+    factClip: 'mf_virginia', nudge: 'Look down the East Coast for Virginia.'
   },
   nyc: {
     id: 'nyc', region: 'us', name: 'New York City', lat: 40.76, lon: -73.98, img: 'img/macys_parade.jpg', lbl: 'right',
-    q: 'Giant character balloons float past skyscrapers every Thanksgiving morning in the Macy\'s Parade here. Tap New York City.',
-    fact: 'New York City has hosted the Macy\'s Thanksgiving Day Parade since 1924, marching down Manhattan to Herald Square.',
-    factClip: 'mf_nyc', nudge: 'Look on the Northeast Atlantic coast, southwest of Massachusetts.'
+    q: 'Giant holiday balloons float down city streets in the Macy\'s Parade here. Tap New York City.',
+    fact: 'New York City has hosted the Macy\'s Thanksgiving Day Parade with giant balloons since 1924.',
+    factClip: 'mf_nyc', nudge: 'Look on the East Coast for New York City.'
   },
   dc: {
     id: 'dc', region: 'us', name: 'Washington, D.C.', lat: 38.90, lon: -77.04, img: 'img/white_house.jpg', lbl: 'left',
-    q: 'Lincoln declared Thanksgiving a national holiday here, and presidents pardon a turkey at the White House every fall. Tap Washington, D.C.',
-    fact: 'Washington, D.C. is the capital of the United States, where the White House Thanksgiving turkey pardon takes place each November.',
-    factClip: 'mf_dc', nudge: 'Look on the Mid-Atlantic coast between Maryland and Virginia.'
+    q: 'The president pardons a lucky turkey at the White House here. Tap Washington, D.C.',
+    fact: 'Washington, D.C. is the capital of the United States, where the president pardons Thanksgiving turkeys.',
+    factClip: 'mf_dc', nudge: 'Look near the East Coast for Washington, D.C.'
   },
   mass: {
     id: 'mass', region: 'us', name: 'Massachusetts', lat: 42.30, lon: -71.35, img: 'img/cranberry_bog.jpg', lbl: 'right',
-    q: 'Flooded bogs turn bright red every autumn in this New England state, one of America\'s top cranberry growers. Tap Massachusetts.',
-    fact: 'Acidic, sandy glacial bogs help Massachusetts grow millions of pounds of native cranberries every year — right near Plymouth.',
-    factClip: 'mf_mass', nudge: 'Look in southern New England along the Atlantic coast.'
+    q: 'Farmers flood sandy bogs here to harvest bright red cranberries. Tap Massachusetts.',
+    fact: 'Wet sandy bogs help Massachusetts grow millions of pounds of red cranberries every fall.',
+    factClip: 'mf_mass', nudge: 'Look in the northeast corner by the ocean for Massachusetts.'
   },
   illinois: {
     id: 'illinois', region: 'us', name: 'Illinois', lat: 40.35, lon: -89.35, img: 'img/pumpkin_farm.jpg', lbl: 'above',
-    q: 'This Midwest state grows more pumpkins than any other state in the United States. Tap Illinois.',
-    fact: 'Deep, fertile Midwest prairie soils left by ancient glaciers make Illinois America\'s top pumpkin state, growing over 80% of US canned pumpkin.',
-    factClip: 'mf_illinois_bio', nudge: 'Look in the Midwest, just south of Lake Michigan.'
+    q: 'Rich dark soil helps this state grow the most pumpkins in America. Tap Illinois.',
+    fact: 'Deep rich farm dirt helps Illinois grow more pumpkins than any other state.',
+    factClip: 'mf_illinois_bio', nudge: 'Look in the middle of the map for Illinois.'
   },
   minnesota: {
     id: 'minnesota', region: 'us', name: 'Minnesota', lat: 45.80, lon: -94.20, img: 'img/wild_turkey.jpg', lbl: 'above',
-    q: 'This northern Midwest state raises more turkeys than any other state in America. Tap Minnesota.',
-    fact: 'Minnesota raises around 40 million turkeys every year, supported by the grain-rich soils of the northern plains.',
-    factClip: 'mf_minnesota', nudge: 'Look far north in the upper Midwest, bordering Canada and Lake Superior.'
+    q: 'This northern state raises more turkeys than any other state. Tap Minnesota.',
+    fact: 'Minnesota farms raise around 40 million turkeys every year.',
+    factClip: 'mf_minnesota', nudge: 'Look near the top middle of the map for Minnesota.'
   },
   nc: {
     id: 'nc', region: 'us', name: 'North Carolina', lat: 35.60, lon: -79.20, img: 'img/sweet_potatoes.jpg', lbl: 'right',
-    q: 'Warm sandy soil helps this East Coast state grow more than half of all US sweet potatoes. Tap North Carolina.',
-    fact: 'Warm, sandy coastal-plain soils and a long sunny growing season allow North Carolina to grow more than half of all US sweet potatoes.',
-    factClip: 'mf_nc_bio', nudge: 'Look on the Southeast Atlantic coast, south of Virginia.'
+    q: 'Warm sandy soil helps this state grow most of our sweet potatoes. Tap North Carolina.',
+    fact: 'Warm sunny weather and sandy dirt make North Carolina America\'s top sweet potato state.',
+    factClip: 'mf_nc_bio', nudge: 'Look on the Southeast coast for North Carolina.'
   },
   detroit: {
     id: 'detroit', region: 'us', name: 'Detroit, Michigan', lat: 42.33, lon: -83.05, img: 'img/football.jpg', lbl: 'above',
-    q: 'Since 1934, football fans have watched the Lions play a Thanksgiving game in this Michigan city. Tap Detroit.',
-    fact: 'Detroit, Michigan started the pro Thanksgiving football tradition in 1934 to bring fans out to the stadium on the holiday.',
-    factClip: 'mf_detroit', nudge: 'Look in the Great Lakes region, in southeastern Michigan.'
+    q: 'The Lions football team has played on Thanksgiving here since 1934. Tap Detroit, Michigan.',
+    fact: 'Detroit, Michigan started the pro Thanksgiving football tradition way back in 1934.',
+    factClip: 'mf_detroit', nudge: 'Look by the Great Lakes for Detroit, Michigan.'
   },
   vermont: {
     id: 'vermont', region: 'us', name: 'Vermont', lat: 44.26, lon: -72.58, img: 'img/vermont_maple.jpg', lbl: 'above',
-    q: 'This northern New England state makes nearly half of all American maple syrup from sugar maple trees. Tap Vermont.',
-    fact: 'Vermont produces millions of gallons of golden maple syrup when freezing nights and sunny late-winter days make the sugar maple sap flow.',
-    factClip: 'mf_vermont', nudge: 'Look in northern New England, directly north of Massachusetts.'
+    q: 'Tall sugar maple trees here make nearly half of America\'s maple syrup. Tap Vermont.',
+    fact: 'Vermont makes millions of gallons of sweet golden maple syrup from sugar maple trees.',
+    factClip: 'mf_vermont', nudge: 'Look up in the northeast for Vermont.'
   },
   georgia: {
     id: 'georgia', region: 'us', name: 'Georgia', lat: 32.70, lon: -83.40, img: 'img/pecan_pie.jpg', lbl: 'below',
-    q: 'This sunny southern state is famous for growing buttery pecans used in holiday pecan pie. Tap Georgia.',
-    fact: 'Georgia\'s warm, humid Deep South climate makes it a top grower of pecans, the only major tree nut native to North America.',
-    factClip: 'mf_georgia', nudge: 'Look in the Deep South, just north of Florida.'
+    q: 'This warm southern state grows buttery pecans for pecan pie. Tap Georgia.',
+    fact: 'Georgia\'s warm weather makes it a top place to grow pecans, a nut native to North America.',
+    factClip: 'mf_georgia', nudge: 'Look near the bottom right of the map for Georgia.'
   }
 };
 
-// Balanced-length Oregon Trail Mid-Atlantic Events with real historical wrong-choice consequences!
+// Kid-friendly Oregon Trail Mid-Atlantic Events with real historical wrong-choice consequences
 const SEA_EVENTS = [
   {
     id: 'ev_beam', kind: 'event', region: 'atlantic',
     lat: 47.9, lon: -23.0, day: 'Day 24 of 66', miles: 1050, status: 'Beam Cracked',
-    title: 'North Atlantic Gale — Cracked Main Beam',
+    title: 'Big Storm — Cracked Ship Beam',
     badge: 'Day 24 · Mid-Atlantic Storm',
     img: 'img/atlantic_storm.jpg',
-    q: 'A fierce North Atlantic gale slams the Mayflower and cracks a giant wooden support beam. Captain Jones thinks they may have to turn back to England. What should the passengers do?',
+    q: 'A big storm hits the Mayflower and cracks a giant wooden beam. What should the passengers do?',
     opts: [
-      { id: 'screw', text: 'Brace the beam using a giant iron jackscrew from cargo' },
-      { id: 'turn', text: 'Turn the damaged ship around and sail back to England', why: 'Captain Jones thought about turning back, which would have wasted the whole voyage, until the crew spotted a better fix in the cargo hold.', whyClip: 'why_beam_turn' },
-      { id: 'caulk', text: 'Wrap the cracked oak beam tightly with rope and pine tar', why: 'Rope and pine tar could seal small leaks, but they were not strong enough to hold up a snapped oak deck beam in crashing waves.', whyClip: 'why_beam_caulk' }
+      { id: 'screw', text: 'Lift it with a giant iron screw' },
+      { id: 'turn', text: 'Turn around and sail home', why: 'Turning back meant giving up the whole trip, and they had a strong tool to fix it.', whyClip: 'why_beam_turn' },
+      { id: 'caulk', text: 'Wrap it up with rope', why: 'Rope was not strong enough to hold up a giant heavy beam in big waves.', whyClip: 'why_beam_caulk' }
     ],
     answer: 'screw',
-    outcome: 'History says they saved the ship! The passengers pulled a giant iron jackscrew from their cargo hold and bolted the cracked main beam tightly back into place so the Mayflower could keep sailing west.',
-    fixedStatus: 'Beam Braced Safely',
+    outcome: 'They saved the ship. They found a giant iron screw in the cargo and lifted the cracked beam tightly back into place.',
+    fixedStatus: 'Beam Fixed Safely',
     qClip: 'ev_beam_q', fClip: 'ev_beam_f'
   },
   {
     id: 'ev_current', kind: 'event', region: 'atlantic',
-    lat: 45.2, lon: -42.5, day: 'Day 38 of 66', miles: 1850, status: 'Fierce Headwinds',
-    title: 'Ocean Currents & Right Whales',
-    badge: 'Day 38 · Oceanography & Wildlife',
+    lat: 45.2, lon: -42.5, day: 'Day 38 of 66', miles: 1850, status: 'Strong Winds',
+    title: 'Ocean Winds & Big Whales',
+    badge: 'Day 38 · Mid-Ocean',
     img: 'img/right_whale.jpg',
-    q: 'Halfway across the ocean, North Atlantic right whales breach beside the ship, yet the Mayflower crawls slowly against fierce headwinds. Why is sailing west across the North Atlantic so tough in autumn?',
+    q: 'Big whales swim beside the ship, but the Mayflower moves very slowly. Why is sailing west across the ocean so hard?',
     opts: [
-      { id: 'wind', text: 'Westerly winds and the Gulf Stream push against the ship' },
-      { id: 'calm', text: 'Autumn leaves the middle of the Atlantic with zero wind', why: 'The North Atlantic in autumn was the opposite of calm. Fierce headwinds battered the sails week after week.', whyClip: 'why_cur_calm' },
-      { id: 'ice', text: 'Drifting Arctic icebergs block the sea lanes in October', why: 'Spring icebergs drift near Newfoundland, but autumn storms and winds were the real barrier slowing the Mayflower down.', whyClip: 'why_cur_ice' }
+      { id: 'wind', text: 'Strong winds push the ship back' },
+      { id: 'calm', text: 'There is no wind at all', why: 'The fall ocean was super windy, not calm at all.', whyClip: 'why_cur_calm' },
+      { id: 'ice', text: 'Giant icebergs block the whole sea', why: 'It was strong wind and currents, not icebergs, that slowed them down.', whyClip: 'why_cur_ice' }
     ],
     answer: 'wind',
-    outcome: 'Prevailing westerly winds and the warm Gulf Stream current both push from west to east across the North Atlantic. Sailing to America took 66 stormy days, while the Mayflower\'s return trip to England took only 31 days.',
-    fixedStatus: 'Tacking Westward',
+    outcome: 'Strong winds and ocean currents pushed against the sails. Going to America took 66 days, while sailing back to England took only 31 days.',
+    fixedStatus: 'Sailing Westward',
     qClip: 'ev_current_q', fClip: 'ev_current_f'
   },
   {
     id: 'ev_rations', kind: 'event', region: 'atlantic',
-    lat: 43.3, lon: -58.0, day: 'Day 52 of 66', miles: 2500, status: '103 Aboard (+Oceanus)',
-    title: 'Sea Rations & A Baby Born at Sea',
-    badge: 'Day 52 · Near the Grand Banks',
+    lat: 43.3, lon: -58.0, day: 'Day 52 of 66', miles: 2500, status: 'Baby Oceanus Born',
+    title: 'Ship Food & A Baby at Sea',
+    badge: 'Day 52 · Almost There',
     img: 'img/ship_deck.jpg',
-    q: 'Fresh water barrels have gone stale, storm waves soak the deck, and a baby boy named Oceanus Hopkins is born aboard ship. What food kept the 102 passengers alive without refrigerators?',
+    q: 'A baby boy named Oceanus is born on the ship. There are no fridges on board. What food keeps everyone fed?',
     opts: [
-      { id: 'salted', text: 'Salted meat, hardtack biscuits, dried peas, and small beer' },
-      { id: 'fish', text: 'Fresh codfish caught off the deck during storms each day', why: 'Fishing from a rolling wooden ship in autumn gales was far too dangerous and unreliable to feed 102 passengers every day.', whyClip: 'why_rat_fish' },
-      { id: 'fresh', text: 'Fresh baked loaves, milk, and leafy greens stored below deck', why: 'Without refrigerators, fresh bread, milk, and greens spoiled within the first two weeks at sea.', whyClip: 'why_rat_fresh' }
+      { id: 'salted', text: 'Salted meat and dry biscuits' },
+      { id: 'fish', text: 'Fresh fish caught in the storms', why: 'The waves were way too wild for fishing off the deck every day.', whyClip: 'why_rat_fish' },
+      { id: 'fresh', text: 'Fresh milk and soft bread', why: 'Without a fridge, fresh milk and soft bread spoiled in just a few days.', whyClip: 'why_rat_fresh' }
     ],
     answer: 'salted',
-    outcome: 'Without refrigeration, passengers survived on salted beef and pork, hardtack biscuits, dried peas, cheese, and weak "small beer," which stayed safer to drink than stale barrel water.',
-    fixedStatus: 'Land Approaching',
+    outcome: 'People ate salted meat, hard dry biscuits, cheese, and dried peas because those foods did not spoil on the long trip.',
+    fixedStatus: 'Land Ahead',
     qClip: 'ev_rations_q', fClip: 'ev_rations_f'
   }
 ];
 
-// Balanced-length First-Year Plymouth Colony Survival Events with real consequences!
+// Kid-friendly First-Year Plymouth Colony Survival Events
 const COLONY_EVENTS = [
   {
     id: 'col_winter', kind: 'colony', region: 'massbay',
-    lat: 41.958, lon: -70.667, day: 'Jan 1621 · Winter', miles: 3025, status: 'Sickness & Cold',
-    title: 'The Brutal First Winter & Scurvy',
-    badge: 'Jan 1621 · Plymouth Survival',
+    lat: 41.958, lon: -70.667, day: 'Jan 1621 · Winter', miles: 3025, status: 'Cold & Sickness',
+    title: 'The Cold First Winter',
+    badge: 'Jan 1621 · Plymouth',
     img: 'img/winter_snow.jpg',
-    q: 'Freezing snow falls before houses are finished, and half the settlers grow sick with scurvy and winter fever after months without fresh food. How does the small settlement survive?',
+    q: 'Freezing snow falls, and many people get sick from the cold and no fresh fruit. How does the little town make it through winter?',
     opts: [
-      { id: 'care', text: 'Keep a fire burning, shelter sick on ship, and dig shellfish' },
-      { id: 'march', text: 'March south through winter forests toward milder Virginia', why: 'Virginia was over 400 miles away through deep snow and dense forest, with no roads and dozens of sick passengers.', whyClip: 'why_win_march' },
-      { id: 'tents', text: 'Pitch canvas sailing tents on the frozen beach until spring', why: 'Thin cloth tents could not keep out freezing New England snowstorms and icy ocean winds.', whyClip: 'why_win_tents' }
+      { id: 'care', text: 'Keep fires lit and share soup' },
+      { id: 'march', text: 'Walk far south through the snow', why: 'Warm Virginia was hundreds of miles away through deep snow with no roads.', whyClip: 'why_win_march' },
+      { id: 'tents', text: 'Sleep in cloth tents on the beach', why: 'Thin cloth tents could not keep out freezing snowstorms.', whyClip: 'why_win_tents' }
     ],
     answer: 'care',
-    outcome: 'That brutal first winter took nearly half of the 102 passengers. Scurvy came from lacking Vitamin C at sea. A tiny group of healthy colonists kept the Common House fire lit, sheltered people aboard the Mayflower, and cooked broth and shellfish until spring arrived.',
-    fixedStatus: 'Survived to Spring',
+    outcome: 'That first winter was very hard. Healthy neighbors kept warm fires going, sheltered sick folks on the ship, and cooked soup and clams until spring came.',
+    fixedStatus: 'Made It to Spring',
     qClip: 'col_winter_q', fClip: 'col_winter_f'
   },
   {
     id: 'col_houses', kind: 'colony', region: 'massbay',
-    lat: 41.958, lon: -70.667, day: 'Winter 1621 · Building', miles: 3025, status: 'Need Shelter',
-    title: 'Building Plymouth\'s First Houses',
-    badge: 'Winter 1621 · Timber & Thatch',
+    lat: 41.958, lon: -70.667, day: 'Winter 1621 · Houses', miles: 3025, status: 'Building Homes',
+    title: 'Building First Houses',
+    badge: 'Winter 1621 · Cottages',
     img: 'img/colony_houses.jpg',
-    q: 'There are no brick factories, glass shops, or hardware stores in Plymouth. Using local New England oak trees, clay, and marsh reeds, how do the colonists build their first houses?',
+    q: 'There are no brick shops or glass stores in Plymouth. How do the settlers build their first cozy cottages?',
     opts: [
-      { id: 'thatch', text: 'Oak frames, mud-straw walls, reed roofs, and oiled paper' },
-      { id: 'brick', text: 'Fire red bricks and glass panes using coastal beach sand', why: 'Plymouth had no brick kilns, glass factories, or supply towns nearby, so colonists had to build with local woods and marsh reeds.', whyClip: 'why_hou_brick' },
-      { id: 'stone', text: 'Stack heavy granite boulders and slate slabs into stone walls', why: 'Cutting and mortaring heavy granite walls took too much time and tools in freezing winter weather.', whyClip: 'why_hou_stone' }
+      { id: 'thatch', text: 'Oak logs, mud walls, and reed roofs' },
+      { id: 'brick', text: 'Red bricks and shiny glass windows', why: 'They had no brick ovens or glass factories in their brand-new town.', whyClip: 'why_hou_brick' },
+      { id: 'stone', text: 'Giant stone castles from boulders', why: 'Heavy stone castles took too much time and tools in freezing winter weather.', whyClip: 'why_hou_stone' }
     ],
     answer: 'thatch',
-    outcome: 'Colonists split oak logs into timber frames and clapboards, packed mud and straw into the walls, bundled dried marsh reeds into thick thatched roofs, and used oiled paper or wooden shutters instead of glass windows.',
+    outcome: 'They cut oak trees for frames, packed mud and straw into the walls, tied marsh reeds for roofs, and used oiled paper in the windows.',
     fixedStatus: '7 Cottages Built',
     qClip: 'col_houses_q', fClip: 'col_houses_f'
   },
   {
     id: 'col_farm', kind: 'colony', region: 'massbay',
-    lat: 41.958, lon: -70.667, day: 'Spring 1621 · Planting', miles: 3025, status: 'Sandy Soil',
-    title: 'Farming Without Plows or Oxen',
-    badge: 'Spring 1621 · Early Farms',
+    lat: 41.958, lon: -70.667, day: 'Spring 1621 · Farms', miles: 3025, status: 'Planting Corn',
+    title: 'Planting Without Plows',
+    badge: 'Spring 1621 · Gardens',
     img: 'img/colony_farm.jpg',
-    q: 'You have no horses, cows, or plows yet, and your English wheat seeds are struggling in Plymouth\'s sandy, rocky glacial soil. How do you grow enough food to survive the next winter?',
+    q: 'There are no horses or plows in Plymouth, and the dirt is sandy and rocky. How do you grow enough food for next winter?',
     opts: [
-      { id: 'mounds', text: 'Hoe soil mounds with herring, corn, beans, and squash' },
-      { id: 'wheat', text: 'Broadcast more English wheat seed across cleared pastures', why: 'English wheat and barley struggled in Plymouth\'s sandy, acidic glacial soil and did not produce enough grain to survive winter.', whyClip: 'why_far_wheat' },
-      { id: 'barley', text: 'Dig long flat furrows by hand for English barley and oats', why: 'Without oxen or plows, turning rocky forest soil for European grain fields alone could not feed the colony.', whyClip: 'why_far_barley' }
+      { id: 'mounds', text: 'Dig dirt hills with fish and corn' },
+      { id: 'wheat', text: 'Toss wheat seeds on the grass', why: 'English wheat did not grow well in Plymouth\'s sandy, rocky dirt.', whyClip: 'why_far_wheat' },
+      { id: 'barley', text: 'Wait for wild berries all year', why: 'Wild berries disappeared in winter, so they needed big fields of corn.', whyClip: 'why_far_barley' }
     ],
     answer: 'mounds',
-    outcome: 'Without plows or oxen, colonists hoed 20 acres by hand. Following Wampanoag farming wisdom, they buried migrating spring herring in raised soil mounds and planted hardy native flint corn, beans, and squash.',
-    fixedStatus: '20 Acres Planted',
+    outcome: 'With help from their Wampanoag neighbors, settlers dug dirt hills by hand, tucked in small fish to feed the soil, and planted hardy corn, beans, and squash.',
+    fixedStatus: 'Gardens Growing',
     qClip: 'col_farm_q', fClip: 'col_farm_f'
   },
   {
     id: 'col_roads', kind: 'colony', region: 'massbay',
-    lat: 41.958, lon: -70.667, day: 'Summer 1621 · Travel', miles: 3025, status: 'No Paved Roads',
-    title: 'Roads, Footpaths & Coastal Boats',
+    lat: 41.958, lon: -70.667, day: 'Summer 1621 · Travel', miles: 3025, status: 'Boats & Paths',
+    title: 'Roads, Paths & Boats',
     badge: 'Summer 1621 · Getting Around',
     img: 'img/leyden_street.jpg',
-    q: 'There are no paved highways, bridges, or wagons anywhere in New England. How do people move heavy supplies and travel between coastal villages?',
+    q: 'There are no paved roads, cars, or bridges in Plymouth. How do people carry supplies and visit nearby towns?',
     opts: [
-      { id: 'boats', text: 'Sail coastal shallops and walk Leyden Street and forest paths' },
-      { id: 'wagons', text: 'Haul wooden supply wagons overland down wide cleared roads', why: 'Plymouth had no horses, oxen, or wide cleared roads for heavy wheeled wagons in 1621.', whyClip: 'why_roa_wagons' },
-      { id: 'bridges', text: 'Build stone bridges across bays and rivers to link villages', why: 'Building stone bridges across wide coastal rivers was far beyond the tools and size of the tiny 1621 settlement.', whyClip: 'why_roa_bridges' }
+      { id: 'boats', text: 'Sail small boats and walk paths' },
+      { id: 'wagons', text: 'Drive big wagons on highways', why: 'There were no horses, wagons, or wide paved roads in 1621.', whyClip: 'why_roa_wagons' },
+      { id: 'bridges', text: 'Build giant stone bridges over bays', why: 'The little town did not have the tools to build big bridges.', whyClip: 'why_roa_bridges' }
     ],
     answer: 'boats',
-    outcome: 'Plymouth laid out one packed-dirt lane, Leyden Street, uphill from the harbor. For longer trips, people traveled mainly by small sailing boats called shallops along bays and rivers, or walked narrow worn forest trails.',
-    fixedStatus: 'Coastal Trade Open',
+    outcome: 'Plymouth built one dirt lane up from the water called Leyden Street. For longer trips, people sailed small wooden boats or walked forest trails.',
+    fixedStatus: 'Boats Sailing',
     qClip: 'col_roads_q', fClip: 'col_roads_f'
   }
 ];
@@ -1298,8 +1332,8 @@ function renderHome() {
   const qSeen = Object.keys(S.seenQuiz).length;
   const mSeen = Object.keys(S.seenMap).length;
   const mTotal = Object.keys(MAP_LOCATIONS).length + SEA_EVENTS.length + COLONY_EVENTS.length;
-  $('meta-quiz').textContent = `10 questions per round · ${qSeen} of ${QUIZ_ITEMS.length} explored`;
-  $('meta-map').textContent = `10 stops & sea events · ${mSeen} of ${mTotal} explored`;
+  $('meta-quiz').textContent = `8 questions per round · ${qSeen} of ${QUIZ_ITEMS.length} explored`;
+  $('meta-map').textContent = `8 stops & sea events · ${mSeen} of ${mTotal} explored`;
   const totalR = (S.stats.quiz.rounds || 0) + (S.stats.map.rounds || 0);
   $('home-stats').textContent = totalR ? `${totalR} round${totalR === 1 ? '' : 's'} played` : 'Tap a game to begin.';
 }
@@ -1334,7 +1368,7 @@ function setTrack(prefix, idx, total) {
 
 function startQuiz() {
   stopVoice(); clearToast();
-  Q.items = pickFresh(QUIZ_ITEMS, S.seenQuiz, 10);
+  Q.items = pickFresh(QUIZ_ITEMS, S.seenQuiz, 8);
   Q.i = 0; Q.ok = 0; Q.chips = [];
   show('s-quiz');
   renderQuizStep();
@@ -1349,7 +1383,7 @@ function renderQuizBar(showNext) {
   if ($('q-read-opts')) {
     $('q-read-opts').addEventListener('click', () => {
       sfxPop();
-      readChoicesSequentially('#q-choices .choice-wrap', r => r.dataset.v);
+      readChoicesSequentially('#q-choices .choice-wrap', r => r.dataset.clip, r => r.dataset.v);
     });
   }
   if (showNext) {
@@ -1387,25 +1421,29 @@ function renderQuizStep() {
         <div id="q-fact-slot"></div>
       </div>
     </div>
-    <div class="choices" id="q-choices">
-      ${opts.map(o => `<div class="choice-wrap" data-v="${o.replace(/"/g, '&quot;')}">
+    <div class="choices ${opts.length === 3 ? 'three' : ''}" id="q-choices">
+      ${opts.map(o => {
+        const oIdx = item.opts.indexOf(o);
+        return `<div class="choice-wrap" data-v="${o.replace(/"/g, '&quot;')}" data-clip="qo_${item.id}_${oIdx}">
         <button class="choice-main">${item.binary ? binIconFor(o) : ''}<span>${o}</span></button>
         <button class="choice-say" aria-label="Read choice aloud" title="Hear this choice">${ICONS.voiceOn}</button>
-      </div>`).join('')}
+      </div>`;
+      }).join('')}
     </div>
   `;
   renderQuizBar(false);
   playVoice(Q.curClip, Q.curText, false);
 
   document.querySelectorAll('#q-choices .choice-wrap').forEach(wrap => {
-    // Tap speaker icon on right of any option to hear just that option (ideal for 4-6 year old pre-readers)
+    // Tap speaker icon on right of any option to hear just that option in the same slow neural voice
     wrap.querySelector('.choice-say').addEventListener('click', e => {
       e.stopPropagation();
       if (wrap.classList.contains('dim')) return;
       stopVoice();
       sfxPop();
+      const mySeq = ++speechSeq;
       wrap.classList.add('speaking');
-      speakTextPromise(wrap.dataset.v).then(() => wrap.classList.remove('speaking'));
+      playClipPromise(wrap.dataset.clip, wrap.dataset.v, mySeq).then(() => wrap.classList.remove('speaking'));
     });
 
     wrap.querySelector('.choice-main').addEventListener('click', () => {
@@ -1646,11 +1684,11 @@ function updateVoyageLog(day, miles, status, isGood) {
 function startMapGame() {
   stopVoice(); clearToast(); cancelSail();
   M.runToken++;
-  // Rotate Europe start between Plymouth England and Leiden Netherlands so all 21 locations/events are reachable!
+  // Rotate Europe start between Plymouth England and Leiden Netherlands so all 21 locations/events are reachable
   const euroStart = (S.seenMap.plymouth_uk || 0) > (S.seenMap.leiden || 0) ? MAP_LOCATIONS.leiden : MAP_LOCATIONS.plymouth_uk;
   const events = shuffle(SEA_EVENTS).slice(0, 2).sort((a, b) => a.miles - b.miles);
   const colonyEv = pickFresh(COLONY_EVENTS, S.seenMap, 1)[0];
-  const usStops = pickFresh(US_LOC_LIST, S.seenMap, 3).map(loc => ({ kind: 'pin', loc }));
+  const usStops = pickFresh(US_LOC_LIST, S.seenMap, 2).map(loc => ({ kind: 'pin', loc }));
 
   M.steps = [
     { kind: 'pin', loc: euroStart },
@@ -1658,11 +1696,10 @@ function startMapGame() {
     { kind: 'pin', loc: MAP_LOCATIONS.capecod },
     { kind: 'pin', loc: MAP_LOCATIONS.plymouth_ma },
     colonyEv,
-    { kind: 'pin', loc: MAP_LOCATIONS.virginia },
     ...usStops
   ];
   M.i = 0; M.ok = 0; M.chips = [];
-  // Park Mayflower cleanly offshore southwest of England so the Plymouth UK pin is 100% visible!
+  // Park Mayflower cleanly offshore southwest of England so the Plymouth UK pin is 100% visible
   M.shipLatLng = [48.6, -7.8];
 
   show('s-map');
@@ -1681,7 +1718,7 @@ function renderMapBar(showNext, nextText, canReadOpts) {
   if ($('m-read-opts')) {
     $('m-read-opts').addEventListener('click', () => {
       sfxPop();
-      readChoicesSequentially('#se-opts .se-opt-row', r => r.querySelector('.se-opt-btn').textContent);
+      readChoicesSequentially('#se-opts .se-opt-row', r => r.dataset.clip, r => r.querySelector('.se-opt-btn').textContent);
     });
   }
   if (showNext) {
@@ -1810,7 +1847,7 @@ function openSeaEvent(ev, nextLbl) {
   outEl.classList.remove('warn');
 
   const opts = shuffle(ev.opts);
-  $('se-opts').innerHTML = opts.map(o => `<div class="se-opt-row" data-oid="${o.id}">
+  $('se-opts').innerHTML = opts.map(o => `<div class="se-opt-row" data-oid="${o.id}" data-clip="eo_${ev.id}_${o.id}">
     <button class="se-opt-btn">${o.text}</button>
     <button class="se-opt-say" aria-label="Read choice aloud" title="Hear this choice">${ICONS.voiceOn}</button>
   </div>`).join('');
@@ -1824,8 +1861,9 @@ function openSeaEvent(ev, nextLbl) {
       e.stopPropagation();
       if (row.classList.contains('dim')) return;
       stopVoice(); sfxPop();
+      const mySeq = ++speechSeq;
       row.classList.add('speaking');
-      speakTextPromise(optObj.text).then(() => row.classList.remove('speaking'));
+      playClipPromise(row.dataset.clip, optObj.text, mySeq).then(() => row.classList.remove('speaking'));
     });
 
     row.querySelector('.se-opt-btn').addEventListener('click', () => {
@@ -1864,6 +1902,20 @@ function openSeaEvent(ev, nextLbl) {
   });
 }
 
+function pickSpacedUsPins(targetLoc) {
+  const chosen = [targetLoc];
+  const candidates = shuffle(US_LOC_LIST.filter(x => x.id !== targetLoc.id));
+  for (const minDist of [5.5, 4.0, 2.5]) {
+    for (const c of candidates) {
+      if (chosen.length >= 4) break;
+      if (chosen.includes(c)) continue;
+      const farEnough = chosen.every(p => Math.hypot(p.lat - c.lat, (p.lon - c.lon) * 0.78) >= minDist);
+      if (farEnough) chosen.push(c);
+    }
+  }
+  return chosen;
+}
+
 function renderPinsForView(activeLoc) {
   mapPinsLayer.clearLayers();
   M.pinMap = {};
@@ -1875,7 +1927,7 @@ function renderPinsForView(activeLoc) {
   } else if (activeLoc.region === 'massbay') {
     pinsToShow = [MAP_LOCATIONS.plymouth_ma, MAP_LOCATIONS.capecod];
   } else {
-    pinsToShow = US_LOC_LIST;
+    pinsToShow = pickSpacedUsPins(activeLoc);
   }
 
   pinsToShow.forEach(p => {
@@ -1884,8 +1936,8 @@ function renderPinsForView(activeLoc) {
     const icon = L.divIcon({
       className: '',
       html: `<div class="tg-pin ${isDone ? 'done' : ''}" data-pid="${p.id}"><span class="tg-lbl ${lblCls}">${p.name}</span></div>`,
-      iconSize: [34, 34],
-      iconAnchor: [17, 17]
+      iconSize: [42, 42],
+      iconAnchor: [21, 21]
     });
     const marker = L.marker([p.lat, p.lon], { icon }).addTo(mapPinsLayer);
     M.pinMap[p.id] = marker;
@@ -1934,7 +1986,7 @@ function onPinTap(p, marker) {
     el.classList.add('dim');
     $('map-hud').classList.add('oops');
     toast(item.nudge, 3200);
-    if (S.settings.autoRead) speakTextPromise(item.nudge);
+    if (S.settings.autoRead) playVoice('mn_' + item.id, item.nudge, false);
     if (M.tries >= 1) {
       const rightEl = M.pinMap[item.id]?.getElement()?.querySelector('.tg-pin');
       if (rightEl) rightEl.classList.add('hint');
@@ -1944,6 +1996,7 @@ function onPinTap(p, marker) {
 
 $('btn-map-home').addEventListener('click', () => { stopVoice(); clearToast(); cancelSail(); M.runToken++; renderHome(); show('s-home'); });
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopVoice(); });
+window.addEventListener('pagehide', () => { stopVoice(); try { voicePlayer.removeAttribute('src'); voicePlayer.load(); } catch (e) {} });
 
 // ==================== END SCREEN ====================
 let lastGame = 'quiz';
@@ -1980,14 +2033,14 @@ document.querySelectorAll('#s-parent .tab').forEach(t => t.addEventListener('cli
 function renderGuide() {
   $('pane-guide').innerHTML = `
     <h2>About Thanksgiving Explorer</h2>
-    <p>Designed for kids ages 4–8 on iPad, this app blends American history with biogeography, real photographs, classic historical art, real physical relief maps, and pre-recorded neural voice narration.</p>
+    <p>Designed for younger kids (ages 4–7) on iPad, this app blends American history with nature, real photographs, classic paintings, real relief maps, and slow, warm pre-recorded neural voice narration.</p>
     <h3>Two Games</h3>
     <ul>
-      <li><b>Thanksgiving Quiz</b> (32 questions, 10 per round): Covers the 1620 Mayflower voyage, 1621 houses, winter and scurvy, hand-hoed farms, Leyden Street, 1621 vs modern foods, biogeography (latitude and the Gulf Stream, glacial Cape Cod and cranberry bogs, native American vs Old World species, autumn deciduous foliage), US presidents and Sarah Josepha Hale, and modern traditions like the Macy's Parade, Turkey Pardon, and football.</li>
-      <li><b>Voyage &amp; US Map</b> (10 stops &amp; survival events per round): Sails an animated Mayflower across a real Leaflet Atlantic map with Oregon Trail-style mid-ocean decisions (cracked main beam, westerly winds and right whales, sea rations and baby Oceanus), zooms into high-resolution Massachusetts Bay to separate Cape Cod and Plymouth, plays a First Year in Plymouth survival challenge (first winter, timber-and-thatch houses, farming sandy glacial soil without plows, or roads and coastal boats), compares Virginia, and explores US Thanksgiving landmarks and agricultural biogeography.</li>
+      <li><b>Thanksgiving Quiz</b> (32 questions, 8 per round): Short, clear questions with 2–3 choices covering the 1620 Mayflower voyage, early Plymouth houses, winter health, hand-dug farms, boats and trails, 1621 vs modern foods, nature and weather, US presidents, and modern traditions.</li>
+      <li><b>Voyage &amp; US Map</b> (8 stops &amp; survival events per round): Sails an animated Mayflower across a real Leaflet Atlantic map with mid-ocean decisions, zooms into Massachusetts Bay for Cape Cod and Plymouth, plays a First Year in Plymouth survival challenge, and visits US harvest states with 4 well-spaced pins at a time.</li>
     </ul>
-    <h3>Audio Support for Emerging Readers</h3>
-    <p>Questions, facts, and event consequences use pre-recorded neural narration. Younger kids can also tap the speaker button on any individual answer choice, or tap <b>Read choices</b> to hear every option highlighted in turn. Older kids can toggle <b>Labels: Off</b> on the map for an extra geography challenge.</p>
+    <h3>Audio Support for Pre-Readers</h3>
+    <p>Every question, answer choice, fun fact, map clue, and survival outcome uses slow pre-recorded neural voice narration. Kids can tap the speaker button on any choice, or tap <b>Read choices</b> to hear each option highlighted in turn. You can adjust voice speed anytime in Settings.</p>
     <h3>Photo &amp; Map Credits</h3>
     <p>Photographs and classic paintings are public-domain or Creative Commons works sourced from Wikimedia Commons and stored locally for offline iPad play.</p>
   `;
@@ -2015,6 +2068,10 @@ function renderSettings() {
       <button class="pbtn" id="set-test">Test voice</button>
     </div>
     <div class="field">
+      <label>Voice speed</label>
+      ${[['slower', 'Extra slow'], ['gentle', 'Gentle (default)'], ['normal', 'Faster']].map(([k, lbl]) => `<button class="pbtn ${(S.settings.speed || 'gentle') === k ? 'on' : ''}" data-spd="${k}">${lbl}</button>`).join('')}
+    </div>
+    <div class="field">
       <label>Map pin labels</label>
       <button class="pbtn ${S.settings.mapLabels !== false ? 'on' : ''}" id="set-labels">${S.settings.mapLabels !== false ? 'Labels Shown' : 'Hidden Until Found'}</button>
     </div>
@@ -2034,6 +2091,7 @@ function renderSettings() {
   $('set-autoread').addEventListener('click', () => { S.settings.autoRead = !S.settings.autoRead; save(); updateVoiceButtons(); renderSettings(); });
   $('set-labels').addEventListener('click', () => { S.settings.mapLabels = !(S.settings.mapLabels !== false); save(); applyMapLabelsUI(); renderSettings(); });
   $('set-test').addEventListener('click', () => playVoice('ev_beam_q', SEA_EVENTS[0].q, true));
+  document.querySelectorAll('[data-spd]').forEach(b => b.addEventListener('click', () => { S.settings.speed = b.dataset.spd; save(); renderSettings(); playVoice('q_mayflower', QUIZ_ITEMS[4].q, true); }));
   $('set-sfx').addEventListener('click', () => { S.settings.sfx = !S.settings.sfx; save(); renderSettings(); });
   document.querySelectorAll('[data-th]').forEach(b => b.addEventListener('click', () => { S.settings.theme = b.dataset.th; applyTheme(); save(); renderSettings(); }));
   pointerHold($('set-reset'), 3000, () => {

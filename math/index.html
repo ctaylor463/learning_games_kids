@@ -499,18 +499,47 @@ const icon=n=>ICONS[n]||'';
 
 // ---------- Speech ----------
 // Every prompt is spoken, so a child who cannot read yet can still play. Silent where speech is missing.
-let voices=[];
+let voices=[], curUtterance=null, audioCtx=null;
 const hasSpeech='speechSynthesis' in window;
 function loadVoices(){ try{ voices=speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
 if(hasSpeech){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
-function pickVoice(){ if(!voices.length) loadVoices(); if(!voices.length) return null; const en=voices.filter(v=>/^en[-_]US/i.test(v.lang)); return en.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||en[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0]; }
+function pickVoice(){
+  if(!voices.length) loadVoices();
+  if(!voices.length) return null;
+  const en=voices.filter(v=>/^en[-_]US/i.test(v.lang));
+  const loc=en.filter(v=>v.localService);
+  const pool=loc.length?loc:en;
+  return pool.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||pool[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0];
+}
 const canSpeak=()=>hasSpeech&&S.settings.speech!==false;
-function speak(text){ return new Promise(res=>{ if(!canSpeak()||!text) return res(); let done=false; const fin=()=>{ if(!done){ done=true; res(); } }; try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.75; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); } }); }
-function hush(){ try{ if(hasSpeech) speechSynthesis.cancel(); }catch(e){} }
-// iOS only lets a page speak after a first utterance started inside a tap.
+function speak(text){
+  return new Promise(res=>{
+    if(!canSpeak()||!text) return res();
+    let done=false; const fin=()=>{ if(!done){ done=true; res(); } };
+    try{
+      if(speechSynthesis.paused) speechSynthesis.resume();
+      if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      curUtterance=u;
+      u.lang='en-US'; u.rate=0.75; u.volume=1;
+      const v=pickVoice(); if(v) u.voice=v;
+      u.onend=fin; u.onerror=fin;
+      speechSynthesis.speak(u);
+      setTimeout(fin,1500+text.length*120);
+    }catch(e){ fin(); }
+  });
+}
+function hush(){ try{ if(hasSpeech&&(speechSynthesis.speaking||speechSynthesis.pending)) speechSynthesis.cancel(); }catch(e){} }
+// iOS only lets a page speak after a first utterance started inside a tap, and waking AudioContext helps iPadOS route audio reliably.
 let primed=false;
-const prime=()=>{ if(primed||!hasSpeech) return; primed=true; try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} };
-['touchend','click'].forEach(ev=>document.addEventListener(ev,prime,{capture:true}));
+const prime=()=>{
+  if(primed) return; primed=true;
+  try{ if(!audioCtx&&(window.AudioContext||window.webkitAudioContext)){ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); } if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); }catch(e){}
+  if(!hasSpeech) return;
+  try{ if(speechSynthesis.paused) speechSynthesis.resume(); if(!speechSynthesis.speaking&&!speechSynthesis.pending){ const u=new SpeechSynthesisUtterance(''); u.volume=0; curUtterance=u; speechSynthesis.speak(u); } }catch(e){}
+};
+['pointerdown','touchend','click'].forEach(ev=>document.addEventListener(ev,prime,{capture:true,passive:true}));
+window.addEventListener('pageshow',()=>{ try{ if(hasSpeech&&speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} });
 
 // ---------- Fact tracking and error classification ----------
 // A fact key is the thing being practised, for example "8+5" or "bond10:7" or "count:6".

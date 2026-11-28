@@ -320,14 +320,45 @@ document.querySelectorAll('[data-fs-btn]').forEach(btn => {
 });
 
 // ---------- Speech ----------
-let voices=[];
+let voices=[], curUtterance=null, audioCtx=null;
 function loadVoices(){ try{ voices=speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
 if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
-function pickVoice(){ if(!voices.length) return null; if(S.settings.voice){ const v=voices.find(v=>v.name===S.settings.voice); if(v) return v; } const en=voices.filter(v=>/^en[-_]US/i.test(v.lang)); return en.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||en[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0]; }
-function speak(text){ return new Promise(res=>{ if(!('speechSynthesis' in window)||!text) return res(); let done=false; const fin=()=>{ if(!done){ done=true; res(); } }; try{ const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=S.settings.rate||0.75; const v=pickVoice(); if(v) u.voice=v; u.onend=fin; u.onerror=fin; speechSynthesis.cancel(); speechSynthesis.speak(u); setTimeout(fin,1500+text.length*120); }catch(e){ fin(); } }); }
-// iOS only lets speech start from a tap, so the first tap anywhere speaks a silent utterance.
-let primed=false; function primeSpeech(){ if(primed||!('speechSynthesis' in window)) return; primed=true; try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
-['touchend','click'].forEach(ev=>document.addEventListener(ev,primeSpeech,true));
+function pickVoice(){
+  if(!voices.length) loadVoices();
+  if(!voices.length) return null;
+  if(S.settings.voice){ const v=voices.find(v=>v.name===S.settings.voice); if(v) return v; }
+  const en=voices.filter(v=>/^en[-_]US/i.test(v.lang));
+  const loc=en.filter(v=>v.localService);
+  const pool=loc.length?loc:en;
+  return pool.find(v=>/Samantha|Ava|Allison|Nicky|Zoe|Enhanced|Premium/i.test(v.name))||pool[0]||voices.find(v=>/^en/i.test(v.lang))||voices[0];
+}
+function speak(text){
+  return new Promise(res=>{
+    if(!('speechSynthesis' in window)||!text) return res();
+    let done=false; const fin=()=>{ if(!done){ done=true; res(); } };
+    try{
+      if(speechSynthesis.paused) speechSynthesis.resume();
+      if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      curUtterance=u;
+      u.lang='en-US'; u.rate=S.settings.rate||0.75; u.volume=1;
+      const v=pickVoice(); if(v) u.voice=v;
+      u.onend=fin; u.onerror=fin;
+      speechSynthesis.speak(u);
+      setTimeout(fin,1500+text.length*120);
+    }catch(e){ fin(); }
+  });
+}
+// iOS only lets speech start from a tap, and waking AudioContext helps iPadOS route audio reliably.
+let primed=false;
+function primeSpeech(){
+  if(primed) return; primed=true;
+  try{ if(!audioCtx&&(window.AudioContext||window.webkitAudioContext)){ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); } if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); }catch(e){}
+  if(!('speechSynthesis' in window)) return;
+  try{ if(speechSynthesis.paused) speechSynthesis.resume(); if(!speechSynthesis.speaking&&!speechSynthesis.pending){ const u=new SpeechSynthesisUtterance(''); u.volume=0; curUtterance=u; speechSynthesis.speak(u); } }catch(e){}
+}
+['pointerdown','touchend','click'].forEach(ev=>document.addEventListener(ev,primeSpeech,{capture:true,passive:true}));
+window.addEventListener('pageshow',()=>{ try{ if('speechSynthesis' in window&&speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} });
 
 // ---------- Word helpers ----------
 const TWO={sh:1,ch:1,th:1,wh:1,ng:1,ck:1,ar:1,or:1,er:1,ir:1,ur:1,ee:1,oo:1,ai:1,oa:1,ay:1,ea:1,ou:1,ow:1,ey:1,qu:1};
